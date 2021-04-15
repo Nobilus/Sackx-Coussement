@@ -14,6 +14,10 @@ namespace Project.DataContext
     {
         DbSet<Product> Products { get; set; }
         DbSet<Unit> Units { get; set; }
+        DbSet<Customer> Customers { get; set; }
+        DbSet<Order> Orders { get; set; }
+        DbSet<Person> Persons { get; set; }
+        DbSet<Staff> Staff { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
@@ -22,6 +26,12 @@ namespace Project.DataContext
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Unit> Units { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Staff> Staff { get; set; }
+
+
         private ConnectionStrings _connectionStrings;
 
         public WoodshopContext(DbContextOptions<WoodshopContext> options, IOptions<ConnectionStrings> connectionStrings) : base(options)
