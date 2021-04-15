@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  db:
+    image: "mcr.microsoft.com/mssql/server:2017-CU22-ubuntu-16.04"
+    environment:
+      SA_PASSWORD: "<YourNewStrong@Passw0rd>"
+      ACCEPT_EULA: "Y"
+    ports:
+      - 1433:1433
+    volumes:
+      - ../db/data:/var/opt/mssql/data
+  api:
+    image: woodshopapi
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://+:5000
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - 5000:5000
+      - 5001:5000
+    depends_on:
+      - db
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
