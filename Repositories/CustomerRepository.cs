@@ -11,7 +11,7 @@ namespace Project.Repositories
     public interface ICustomerRepository
     {
         Task<Customer> AddCustomer(Customer customer);
-        Task<Customer> GetCustomer(Guid customerId);
+        Task<Customer> GetCustomer(int customerId);
         Task<List<Customer>> GetCustomers();
     }
 
@@ -29,9 +29,9 @@ namespace Project.Repositories
             return await _context.Customers.Include(c => c.Person).ToListAsync();
         }
 
-        public async Task<Customer> GetCustomer(Guid customerId)
+        public async Task<Customer> GetCustomer(int customerId)
         {
-            return await _context.Customers.Where(c => c.Person.PersonId == customerId)
+            return await _context.Customers.Where(c => c.PersonId == customerId)
             .Include(c => c.Person)
             .ThenInclude(p => p.FirstName)
             .Include(c => c.Person)

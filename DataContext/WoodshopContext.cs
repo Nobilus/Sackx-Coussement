@@ -48,6 +48,11 @@ namespace Project.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Customer>().HasKey(c => new { c.PersonId });
+            modelBuilder.Entity<Staff>().HasKey(s => new { s.PersonId });
+            modelBuilder.Entity<Product>().HasOne(p => p.Unit).WithMany(u => u.Products);
+
+
             #region Products
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -55,7 +60,9 @@ namespace Project.DataContext
                 Name = "Oregon 7x15",
                 Thickness = 7,
                 Width = 15,
-                Price = 5.01
+                Price = 5.01,
+                UnitId = 1,
+
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -64,6 +71,7 @@ namespace Project.DataContext
                 Thickness = 7,
                 Width = 18,
                 Price = 4.62,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -72,6 +80,7 @@ namespace Project.DataContext
                 Thickness = 2.4,
                 Width = 3.2,
                 Price = 0.30,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -80,6 +89,7 @@ namespace Project.DataContext
                 Thickness = 2,
                 Width = 2.3,
                 Price = 0.22,
+                UnitId = 1
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -88,6 +98,7 @@ namespace Project.DataContext
                 Thickness = 2.5,
                 Width = 10,
                 Price = 0.85,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -96,6 +107,7 @@ namespace Project.DataContext
                 Thickness = 2,
                 Width = 10,
                 Price = 0.61,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -104,6 +116,7 @@ namespace Project.DataContext
                 Thickness = 0.36,
                 Width = 122,
                 Price = 4.45,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -112,6 +125,7 @@ namespace Project.DataContext
                 Thickness = 1.8,
                 Width = 122,
                 Price = 6.56,
+                UnitId = 2,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -120,6 +134,7 @@ namespace Project.DataContext
                 Thickness = 1.2,
                 Width = 59,
                 Price = 3.97,
+                UnitId = 2,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -128,6 +143,7 @@ namespace Project.DataContext
                 Thickness = 1,
                 Width = 20,
                 Price = 5.62,
+                UnitId = 3,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -136,6 +152,7 @@ namespace Project.DataContext
                 Thickness = 0.9,
                 Width = 0,
                 Price = 2.64,
+                UnitId = 2,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -144,6 +161,7 @@ namespace Project.DataContext
                 Thickness = 2.2,
                 Width = 4.5,
                 Price = 0.57,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -152,6 +170,7 @@ namespace Project.DataContext
                 Thickness = 3.8,
                 Width = 5.8,
                 Price = 0.99,
+                UnitId = 1,
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -160,6 +179,7 @@ namespace Project.DataContext
                 Thickness = 2.5,
                 Width = 14.5,
                 Price = 6.35,
+                UnitId = 1
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -168,6 +188,7 @@ namespace Project.DataContext
                 Thickness = 63,
                 Width = 150,
                 Price = 6.15,
+                UnitId = 1
             });
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -176,30 +197,31 @@ namespace Project.DataContext
                 Thickness = 40,
                 Width = 55,
                 Price = 2.81,
+                UnitId = 1
             });
             #endregion
             #region Units
             modelBuilder.Entity<Unit>().HasData(new Unit()
             {
-                UnitId = Guid.NewGuid(),
+                UnitId = 1,
                 Name = "lm",
                 Desc = "Lopende meter",
             });
             modelBuilder.Entity<Unit>().HasData(new Unit()
             {
-                UnitId = Guid.NewGuid(),
+                UnitId = 2,
                 Name = "m²",
                 Desc = "Vierkante meter",
             });
             modelBuilder.Entity<Unit>().HasData(new Unit()
             {
-                UnitId = Guid.NewGuid(),
+                UnitId = 3,
                 Name = "m³",
                 Desc = "Kubieke meter",
             });
             modelBuilder.Entity<Unit>().HasData(new Unit()
             {
-                UnitId = Guid.NewGuid(),
+                UnitId = 4,
                 Name = "st",
                 Desc = "Stuk",
             });

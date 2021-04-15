@@ -7,6 +7,7 @@ namespace Project.Models
         public string Email { get; set; }
         public string TelephoneNumber { get; set; }
         public virtual Person Person { get; set; }
+        public int? PersonId { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

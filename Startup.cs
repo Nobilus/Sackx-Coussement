@@ -39,6 +39,7 @@ namespace Project
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             // context
             services.AddDbContext<WoodshopContext>();
+            services.AddDbContext<IWoodshopContext, WoodshopContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
