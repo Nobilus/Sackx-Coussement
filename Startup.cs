@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Project.Config;
+using Project.DataContext;
 
 namespace Project
 {
@@ -36,6 +37,8 @@ namespace Project
 
             // connectionstrings:
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+            // context
+            services.AddDbContext<WoodshopContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

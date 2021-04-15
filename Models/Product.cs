@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Project.Models
 {
@@ -8,8 +9,11 @@ namespace Project.Models
         public string Name { get; set; }
         public double Thickness { get; set; }
         public double Width { get; set; }
-        public double Length { get; set; }
-        public double Prijs_Excl_Tax { get; set; }
-        public double Prijs_Incl_Tax { get; set; }
+        public double Price { get; set; }
+
+        public int UnitId { get; set; }
+        public Unit Unit { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }
