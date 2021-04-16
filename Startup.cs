@@ -13,6 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Project.Config;
 using Project.DataContext;
+using Project.Repositories;
+using Project.Services;
+using AutoMapper;
 
 namespace Project
 {
@@ -28,6 +31,9 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
+            // connectionstrings:
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -35,11 +41,14 @@ namespace Project
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Project", Version = "v1" });
             });
 
-            // connectionstrings:
-            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
+
             // context
             services.AddDbContext<WoodshopContext>();
-            services.AddDbContext<IWoodshopContext, WoodshopContext>();
+            services.AddTransient<IWoodshopContext, WoodshopContext>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+
+            services.AddTransient<IWoodshopService, WoodshopService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

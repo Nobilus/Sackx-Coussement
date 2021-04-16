@@ -3,21 +3,38 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.DataContext;
 
 namespace Project.Migrations
 {
     [DbContext(typeof(WoodshopContext))]
-    partial class WoodshopContextModelSnapshot : ModelSnapshot
+    [Migration("20210416080854_addCustomer")]
+    partial class addCustomer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.Property<Guid>("OrdersOrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrdersOrderId", "ProductsProductId");
+
+                    b.HasIndex("ProductsProductId");
+
+                    b.ToTable("OrderProduct");
+                });
 
             modelBuilder.Entity("Project.Models.Customer", b =>
                 {
@@ -45,49 +62,20 @@ namespace Project.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerPersonId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProductId");
+                    b.HasIndex("CustomerPersonId");
 
                     b.ToTable("Orders");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderId = new Guid("7fa67b1d-9434-44aa-ab7c-c0815cc47963"),
-                            Amount = 21.0,
-                            CustomerId = 1,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
-                });
-
-            modelBuilder.Entity("Project.Models.OrderCustomer", b =>
-                {
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId", "CustomerId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("OrderCustomers");
                 });
 
             modelBuilder.Entity("Project.Models.Person", b =>
@@ -108,12 +96,6 @@ namespace Project.Migrations
                     b.ToTable("Persons");
 
                     b.HasData(
-                        new
-                        {
-                            PersonId = 2,
-                            FirstName = "Sander",
-                            LastName = "Coussement"
-                        },
                         new
                         {
                             PersonId = 1,
@@ -152,7 +134,7 @@ namespace Project.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("49db23d0-addf-49ff-84ec-76f63d6e9de6"),
+                            ProductId = new Guid("259a2939-8309-4a83-a882-259ec81f0f6e"),
                             Name = "Oregon 7x15",
                             Price = 5.0099999999999998,
                             Thickness = 7.0,
@@ -161,7 +143,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("f2864db7-a3fd-4aa9-b4e3-4cf25fa50e64"),
+                            ProductId = new Guid("e687657c-81c9-4be9-b770-056395aaa8d9"),
                             Name = "Oregon 7x18",
                             Price = 4.6200000000000001,
                             Thickness = 7.0,
@@ -170,7 +152,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("a913fc75-f592-4188-9cc4-03b156b02837"),
+                            ProductId = new Guid("daf92ab6-a022-458c-acaf-10b732d86f52"),
                             Name = "Pannelatten",
                             Price = 0.29999999999999999,
                             Thickness = 2.3999999999999999,
@@ -179,7 +161,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("6368d486-2bef-4c52-9cef-c6f93734cc15"),
+                            ProductId = new Guid("5365b52e-5100-4959-916c-b35c22fae462"),
                             Name = "Stoflatten",
                             Price = 0.22,
                             Thickness = 2.0,
@@ -188,7 +170,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("6d7e74b5-4968-4ad3-b38a-ec36c3063f7a"),
+                            ProductId = new Guid("14163d6b-4827-495e-b054-881063193672"),
                             Name = "RND gedrenkt",
                             Price = 0.84999999999999998,
                             Thickness = 2.5,
@@ -197,7 +179,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("e3506a8a-53da-43e2-adc2-6da626c1bd55"),
+                            ProductId = new Guid("f3017254-7bf8-4b08-b1df-35c3156fc0d4"),
                             Name = "RND ongeschaafd",
                             Price = 0.60999999999999999,
                             Thickness = 2.0,
@@ -206,7 +188,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("398997b6-a769-4b13-ab9b-4f7f93e85a64"),
+                            ProductId = new Guid("41453897-4b21-4f85-9ecc-868f759df221"),
                             Name = "Merantiplaten",
                             Price = 4.4500000000000002,
                             Thickness = 0.35999999999999999,
@@ -215,7 +197,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("38c8733a-976e-469e-b3dd-064933872de4"),
+                            ProductId = new Guid("39aa422a-e060-4164-9c88-5d6d8d03db8c"),
                             Name = "CDX platen",
                             Price = 6.5599999999999996,
                             Thickness = 1.8,
@@ -224,7 +206,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("3d38a604-0321-4914-a7b0-02c5ffa8fa55"),
+                            ProductId = new Guid("3cf83168-f907-4ed3-8f2c-07c766151b08"),
                             Name = "OBS platen",
                             Price = 3.9700000000000002,
                             Thickness = 1.2,
@@ -233,7 +215,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("e7677448-aefe-4450-a60a-9b718f8971f4"),
+                            ProductId = new Guid("b7b8b431-7952-49b7-9f0e-40a7a91c2560"),
                             Name = "Meubelplaten wit",
                             Price = 5.6200000000000001,
                             Thickness = 1.0,
@@ -242,7 +224,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("af013445-ec70-444e-8cc6-c143a276aa42"),
+                            ProductId = new Guid("61dd4f13-bfdf-4ac4-bb60-39c062cc503b"),
                             Name = "Gipsplaten",
                             Price = 2.6400000000000001,
                             Thickness = 0.90000000000000002,
@@ -251,7 +233,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("faa9937b-00a1-4582-a7de-8756c1bb1b83"),
+                            ProductId = new Guid("ea74f6bd-83a5-43fb-bbe2-54eb646c6a2c"),
                             Name = "Plafondlatten",
                             Price = 0.56999999999999995,
                             Thickness = 2.2000000000000002,
@@ -260,7 +242,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("f0b0f3f9-bb94-4194-9a2b-cfb8dd8bee10"),
+                            ProductId = new Guid("e272383a-3b48-46bb-8638-76f233796680"),
                             Name = "CLS",
                             Price = 0.98999999999999999,
                             Thickness = 3.7999999999999998,
@@ -269,7 +251,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("e6423530-0f13-4bfe-97de-e7119950f93a"),
+                            ProductId = new Guid("f645eef5-2fbf-4e94-ab54-5dff266cabfe"),
                             Name = "Terrasplanken tali",
                             Price = 6.3499999999999996,
                             Thickness = 2.5,
@@ -278,7 +260,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("003b540d-bfa5-444f-baef-c22677cdf443"),
+                            ProductId = new Guid("1389cbe6-7513-44ab-a921-164013941ef6"),
                             Name = "Thermowood",
                             Price = 6.1500000000000004,
                             Thickness = 63.0,
@@ -287,7 +269,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("f50c235c-537f-4ccb-a686-b01c2b794489"),
+                            ProductId = new Guid("ad7a5fe6-5631-4f40-8c3a-0ebe6d9c1cde"),
                             Name = "Tali kepers",
                             Price = 2.8100000000000001,
                             Thickness = 40.0,
@@ -313,14 +295,6 @@ namespace Project.Migrations
                     b.HasKey("PersonId");
 
                     b.ToTable("Staff");
-
-                    b.HasData(
-                        new
-                        {
-                            PersonId = 2,
-                            IsAdmin = true,
-                            TelephoneNumber = "0412345678"
-                        });
                 });
 
             modelBuilder.Entity("Project.Models.Unit", b =>
@@ -367,6 +341,21 @@ namespace Project.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OrderProduct", b =>
+                {
+                    b.HasOne("Project.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project.Models.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Project.Models.Customer", b =>
                 {
                     b.HasOne("Project.Models.Person", "Person")
@@ -381,35 +370,10 @@ namespace Project.Migrations
             modelBuilder.Entity("Project.Models.Order", b =>
                 {
                     b.HasOne("Project.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project.Models.Product", null)
                         .WithMany("Orders")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("CustomerPersonId");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Project.Models.OrderCustomer", b =>
-                {
-                    b.HasOne("Project.Models.Customer", "customer")
-                        .WithMany("OrderCustomer")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project.Models.Order", "Order")
-                        .WithMany("OrderCustomer")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("customer");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Project.Models.Product", b =>
@@ -436,12 +400,7 @@ namespace Project.Migrations
 
             modelBuilder.Entity("Project.Models.Customer", b =>
                 {
-                    b.Navigation("OrderCustomer");
-                });
-
-            modelBuilder.Entity("Project.Models.Order", b =>
-                {
-                    b.Navigation("OrderCustomer");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Project.Models.Person", b =>
@@ -449,11 +408,6 @@ namespace Project.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Staff");
-                });
-
-            modelBuilder.Entity("Project.Models.Product", b =>
-                {
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Project.Models.Unit", b =>

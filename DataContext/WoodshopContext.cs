@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace Project.DataContext
         DbSet<Order> Orders { get; set; }
         DbSet<Person> Persons { get; set; }
         DbSet<Staff> Staff { get; set; }
+        DbSet<OrderProduct> OrderProducts { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
@@ -30,7 +32,7 @@ namespace Project.DataContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Staff> Staff { get; set; }
-
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
         private ConnectionStrings _connectionStrings;
 
@@ -48,13 +50,28 @@ namespace Project.DataContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasKey(c => new { c.PersonId });
-            modelBuilder.Entity<Staff>().HasKey(s => new { s.PersonId });
-            modelBuilder.Entity<Product>().HasOne(p => p.Unit).WithMany(u => u.Products);
+
+            modelBuilder.Entity<Customer>()
+            .HasKey(c => new { c.PersonId });
+
+            modelBuilder.Entity<Staff>()
+            .HasKey(s => new { s.PersonId });
+
+            modelBuilder.Entity<Order>()
+            .HasOne<Customer>(o => o.Customer)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(o => o.CustomerId);
 
 
-            #region Products
-            modelBuilder.Entity<Product>().HasData(new Product()
+            modelBuilder.Entity<Product>()
+            .HasOne(p => p.Unit)
+            .WithMany(u => u.Products);
+
+            modelBuilder.Entity<OrderProduct>()
+            .HasKey(op => new { op.OrderId, op.ProductId });
+
+
+            var product1 = new Product
             {
                 ProductId = Guid.NewGuid(),
                 Name = "Oregon 7x15",
@@ -62,8 +79,39 @@ namespace Project.DataContext
                 Width = 15,
                 Price = 5.01,
                 UnitId = 1,
+            };
 
+
+
+            #region Staff
+            modelBuilder.Entity<Person>().HasData(new Person()
+            {
+                PersonId = 2,
+                FirstName = "Sander",
+                LastName = "Coussement"
             });
+            modelBuilder.Entity<Staff>().HasData(new Staff()
+            {
+                PersonId = 2,
+                TelephoneNumber = "0412345678",
+                IsAdmin = true,
+            });
+            #endregion
+            #region Customers
+            modelBuilder.Entity<Person>().HasData(new Person()
+            {
+                PersonId = 1,
+                FirstName = "Jonas",
+                LastName = "De Meyer",
+            });
+            modelBuilder.Entity<Customer>().HasData(new Customer()
+            {
+                PersonId = 1,
+                CompanyNumber = "0123456789"
+            });
+            #endregion
+            #region Products
+            modelBuilder.Entity<Product>().HasData(product1);
             modelBuilder.Entity<Product>().HasData(new Product()
             {
                 ProductId = Guid.NewGuid(),
@@ -226,6 +274,7 @@ namespace Project.DataContext
                 Desc = "Stuk",
             });
             #endregion
+
         }
     }
 }

@@ -1,23 +1,23 @@
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Project.Models;
 
-namespace Project.Models
+namespace Project.DTO
 {
-    public class Product
+    public class ProductDTO
     {
         public Guid ProductId { get; set; }
         public string Name { get; set; }
         public double Thickness { get; set; }
         public double Width { get; set; }
         public double Price { get; set; }
-
         [JsonIgnore]
-        public int UnitId { get; set; }
         public Unit Unit { get; set; }
 
-        [JsonIgnore]
-        public IList<OrderProduct> OrderProducts { get; set; }
+        [JsonPropertyName("measurement_unit")]
+        public string MeasurmentUnit { get { return Unit.Name; } }
 
     }
 }
+
+
