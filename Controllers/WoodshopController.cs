@@ -37,5 +37,34 @@ namespace Project.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("customers")]
+        public async Task<ActionResult<List<Customer>>> GetCustomers()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetCustomers());
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("staff")]
+        public async Task<ActionResult<List<Staff>>> GetStaff()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetStaffs());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
     }
 }

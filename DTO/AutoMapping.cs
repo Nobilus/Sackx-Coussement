@@ -12,6 +12,8 @@ namespace Sneakers.API.DTO
         {
 
             CreateMap<Product, ProductDTO>();
+            CreateMap<Customer, CustomerDTO>();
+            CreateMap<Staff, StaffDTO>();
         }
     }
 }

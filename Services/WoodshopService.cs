@@ -11,8 +11,9 @@ namespace Project.Services
     public interface IWoodshopService
     {
         Task<Customer> GetCustomer(int customerId);
-        Task<List<Customer>> GetCustomers();
+        Task<List<CustomerDTO>> GetCustomers();
         Task<List<ProductDTO>> GetProducts();
+        Task<List<StaffDTO>> GetStaffs();
 
     }
 
@@ -21,12 +22,14 @@ namespace Project.Services
     {
         private ICustomerRepository _customerRepository;
         private IProductRepository _productRepository;
+        private IStaffRepository _staffRepository;
         private IMapper _mapper;
 
-        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository)
+        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository)
         {
             _customerRepository = customerRepository;
             _productRepository = productRepository;
+            _staffRepository = staffRepository;
             _mapper = mapper;
         }
 
@@ -48,11 +51,15 @@ namespace Project.Services
             }
         }
 
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<CustomerDTO>> GetCustomers()
         {
-            return await _customerRepository.GetCustomers();
+            return _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers());
         }
 
+        public async Task<List<StaffDTO>> GetStaffs()
+        {
+            return _mapper.Map<List<StaffDTO>>(await _staffRepository.GetStaffMembers());
+        }
 
     }
 }

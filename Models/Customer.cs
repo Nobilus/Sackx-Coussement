@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Project.Models
 {
@@ -9,6 +10,7 @@ namespace Project.Models
         public virtual Person Person { get; set; }
         public int? PersonId { get; set; }
 
+        [JsonIgnore]
         public ICollection<Order> Orders { get; set; }
     }
 }

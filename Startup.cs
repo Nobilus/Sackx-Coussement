@@ -47,6 +47,7 @@ namespace Project
             services.AddTransient<IWoodshopContext, WoodshopContext>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IStaffRepository, StaffRepository>();
 
             services.AddTransient<IWoodshopService, WoodshopService>();
         }
