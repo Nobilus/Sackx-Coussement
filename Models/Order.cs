@@ -13,6 +13,7 @@ namespace Project.Models
         public Customer Customer { get; set; }
 
         public IList<OrderProduct> OrderProducts { get; set; }
+        public bool isPayed { get; set; }
 
     }
 }

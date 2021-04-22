@@ -1,9 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Project.Models;
 
 namespace Project.DTO
 {
+    public class CustomerAddDTO
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyNumber { get; set; }
+    }
     public class CustomerDTO
     {
         [JsonPropertyName("id")]
@@ -14,6 +21,7 @@ namespace Project.DTO
         public string LastName { get { return Person.LastName; } }
         public string CompanyNumber { get; set; }
 
+        public ICollection<Order> Orders { get; set; }
 
     }
 }

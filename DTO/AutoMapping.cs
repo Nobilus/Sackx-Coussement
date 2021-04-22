@@ -12,8 +12,16 @@ namespace Sneakers.API.DTO
         {
 
             CreateMap<Product, ProductDTO>();
+
             CreateMap<Customer, CustomerDTO>();
+            CreateMap<CustomerDTO, Customer>();
+            CreateMap<CustomerAddDTO, Person>();
+            CreateMap<CustomerAddDTO, Customer>();
+
             CreateMap<Staff, StaffDTO>();
+
+            CreateMap<Order, OrderDTO>();
+            CreateMap<OrderDTO, Order>();
         }
     }
 }

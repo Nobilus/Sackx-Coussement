@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Project.DTO;
 using Project.Models;
 using Project.Services;
 
@@ -62,6 +63,35 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("order")]
+        public async Task<ActionResult<Order>> AddOrder(OrderDTO order)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddOrder(order));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpPost]
+        [Route("customer")]
+        public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddCustomer(customer));
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex);
                 return new StatusCodeResult(500);
             }
         }
