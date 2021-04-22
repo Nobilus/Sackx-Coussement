@@ -13,12 +13,10 @@ namespace Project.DTO
     }
     public class CustomerDTO
     {
-        [JsonPropertyName("id")]
-        public int PersonId { get; set; }
-        [JsonIgnore]
-        public Person Person { get; set; }
-        public string FirstName { get { return Person.FirstName; } }
-        public string LastName { get { return Person.LastName; } }
+        public int Id { get; set; }
+
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string CompanyNumber { get; set; }
 
         public ICollection<Order> Orders { get; set; }

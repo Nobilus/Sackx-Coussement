@@ -10,7 +10,9 @@ namespace Project.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        [JsonIgnore]
         public virtual Customer Customer { get; set; }
+        [JsonIgnore]
         public virtual Staff Staff { get; set; }
     }
 }

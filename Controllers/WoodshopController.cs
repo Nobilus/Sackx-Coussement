@@ -54,6 +54,22 @@ namespace Project.Controllers
         }
 
         [HttpGet]
+        [Route("customer/{customerId}")]
+        public async Task<ActionResult<Customer>> GetCustomer(int customerId)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetCustomer(customerId));
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
         [Route("staff")]
         public async Task<ActionResult<List<Staff>>> GetStaff()
         {

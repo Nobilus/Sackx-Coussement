@@ -33,10 +33,8 @@ namespace Project.Repositories
         {
             return await _context.Customers.Where(c => c.PersonId == customerId)
             .Include(c => c.Person)
-            .ThenInclude(p => p.FirstName)
-            .Include(c => c.Person)
-            .ThenInclude(p => p.LastName)
-            .Include(p => p.Orders).SingleOrDefaultAsync();
+            .Include(c => c.Orders)
+            .SingleOrDefaultAsync();
         }
 
         public async Task<Customer> AddCustomer(Customer customer)
@@ -45,6 +43,5 @@ namespace Project.Repositories
             await _context.SaveChangesAsync();
             return customer;
         }
-        // TODO: remove customer function
     }
 }

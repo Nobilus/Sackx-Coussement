@@ -13,10 +13,23 @@ namespace Sneakers.API.DTO
 
             CreateMap<Product, ProductDTO>();
 
-            CreateMap<Customer, CustomerDTO>();
+            CreateMap<Customer, CustomerDTO>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PersonId)
+                )
+                .ForMember(
+                    dest => dest.Firstname,
+                    opt => opt.MapFrom(src => src.Person.FirstName)
+                )
+                .ForMember(
+                    dest => dest.Lastname,
+                    opt => opt.MapFrom(src => src.Person.LastName)
+                );
             CreateMap<CustomerDTO, Customer>();
             CreateMap<CustomerAddDTO, Person>();
             CreateMap<CustomerAddDTO, Customer>();
+
 
             CreateMap<Staff, StaffDTO>();
 

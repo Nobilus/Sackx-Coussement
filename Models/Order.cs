@@ -7,13 +7,13 @@ namespace Project.Models
     {
         public Guid OrderId { get; set; }
         public DateTime Date { get; set; }
-        public double Amount { get; set; }
+        // public double Amount { get; set; }
 
         public int CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         public IList<OrderProduct> OrderProducts { get; set; }
-        public bool isPayed { get; set; }
+        // public bool isPayed { get; set; }
 
     }
 }

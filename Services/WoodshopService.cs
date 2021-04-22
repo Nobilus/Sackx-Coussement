@@ -11,7 +11,7 @@ namespace Project.Services
 {
     public interface IWoodshopService
     {
-        Task<Customer> GetCustomer(int customerId);
+        Task<CustomerDTO> GetCustomer(int customerId);
         Task<List<CustomerDTO>> GetCustomers();
         Task<List<ProductDTO>> GetProducts();
         Task<List<StaffDTO>> GetStaffs();
@@ -38,6 +38,7 @@ namespace Project.Services
             _orderRepository = orderRepository;
             _personRepository = personRepository;
             _mapper = mapper;
+
         }
 
         public async Task<List<ProductDTO>> GetProducts()
@@ -45,11 +46,11 @@ namespace Project.Services
             return _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
         }
 
-        public async Task<Customer> GetCustomer(int customerId)
+        public async Task<CustomerDTO> GetCustomer(int customerId)
         {
             try
             {
-                return await _customerRepository.GetCustomer(customerId);
+                return _mapper.Map<CustomerDTO>(await _customerRepository.GetCustomer(customerId));
             }
             catch (System.Exception ex)
             {
@@ -73,7 +74,6 @@ namespace Project.Services
             try
             {
                 Order newOrder = _mapper.Map<Order>(order);
-                newOrder.isPayed = false;
                 newOrder.OrderId = Guid.NewGuid();
                 newOrder.Date = DateTime.Now;
                 newOrder.OrderProducts = new List<OrderProduct>();
