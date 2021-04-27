@@ -52,6 +52,21 @@ namespace Project.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("product")]
+        public async Task<ActionResult<ProductDTO>> AddProduct(ProductAddDTO product)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddProduct(product));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+
         [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
@@ -83,6 +98,22 @@ namespace Project.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("customer")]
+        public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddCustomer(customer));
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex);
+                return new StatusCodeResult(500);
+            }
+        }
+
+
         [HttpGet]
         [Route("staff")]
         public async Task<ActionResult<List<Staff>>> GetStaff()
@@ -111,6 +142,21 @@ namespace Project.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("staff")]
+        public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddStaff(staff));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+
         [HttpGet]
         [Route("units")]
         public async Task<ActionResult<List<Unit>>> GetUnits()
@@ -124,6 +170,7 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
 
         [HttpPost]
         [Route("order")]
@@ -139,47 +186,7 @@ namespace Project.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("customer")]
-        public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
-        {
-            try
-            {
-                return new OkObjectResult(await _woodshopService.AddCustomer(customer));
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex);
-                return new StatusCodeResult(500);
-            }
-        }
 
-        [HttpPost]
-        [Route("product")]
-        public async Task<ActionResult<ProductDTO>> AddProduct(ProductAddDTO product)
-        {
-            try
-            {
-                return new OkObjectResult(await _woodshopService.AddProduct(product));
-            }
-            catch (Exception ex)
-            {
-                return new StatusCodeResult(500);
-            }
-        }
 
-        [HttpPost]
-        [Route("staff")]
-        public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
-        {
-            try
-            {
-                return new OkObjectResult(await _woodshopService.AddStaff(staff));
-            }
-            catch (Exception ex)
-            {
-                return new StatusCodeResult(500);
-            }
-        }
     }
 }
