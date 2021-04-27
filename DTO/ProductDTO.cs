@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Project.Models;
 
@@ -6,10 +7,15 @@ namespace Project.DTO
 {
     public class ProductAddDTO
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public double Thickness { get; set; }
+        [Required]
         public double Width { get; set; }
+        [Required]
         public double Price { get; set; }
+        [Required]
         public int UnitId { get; set; }
     }
     public class ProductDTO

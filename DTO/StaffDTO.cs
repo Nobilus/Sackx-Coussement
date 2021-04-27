@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Project.Models;
 
@@ -6,9 +7,14 @@ namespace Project.DTO
 {
     public class StaffAddDTO
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string TelephoneNumber { get; set; }
+        [Required]
+        public string Firstname { get; set; }
+        [Required]
+        public string Lastname { get; set; }
+        [Required]
+        [Phone]
+        public string Telephonenumber { get; set; }
+        [EmailAddress]
         public string Email { get; set; }
     }
     public class StaffDTO

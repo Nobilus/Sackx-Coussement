@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "IeOii2rCvk8I/EUkdaKdvAvfwjgRCSqUmUD7OC4vgiH0iqLwTTo3Sw1gWpSFX7q1XBhBZYjmoPMiPB450K9O8w==",
+  "dgSpecHash": "1h1bfcDPVLLyIATldgKvren6lgoTPIog61RjSQHcupFloOVe6A2WbQkbJOtq50V+OJdgWfZwcVNJd8dicb/IQg==",
   "success": true,
   "projectFilePath": "/home/jonas/Documents/School/2020-2021/Back-end/Project/Project.csproj",
   "expectedPackageFiles": [
@@ -9,7 +9,7 @@
     "/home/jonas/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/home/jonas/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/5.0.1/microsoft.aspnetcore.authentication.jwtbearer.5.0.1.nupkg.sha512",
     "/home/jonas/.nuget/packages/microsoft.aspnetcore.authentication.openidconnect/5.0.1/microsoft.aspnetcore.authentication.openidconnect.5.0.1.nupkg.sha512",
-    "/home/jonas/.nuget/packages/microsoft.aspnetcore.mvc.versioning/5.0.0-preview.2/microsoft.aspnetcore.mvc.versioning.5.0.0-preview.2.nupkg.sha512",
+    "/home/jonas/.nuget/packages/microsoft.aspnetcore.mvc.versioning/5.0.0/microsoft.aspnetcore.mvc.versioning.5.0.0.nupkg.sha512",
     "/home/jonas/.nuget/packages/microsoft.azure.keyvault.core/2.0.4/microsoft.azure.keyvault.core.2.0.4.nupkg.sha512",
     "/home/jonas/.nuget/packages/microsoft.azure.storage.blob/11.2.2/microsoft.azure.storage.blob.11.2.2.nupkg.sha512",
     "/home/jonas/.nuget/packages/microsoft.azure.storage.common/11.2.2/microsoft.azure.storage.common.11.2.2.nupkg.sha512",
