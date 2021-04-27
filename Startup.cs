@@ -29,6 +29,7 @@ namespace Project
             // connectionstrings:
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
 
+            services.AddResponseCaching();
             services.AddControllers();
             services.AddApiVersioning(config =>
             {
@@ -77,7 +78,7 @@ namespace Project
             }
 
             app.UseHttpsRedirection();
-
+            app.UseResponseCaching();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -27,6 +27,7 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("products")]
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
             try
@@ -42,6 +43,7 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("products/{productId}")]
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<Product>> GetProduct(Guid productId)
         {
             try
@@ -165,6 +167,7 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("units")]
+        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<Unit>>> GetUnits()
         {
             try
@@ -191,8 +194,5 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
-
-
-
     }
 }
