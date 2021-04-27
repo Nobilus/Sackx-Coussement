@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Project.DTO;
@@ -9,6 +10,7 @@ using Project.Services;
 
 namespace Project.Controllers
 {
+
     [ApiController]
     [Route("api")]
     public class WoodshopController : ControllerBase
@@ -66,7 +68,7 @@ namespace Project.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
@@ -82,6 +84,7 @@ namespace Project.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         [Route("customer/{customerId}")]
         public async Task<ActionResult<Customer>> GetCustomer(int customerId)
@@ -98,6 +101,7 @@ namespace Project.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("customer")]
         public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
@@ -113,7 +117,7 @@ namespace Project.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpGet]
         [Route("staff")]
         public async Task<ActionResult<List<Staff>>> GetStaff()
@@ -128,6 +132,7 @@ namespace Project.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         [Route("staff/{staffId}")]
         public async Task<ActionResult<StaffDTO>> GetStaff(int staffId)
@@ -142,6 +147,7 @@ namespace Project.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("staff")]
         public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
@@ -171,7 +177,7 @@ namespace Project.Controllers
             }
         }
 
-
+        [Authorize]
         [HttpPost]
         [Route("order")]
         public async Task<ActionResult<OrderDTO>> AddOrder(OrderDTO order)
