@@ -5,7 +5,7 @@
 
 ## Indices
 
-* [Ungrouped](#ungrouped)
+* [Endpoints](#Endpoints)
 
   * [add customer](#1-add-customer)
   * [add order](#2-add-order)
@@ -23,7 +23,7 @@
 --------
 
 
-## Ungrouped
+## Endpoints
 
 
 
