@@ -26,7 +26,7 @@ namespace Project.Repositories
 
         public async Task<List<Customer>> GetCustomers()
         {
-            return await _context.Customers.Include(c => c.Person).ToListAsync();
+            return await _context.Customers.Include(c => c.Person).Include(c => c.Orders).ToListAsync();
         }
 
         public async Task<Customer> GetCustomer(int customerId)

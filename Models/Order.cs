@@ -9,11 +9,11 @@ namespace Project.Models
         public Guid OrderId { get; set; }
         public DateTime Date { get; set; }
         // public double Amount { get; set; }
-
+        [JsonIgnore]
         public int CustomerId { get; set; }
         [JsonIgnore]
         public Customer Customer { get; set; }
-
+        [JsonIgnore]
         public IList<OrderProduct> OrderProducts { get; set; }
         // public bool isPayed { get; set; }
 
