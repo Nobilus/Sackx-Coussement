@@ -39,6 +39,20 @@ namespace Project.Controllers
         }
 
         [HttpGet]
+        [Route("products/{productId}")]
+        public async Task<ActionResult<Product>> GetProduct(Guid productId)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetProduct(productId));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
         {
@@ -76,6 +90,20 @@ namespace Project.Controllers
             try
             {
                 return new OkObjectResult(await _woodshopService.GetStaffs());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("staff/{staffId}")]
+        public async Task<ActionResult<StaffDTO>> GetStaff(int staffId)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetStaff(staffId));
             }
             catch (Exception ex)
             {

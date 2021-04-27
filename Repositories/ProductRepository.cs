@@ -38,12 +38,7 @@ namespace Project.Repositories
 
         public async Task<Product> GetProduct(Guid productId)
         {
-            return await _context.Products.Where(p => p.ProductId == productId)
-            .Include(p => p.Name)
-            .Include(p => p.Price)
-            .Include(p => p.Thickness)
-            .Include(p => p.Width)
-            .Include(p => p.Unit).SingleOrDefaultAsync();
+            return await _context.Products.Include(p => p.Unit).Where(p => p.ProductId == productId).SingleOrDefaultAsync();
         }
     }
 }

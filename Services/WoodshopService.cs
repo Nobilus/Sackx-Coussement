@@ -14,7 +14,9 @@ namespace Project.Services
         Task<CustomerDTO> GetCustomer(int customerId);
         Task<List<CustomerDTO>> GetCustomers();
         Task<List<ProductDTO>> GetProducts();
+        Task<ProductDTO> GetProduct(Guid id);
         Task<List<StaffDTO>> GetStaffs();
+        Task<StaffDTO> GetStaff(int id);
         Task<Order> AddOrder(OrderDTO order);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
@@ -49,6 +51,18 @@ namespace Project.Services
             return _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
         }
 
+        public async Task<ProductDTO> GetProduct(Guid id)
+        {
+            try
+            {
+                return _mapper.Map<ProductDTO>(await _productRepository.GetProduct(id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<CustomerDTO> GetCustomer(int customerId)
         {
             try
@@ -70,6 +84,11 @@ namespace Project.Services
         public async Task<List<StaffDTO>> GetStaffs()
         {
             return _mapper.Map<List<StaffDTO>>(await _staffRepository.GetStaffMembers());
+        }
+
+        public async Task<StaffDTO> GetStaff(int id)
+        {
+            return _mapper.Map<StaffDTO>(await _staffRepository.GetStaffMember(id));
         }
 
         public async Task<List<Unit>> GetUnits()

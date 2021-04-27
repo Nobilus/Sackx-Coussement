@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Project.DataContext;
@@ -10,6 +11,7 @@ namespace Project.Repositories
     public interface IStaffRepository
     {
         Task<List<Staff>> GetStaffMembers();
+        Task<Staff> GetStaffMember(int id);
     }
 
     public class StaffRepository : IStaffRepository
@@ -23,6 +25,11 @@ namespace Project.Repositories
         public async Task<List<Staff>> GetStaffMembers()
         {
             return await _context.Staff.Include(s => s.Person).ToListAsync();
+        }
+
+        public async Task<Staff> GetStaffMember(int id)
+        {
+            return await _context.Staff.Include(s => s.Person).Where(s => s.PersonId == id).SingleOrDefaultAsync();
         }
     }
 }
