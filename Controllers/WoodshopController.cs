@@ -43,7 +43,6 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("products/{productId}")]
-        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<Product>> GetProduct(Guid productId)
         {
             try
