@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Project.Models
 {
@@ -10,6 +11,7 @@ namespace Project.Models
         // public double Amount { get; set; }
 
         public int CustomerId { get; set; }
+        [JsonIgnore]
         public Customer Customer { get; set; }
 
         public IList<OrderProduct> OrderProducts { get; set; }

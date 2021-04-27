@@ -83,9 +83,23 @@ namespace Project.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("units")]
+        public async Task<ActionResult<List<Unit>>> GetUnits()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetUnits());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
         [HttpPost]
         [Route("order")]
-        public async Task<ActionResult<Order>> AddOrder(OrderDTO order)
+        public async Task<ActionResult<OrderDTO>> AddOrder(OrderDTO order)
         {
             try
             {
@@ -112,5 +126,18 @@ namespace Project.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("product")]
+        public async Task<ActionResult<ProductDTO>> AddProduct(ProductAddDTO product)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddProduct(product));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
     }
 }

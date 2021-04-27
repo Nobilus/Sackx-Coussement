@@ -42,6 +42,7 @@ namespace Project
             services.AddTransient<IStaffRepository, StaffRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IUnitRepository, UnitRepository>();
 
             services.AddTransient<IWoodshopService, WoodshopService>();
         }

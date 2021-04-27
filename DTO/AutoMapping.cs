@@ -12,6 +12,7 @@ namespace Sneakers.API.DTO
         {
 
             CreateMap<Product, ProductDTO>();
+            CreateMap<ProductAddDTO, Product>();
 
             CreateMap<Customer, CustomerDTO>()
                 .ForMember(

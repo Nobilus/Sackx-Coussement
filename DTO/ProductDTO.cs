@@ -4,6 +4,14 @@ using Project.Models;
 
 namespace Project.DTO
 {
+    public class ProductAddDTO
+    {
+        public string Name { get; set; }
+        public double Thickness { get; set; }
+        public double Width { get; set; }
+        public double Price { get; set; }
+        public int UnitId { get; set; }
+    }
     public class ProductDTO
     {
         public Guid ProductId { get; set; }

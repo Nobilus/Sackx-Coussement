@@ -17,7 +17,8 @@ namespace Project.Services
         Task<List<StaffDTO>> GetStaffs();
         Task<Order> AddOrder(OrderDTO order);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
-
+        Task<ProductAddDTO> AddProduct(ProductAddDTO product);
+        Task<List<Unit>> GetUnits();
     }
 
 
@@ -28,15 +29,17 @@ namespace Project.Services
         private IStaffRepository _staffRepository;
         private IOrderRepository _orderRepository;
         private IPersonRepository _personRepository;
+        private IUnitRepository _unitRepository;
         private IMapper _mapper;
 
-        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository, IOrderRepository orderRepository, IPersonRepository personRepository)
+        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository, IOrderRepository orderRepository, IPersonRepository personRepository, IUnitRepository unitRepository)
         {
             _customerRepository = customerRepository;
             _productRepository = productRepository;
             _staffRepository = staffRepository;
             _orderRepository = orderRepository;
             _personRepository = personRepository;
+            _unitRepository = unitRepository;
             _mapper = mapper;
 
         }
@@ -67,6 +70,20 @@ namespace Project.Services
         public async Task<List<StaffDTO>> GetStaffs()
         {
             return _mapper.Map<List<StaffDTO>>(await _staffRepository.GetStaffMembers());
+        }
+
+        public async Task<List<Unit>> GetUnits()
+        {
+            try
+            {
+                return await _unitRepository.GetUnits();
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
         }
 
         public async Task<Order> AddOrder(OrderDTO order)
@@ -117,5 +134,21 @@ namespace Project.Services
             }
         }
 
+        public async Task<ProductAddDTO> AddProduct(ProductAddDTO product)
+        {
+            try
+            {
+                Product newProduct = _mapper.Map<Product>(product);
+                newProduct.ProductId = Guid.NewGuid();
+                await _productRepository.AddProduct(newProduct);
+                return product;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
+        }
     }
 }
