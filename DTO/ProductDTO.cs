@@ -19,6 +19,7 @@ namespace Project.DTO
         public double Thickness { get; set; }
         public double Width { get; set; }
         public double Price { get; set; }
+        public double PriceWithVat { get; set; }
         [JsonIgnore]
         public Unit Unit { get; set; }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Newtonsoft.Json;
@@ -49,14 +50,18 @@ namespace Project.Services
 
         public async Task<List<ProductDTO>> GetProducts()
         {
-            return _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
+            List<ProductDTO> products = _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
+            products.ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
+            return products;
         }
 
         public async Task<ProductDTO> GetProduct(Guid id)
         {
             try
             {
-                return _mapper.Map<ProductDTO>(await _productRepository.GetProduct(id));
+                ProductDTO product = _mapper.Map<ProductDTO>(await _productRepository.GetProduct(id));
+                product.PriceWithVat = Math.Round(product.Price * 1.21, 2);
+                return product;
             }
             catch (Exception ex)
             {

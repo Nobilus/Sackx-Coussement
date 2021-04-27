@@ -13,12 +13,11 @@ namespace Project.DTO
     }
     public class StaffDTO
     {
-        [JsonPropertyName("id")]
-        public int PersonId { get; set; }
+        public int Id { get; set; }
         [JsonIgnore]
         public Person Person { get; set; }
-        public string FirstName { get { return Person.FirstName; } }
-        public string LastName { get { return Person.LastName; } }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string TelephoneNumber { get; set; }
         public string Email { get; set; }
         public bool IsAdmin { get; set; }
