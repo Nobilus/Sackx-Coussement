@@ -33,6 +33,8 @@ namespace Sneakers.API.DTO
 
 
             CreateMap<Staff, StaffDTO>();
+            CreateMap<StaffAddDTO, Staff>();
+            CreateMap<StaffAddDTO, Person>();
 
             CreateMap<Order, OrderDTO>();
             CreateMap<OrderDTO, Order>();

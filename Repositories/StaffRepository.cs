@@ -12,6 +12,7 @@ namespace Project.Repositories
     {
         Task<List<Staff>> GetStaffMembers();
         Task<Staff> GetStaffMember(int id);
+        Task<Staff> AddStaffMember(Staff staff);
     }
 
     public class StaffRepository : IStaffRepository
@@ -30,6 +31,14 @@ namespace Project.Repositories
         public async Task<Staff> GetStaffMember(int id)
         {
             return await _context.Staff.Include(s => s.Person).Where(s => s.PersonId == id).SingleOrDefaultAsync();
+        }
+
+        public async Task<Staff> AddStaffMember(Staff staff)
+        {
+            await _context.Staff.AddAsync(staff);
+            await _context.SaveChangesAsync();
+
+            return staff;
         }
     }
 }

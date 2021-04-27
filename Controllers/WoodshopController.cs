@@ -167,5 +167,19 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
+        [HttpPost]
+        [Route("staff")]
+        public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.AddStaff(staff));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
     }
 }

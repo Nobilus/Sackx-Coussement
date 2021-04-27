@@ -17,6 +17,7 @@ namespace Project.Services
         Task<ProductDTO> GetProduct(Guid id);
         Task<List<StaffDTO>> GetStaffs();
         Task<StaffDTO> GetStaff(int id);
+        Task<StaffAddDTO> AddStaff(StaffAddDTO staffmember);
         Task<Order> AddOrder(OrderDTO order);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
@@ -63,6 +64,23 @@ namespace Project.Services
             }
         }
 
+        public async Task<ProductAddDTO> AddProduct(ProductAddDTO product)
+        {
+            try
+            {
+                Product newProduct = _mapper.Map<Product>(product);
+                newProduct.ProductId = Guid.NewGuid();
+                await _productRepository.AddProduct(newProduct);
+                return product;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
+        }
+
         public async Task<CustomerDTO> GetCustomer(int customerId)
         {
             try
@@ -81,6 +99,27 @@ namespace Project.Services
             return _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers());
         }
 
+        public async Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer)
+        {
+            try
+            {
+                Person newPerson = _mapper.Map<Person>(customer);
+                newPerson = await _personRepository.AddPerson(newPerson);
+
+                Customer newCustomer = _mapper.Map<Customer>(customer);
+                newCustomer.PersonId = newPerson.PersonId;
+
+                await _customerRepository.AddCustomer(newCustomer);
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
+        }
+
         public async Task<List<StaffDTO>> GetStaffs()
         {
             return _mapper.Map<List<StaffDTO>>(await _staffRepository.GetStaffMembers());
@@ -89,6 +128,27 @@ namespace Project.Services
         public async Task<StaffDTO> GetStaff(int id)
         {
             return _mapper.Map<StaffDTO>(await _staffRepository.GetStaffMember(id));
+        }
+
+        public async Task<StaffAddDTO> AddStaff(StaffAddDTO staff)
+        {
+            try
+            {
+                Person newPerson = _mapper.Map<Person>(staff);
+                newPerson = await _personRepository.AddPerson(newPerson);
+
+                Staff newStaff = _mapper.Map<Staff>(staff);
+                newStaff.PersonId = newPerson.PersonId;
+
+                await _staffRepository.AddStaffMember(newStaff);
+                return staff;
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.StackTrace);
+                throw ex;
+            }
         }
 
         public async Task<List<Unit>> GetUnits()
@@ -132,42 +192,8 @@ namespace Project.Services
             }
         }
 
-        public async Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer)
-        {
-            try
-            {
-                Person newPerson = _mapper.Map<Person>(customer);
-                newPerson = await _personRepository.AddPerson(newPerson);
 
-                Customer newCustomer = _mapper.Map<Customer>(customer);
-                newCustomer.PersonId = newPerson.PersonId;
 
-                await _customerRepository.AddCustomer(newCustomer);
-                return customer;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
-        }
 
-        public async Task<ProductAddDTO> AddProduct(ProductAddDTO product)
-        {
-            try
-            {
-                Product newProduct = _mapper.Map<Product>(product);
-                newProduct.ProductId = Guid.NewGuid();
-                await _productRepository.AddProduct(newProduct);
-                return product;
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
-                throw ex;
-            }
-        }
     }
 }
