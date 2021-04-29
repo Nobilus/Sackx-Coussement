@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace Project.Services
     {
         Task<CustomerDTO> GetCustomer(int customerId);
         Task<List<CustomerDTO>> GetCustomers();
-        Task<List<ProductDTO>> GetProducts();
+        Task<List<ProductDTO>> GetProducts(string orderby);
         Task<ProductDTO> GetProduct(Guid id);
         Task<List<StaffDTO>> GetStaffs();
         Task<StaffDTO> GetStaff(int id);
@@ -48,11 +49,21 @@ namespace Project.Services
 
         }
 
-        public async Task<List<ProductDTO>> GetProducts()
+        public async Task<List<ProductDTO>> GetProducts(string orderby)
         {
             List<ProductDTO> products = _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
             products.ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
-            return products;
+
+            string[] allowdQueries = { "price", "name", "thickness", "unit" };
+            if (allowdQueries.Contains(orderby))
+            {
+                var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                return products.OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
+            }
+            else
+            {
+                return products;
+            }
         }
 
         public async Task<ProductDTO> GetProduct(Guid id)

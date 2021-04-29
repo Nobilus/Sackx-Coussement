@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,13 +31,13 @@ namespace Project.Controllers
         [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
+            string orderby = HttpContext.Request.Query["orderby"].ToString();
             try
             {
-                return new OkObjectResult(await _woodshopService.GetProducts());
+                return new OkObjectResult(await _woodshopService.GetProducts(orderby));
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
                 return new StatusCodeResult(500);
             }
         }

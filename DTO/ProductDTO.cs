@@ -28,8 +28,6 @@ namespace Project.DTO
         public double PriceWithVat { get; set; }
         [JsonIgnore]
         public Unit Unit { get; set; }
-
-        [JsonPropertyName("measurement_unit")]
         public string MeasurmentUnit { get { return Unit.Name; } }
 
     }
