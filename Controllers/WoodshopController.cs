@@ -81,7 +81,6 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
                 return new StatusCodeResult(500);
             }
         }
@@ -97,8 +96,6 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 return new StatusCodeResult(500);
             }
         }
@@ -114,7 +111,6 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex);
                 return new StatusCodeResult(500);
             }
         }

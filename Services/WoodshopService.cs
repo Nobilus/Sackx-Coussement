@@ -95,8 +95,6 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 throw ex;
             }
         }
@@ -134,8 +132,6 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 throw ex;
             }
         }
@@ -165,8 +161,6 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 throw ex;
             }
         }
@@ -179,8 +173,6 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 throw ex;
             }
         }
@@ -198,16 +190,11 @@ namespace Project.Services
                 {
                     newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Id, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false });
                 }
-                string json = JsonConvert.SerializeObject(newOrder, Formatting.Indented);
-                System.Console.WriteLine(json);
-
                 await _orderRepository.AddOrder(newOrder);
                 return newOrder;
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.InnerException.Message);
                 throw ex;
             }
         }
@@ -232,8 +219,6 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.InnerException);
                 throw ex;
             }
         }
