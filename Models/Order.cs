@@ -15,7 +15,8 @@ namespace Project.Models
         public Customer Customer { get; set; }
         [JsonIgnore]
         public IList<OrderProduct> OrderProducts { get; set; }
-        // public bool isPayed { get; set; }
+        // public bool IsPayed { get; set; }
+        // public double Amount { get; set; }
 
     }
 }
