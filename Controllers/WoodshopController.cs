@@ -160,7 +160,6 @@ namespace Project.Controllers
             }
         }
 
-
         [HttpGet]
         [Route("units")]
         [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
@@ -190,6 +189,21 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
+        // [Authorize]
+        // [HttpPatch]
+        // [Route("order/{orderId}")]
+        // public async Task<ActionResult<OrdersDTO>> PatchOrder(Guid id, OrderPatchDTO order)
+        // {
+        //     try
+        //     {
+        //         return new OkObjectResult(await _woodshopService.PatchOrder(id, order));
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return new StatusCodeResult(500);
+        //     }
+        // }
 
         [Authorize]
         [HttpGet]

@@ -31,4 +31,9 @@ namespace Project.DTO
         public ICollection<OrderProductDTO> OrderDetails { get; set; }
 
     }
+
+    public class OrderPatchDTO
+    {
+        public bool IsPayed { get; set; }
+    }
 }
