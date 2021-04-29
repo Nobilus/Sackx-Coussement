@@ -217,7 +217,6 @@ namespace Project.Services
             try
             {
                 List<OrdersDTO> orders = _mapper.Map<List<OrdersDTO>>(await _orderRepository.GetOrders());
-                // TODO: calculate owed amount
                 foreach (var order in orders)
                 {
                     double total = 0.00;
@@ -227,6 +226,7 @@ namespace Project.Services
                         total += product.Quantity * product.PriceWithVat;
                     }
                     order.Indebted = total;
+                    order.VAT = Math.Round(total * 0.21, 2);
                 }
                 return orders;
             }
