@@ -14,8 +14,6 @@ namespace Project.Models
         public Customer Customer { get; set; }
         [JsonIgnore]
         public ICollection<OrderProduct> OrderProducts { get; set; }
-        // public bool IsPayed { get; set; }
-        // public double Amount { get; set; }
 
     }
 }

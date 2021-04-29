@@ -28,7 +28,7 @@ namespace Project.DTO
         public double PriceWithVat { get; set; }
         [JsonIgnore]
         public Unit Unit { get; set; }
-        public string MeasurmentUnit { get { return Unit.Name; } }
+        public string MeasurmentUnit { get; set; }
 
     }
 }

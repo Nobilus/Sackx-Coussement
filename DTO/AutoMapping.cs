@@ -12,7 +12,11 @@ namespace Sneakers.API.DTO
         public AutoMapping()
         {
 
-            CreateMap<Product, ProductDTO>();
+            CreateMap<Product, ProductDTO>()
+                .ForMember(
+                    dest => dest.MeasurmentUnit,
+                    opt => opt.MapFrom(src => src.Unit.Name)
+                );
             CreateMap<ProductAddDTO, Product>();
 
             CreateMap<Customer, CustomerDTO>()
@@ -50,6 +54,7 @@ namespace Sneakers.API.DTO
 
             CreateMap<Order, OrderDTO>();
             CreateMap<OrderDTO, Order>();
+            // CreateMap<OrderAddProductDTO, Order>();
             CreateMap<Order, OrdersDTO>()
                 .ForMember(
                     dest => dest.Id,
@@ -72,8 +77,31 @@ namespace Sneakers.API.DTO
                     opt => opt.MapFrom(src => src.Customer.CompanyNumber)
                 )
                 .ForMember(
-                    dest => dest.Products,
-                    opt => opt.MapFrom(src => src.OrderProducts.Select(op => op.Product).ToList())
+                    dest => dest.OrderDetails,
+                    opt => opt.MapFrom(src => src.OrderProducts)
+
+                );
+            CreateMap<Product, OrderProduct>();
+            CreateMap<OrderProduct, OrderProductDTO>()
+                .ForMember(
+                    dest => dest.Thickness,
+                    opt => opt.MapFrom(src => src.Product.Thickness)
+                )
+                .ForMember(
+                    dest => dest.Name,
+                    opt => opt.MapFrom(src => src.Product.Name)
+                )
+                .ForMember(
+                    dest => dest.Width,
+                    opt => opt.MapFrom(src => src.Product.Width)
+                )
+                .ForMember(
+                    dest => dest.MeasurmentUnit,
+                    opt => opt.MapFrom(src => src.Product.Unit.Name)
+                )
+                .ForMember(
+                    dest => dest.Price,
+                    opt => opt.MapFrom(src => src.Product.Price)
                 );
         }
     }

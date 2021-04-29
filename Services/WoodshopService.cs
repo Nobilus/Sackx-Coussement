@@ -39,6 +39,8 @@ namespace Project.Services
         private IUnitRepository _unitRepository;
         private IMapper _mapper;
 
+        private double VAT = 1.21;
+
         public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository, IOrderRepository orderRepository, IPersonRepository personRepository, IUnitRepository unitRepository)
         {
             _customerRepository = customerRepository;
@@ -192,9 +194,9 @@ namespace Project.Services
                 newOrder.Date = DateTime.Now.Date;
                 newOrder.OrderProducts = new List<OrderProduct>();
 
-                foreach (var id in order.Products)
+                foreach (var p in order.Products)
                 {
-                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = id, OrderId = newOrder.OrderId });
+                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Id, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false });
                 }
                 string json = JsonConvert.SerializeObject(newOrder, Formatting.Indented);
                 System.Console.WriteLine(json);
@@ -204,6 +206,8 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.InnerException.Message);
                 throw ex;
             }
         }
@@ -216,15 +220,20 @@ namespace Project.Services
                 // TODO: calculate owed amount
                 foreach (var order in orders)
                 {
-                    foreach (var product in order.Products)
+                    double total = 0.00;
+                    foreach (var product in order.OrderDetails)
                     {
-                        product.PriceWithVat = Math.Round(product.Price * 1.21, 2);
+                        product.PriceWithVat = Math.Round(product.Price * VAT, 2);
+                        total += product.Quantity * product.PriceWithVat;
                     }
+                    order.Indebted = total;
                 }
                 return orders;
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.InnerException);
                 throw ex;
             }
         }
@@ -234,10 +243,16 @@ namespace Project.Services
             try
             {
                 OrdersDTO order = _mapper.Map<OrdersDTO>(await _orderRepository.GetOrder(id));
-                foreach (var p in order.Products)
+                double total = 0.00;
+
+                foreach (var p in order.OrderDetails)
                 {
                     p.PriceWithVat = Math.Round(p.Price * 1.21, 2);
+                    total += Math.Round(p.Quantity * p.PriceWithVat, 2);
+
                 }
+                order.Indebted = total;
+                order.VAT = Math.Round(total * 0.21, 2);
                 return order;
             }
             catch (Exception ex)
