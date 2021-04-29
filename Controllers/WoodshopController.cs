@@ -194,5 +194,35 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+
+        [Authorize]
+        [HttpGet]
+        [Route("orders")]
+        public async Task<ActionResult<List<OrdersDTO>>> GetOrders()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetOrders());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("order/{orderId}")]
+        public async Task<ActionResult<OrdersDTO>> GetOrder(Guid orderId)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
     }
 }

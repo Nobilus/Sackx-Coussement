@@ -21,6 +21,8 @@ namespace Project.Services
         Task<StaffDTO> GetStaff(int id);
         Task<StaffAddDTO> AddStaff(StaffAddDTO staffmember);
         Task<Order> AddOrder(OrderDTO order);
+        Task<List<OrdersDTO>> GetOrders();
+        Task<OrdersDTO> GetOrder(Guid id);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
         Task<List<Unit>> GetUnits();
@@ -187,7 +189,7 @@ namespace Project.Services
             {
                 Order newOrder = _mapper.Map<Order>(order);
                 newOrder.OrderId = Guid.NewGuid();
-                newOrder.Date = DateTime.Now;
+                newOrder.Date = DateTime.Now.Date;
                 newOrder.OrderProducts = new List<OrderProduct>();
 
                 foreach (var id in order.Products)
@@ -202,14 +204,46 @@ namespace Project.Services
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
-                System.Console.WriteLine(ex.StackTrace);
                 throw ex;
             }
         }
 
+        public async Task<List<OrdersDTO>> GetOrders()
+        {
+            try
+            {
+                List<OrdersDTO> orders = _mapper.Map<List<OrdersDTO>>(await _orderRepository.GetOrders());
+                // TODO: calculate owed amount
+                foreach (var order in orders)
+                {
+                    foreach (var product in order.Products)
+                    {
+                        product.PriceWithVat = Math.Round(product.Price * 1.21, 2);
+                    }
+                }
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-
-
+        public async Task<OrdersDTO> GetOrder(Guid id)
+        {
+            try
+            {
+                OrdersDTO order = _mapper.Map<OrdersDTO>(await _orderRepository.GetOrder(id));
+                foreach (var p in order.Products)
+                {
+                    p.PriceWithVat = Math.Round(p.Price * 1.21, 2);
+                }
+                return order;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

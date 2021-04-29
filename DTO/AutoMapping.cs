@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using AutoMapper;
@@ -49,6 +50,31 @@ namespace Sneakers.API.DTO
 
             CreateMap<Order, OrderDTO>();
             CreateMap<OrderDTO, Order>();
+            CreateMap<Order, OrdersDTO>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.OrderId)
+                )
+                .ForMember(
+                    dest => dest.CustomerId,
+                    opt => opt.MapFrom(src => src.CustomerId)
+                )
+                .ForMember(
+                    dest => dest.Firstname,
+                    opt => opt.MapFrom(src => src.Customer.Person.FirstName)
+                )
+                .ForMember(
+                    dest => dest.Lastname,
+                    opt => opt.MapFrom(src => src.Customer.Person.LastName)
+                )
+                .ForMember(
+                    dest => dest.CompanyNumber,
+                    opt => opt.MapFrom(src => src.Customer.CompanyNumber)
+                )
+                .ForMember(
+                    dest => dest.Products,
+                    opt => opt.MapFrom(src => src.OrderProducts.Select(op => op.Product).ToList())
+                );
         }
     }
 }
