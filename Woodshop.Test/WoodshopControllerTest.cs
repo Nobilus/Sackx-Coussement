@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Woodshop.Test
 {
-    public class UnitTest1
+    public class WoodshopControllerTest: IClassFixture<WebApplicationFactory<Woodshop.API.Startup>>
     {
         [Fact]
         public void Test1()
