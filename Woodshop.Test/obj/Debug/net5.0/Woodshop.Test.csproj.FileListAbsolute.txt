@@ -435,3 +435,4 @@
 /home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.Test/bin/Debug/net5.0/Project.dll
 /home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.Test/bin/Debug/net5.0/Project.pdb
 /home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.Test/bin/Debug/net5.0/CoverletSourceRootsMapping
+/home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.Test/obj/Debug/net5.0/Woodshop.Test.csproj.GenerateResource.cache
