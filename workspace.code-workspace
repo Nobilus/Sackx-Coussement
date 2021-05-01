@@ -1,0 +1,11 @@
+{
+  "folders": [
+	{
+		"path": "Woodshop.Test"
+	},
+	{
+		"path": "Woodshop.API"
+	}
+],
+  "settings": {}
+}
