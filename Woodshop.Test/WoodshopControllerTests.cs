@@ -58,7 +58,7 @@ namespace Woodshop.Test
         [Fact]
         public async Task Add_Product()
         {
-            var product = new ProductAddDTO()
+            ProductAddDTO product = new ProductAddDTO()
             {
                 Name = "test product",
                 Thickness = 50,

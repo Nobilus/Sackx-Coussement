@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Project.DTO;
 using Project.Models;
@@ -211,7 +212,7 @@ namespace Project.Services
                     foreach (var product in order.OrderDetails)
                     {
                         product.PriceWithVat = Math.Round(product.Price * VAT, 2);
-                        total += product.Quantity * product.PriceWithVat;
+                        total += product.Quantity * product.Price;
                     }
                     order.Indebted = total;
                     order.VAT = Math.Round(total * 0.21, 2);
@@ -229,12 +230,13 @@ namespace Project.Services
             try
             {
                 OrdersDTO order = _mapper.Map<OrdersDTO>(await _orderRepository.GetOrder(id));
+
                 double total = 0.00;
 
                 foreach (var p in order.OrderDetails)
                 {
                     p.PriceWithVat = Math.Round(p.Price * 1.21, 2);
-                    total += Math.Round(p.Quantity * p.PriceWithVat, 2);
+                    total += Math.Round(p.Quantity * p.Price, 2);
 
                 }
                 order.Indebted = total;
