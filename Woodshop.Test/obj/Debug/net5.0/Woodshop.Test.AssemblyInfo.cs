@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("Project, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null", "/home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.API", "Project.csproj", "0")]
+[assembly: Microsoft.AspNetCore.Mvc.Testing.WebApplicationFactoryContentRootAttribute("Project", "/home/jonas/Documents/School/2020-2021/Back-end/Project/Woodshop.API", "Project.csproj", "0")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Woodshop.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]

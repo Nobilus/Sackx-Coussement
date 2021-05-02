@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Woodshop.API\Project.csproj" />
+    <ProjectReference Include="../Woodshop.API/Project.csproj" />
   </ItemGroup>
 
 </Project>
