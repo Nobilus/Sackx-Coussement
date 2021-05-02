@@ -44,15 +44,15 @@ namespace Project
                 config.ReportApiVersions = true;
             });
 
-            // services.AddAuthentication(options =>
-            // {
-            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            // }).AddJwtBearer(options =>
-            // {
-            //     options.Authority = "https://jonasdm.eu.auth0.com/";
-            //     options.Audience = "https://woodshopdocker";
-            // });
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.Authority = "https://jonasdm.eu.auth0.com/";
+                options.Audience = "https://woodshopdocker";
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -86,7 +86,7 @@ namespace Project
 
             app.UseResponseCaching();
             app.UseRouting();
-            // app.UseAuthentication();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
