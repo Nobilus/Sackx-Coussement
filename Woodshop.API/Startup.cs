@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Project.Config;
 using Project.DataContext;
@@ -25,6 +27,10 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // We need to enable viewing of PII logs so we can see more details about the error: 
+            // Add the following line in ConfigureServices() to Startup.cs
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddAutoMapper(typeof(Startup));
             // connectionstrings:
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
@@ -38,15 +44,15 @@ namespace Project
                 config.ReportApiVersions = true;
             });
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://jonasdm.eu.auth0.com/";
-                options.Audience = "http://woodshopAPI-nobilus";
-            });
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(options =>
+            // {
+            //     options.Authority = "https://jonasdm.eu.auth0.com/";
+            //     options.Audience = "https://woodshopdocker";
+            // });
 
             services.AddSwaggerGen(c =>
             {
@@ -76,11 +82,11 @@ namespace Project
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project v1"));
             }
-
             app.UseHttpsRedirection();
+
             app.UseResponseCaching();
             app.UseRouting();
-            app.UseAuthentication();
+            // app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -5,6 +5,9 @@
 	},
 	{
 		"path": "Woodshop.API"
+	},
+	{
+		"path": "../backend-labo06-herhalingsoefening/Sneakers.API"
 	}
 ],
   "settings": {}

@@ -38,6 +38,8 @@ namespace Project.Controllers
             }
             catch (Exception ex)
             {
+                System.Console.WriteLine(ex.Message);
+                System.Console.WriteLine(ex.InnerException);
                 return new StatusCodeResult(500);
             }
         }
@@ -70,7 +72,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
@@ -85,7 +87,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("customer/{customerId}")]
         public async Task<ActionResult<Customer>> GetCustomer(int customerId)
@@ -100,7 +102,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("customer")]
         public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
@@ -115,7 +117,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("staff")]
         public async Task<ActionResult<List<Staff>>> GetStaff()
@@ -130,7 +132,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("staff/{staffId}")]
         public async Task<ActionResult<StaffDTO>> GetStaff(int staffId)
@@ -145,7 +147,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("staff")]
         public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
@@ -175,7 +177,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("order")]
         public async Task<ActionResult<OrderDTO>> AddOrder(OrderDTO order)
@@ -205,7 +207,7 @@ namespace Project.Controllers
         //     }
         // }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("orders")]
         public async Task<ActionResult<List<OrdersDTO>>> GetOrders()
@@ -220,7 +222,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("order/{orderId}")]
         public async Task<ActionResult<OrdersDTO>> GetOrder(Guid orderId)
