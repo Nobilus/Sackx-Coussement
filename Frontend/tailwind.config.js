@@ -1,6 +1,7 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
+  mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
@@ -8,9 +9,10 @@ module.exports = {
       ...theme("colors"),
       primary: "#FAFCFA",
     }),
-    textColor: {
+    textColor: (theme) => ({
+      ...theme("colors"),
       primary: "#00371C",
-    },
+    }),
     fontFamily: {},
     extend: {},
   },
