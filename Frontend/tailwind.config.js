@@ -8,6 +8,9 @@ module.exports = {
       ...theme("colors"),
       primary: "#FAFCFA",
     }),
+    textColor: {
+      primary: "#00371C",
+    },
     fontFamily: {},
     extend: {},
   },
