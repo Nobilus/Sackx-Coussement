@@ -30,7 +30,7 @@ function Login() {
           />
           <label
             htmlFor="username"
-            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all"
+            className="cursor-text absolute left-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all peer-focus:-top-4 peer-focus:text-gray-600 peer-focus:text-sm"
           >
             Gebruikersnaam
           </label>
@@ -46,7 +46,7 @@ function Login() {
             placeholder="Wachtwoord"
           />
           <label
-            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all"
+            className="cursor-text absolute left-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all peer-focus:-top-4 peer-focus:text-gray-600 peer-focus:text-sm"
             htmlFor="password"
           >
             Wachtwoord
