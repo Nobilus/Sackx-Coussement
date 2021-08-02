@@ -1,5 +1,8 @@
 import React from "react";
+import Image from "next/image";
 import { useFormik } from "formik";
+
+import Logo from "../public/logo.png";
 
 function Login() {
   const formik = useFormik({
@@ -10,6 +13,7 @@ function Login() {
   });
   return (
     <section className="flex h-screen flex-col justify-center items-center">
+      {/* <Image src={Logo} alt="Logo" className="mx-auto" /> */}
       <form
         className="flex flex-col p-4 bg-white m-5 rounded shadow-sm px-10"
         onSubmit={formik.handleSubmit}
@@ -26,7 +30,7 @@ function Login() {
           />
           <label
             htmlFor="username"
-            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all"
+            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all"
           >
             Gebruikersnaam
           </label>
@@ -42,7 +46,7 @@ function Login() {
             placeholder="Wachtwoord"
           />
           <label
-            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 transition-all"
+            className="cursor-text absolute left-0 top-0 -top-4 text-gray-600 text-sm peer-placeholder-shown:top-1 peer-placeholder-shown:left-1  peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-1 transition-all"
             htmlFor="password"
           >
             Wachtwoord
