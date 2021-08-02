@@ -1,4 +1,4 @@
-const colors = require("tailwindcss/colors");
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   mode: "jit",
@@ -13,8 +13,13 @@ module.exports = {
       ...theme("colors"),
       primary: "#00371C",
     }),
-    fontFamily: {},
-    extend: {},
+
+    extend: {
+      fontFamily: {
+        body: ["Open Sans", ...defaultTheme.fontFamily.sans],
+        title: ["Poppins", ...defaultTheme.fontFamily.sans],
+      },
+    },
   },
   variants: {
     extend: {},
