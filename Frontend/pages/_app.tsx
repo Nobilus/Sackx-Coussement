@@ -1,11 +1,22 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
+import React, { useState } from "react";
+import Footer from "../components/Footer";
+import Login from "./login";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isLoggedin, setIsLoggedin] = useState(false);
   return (
     <ThemeProvider attribute="class">
-      <Component {...pageProps} />
+      {isLoggedin ? (
+        <>
+          <Component {...pageProps} />
+          <Footer />
+        </>
+      ) : (
+        <Login />
+      )}
     </ThemeProvider>
   );
 }
