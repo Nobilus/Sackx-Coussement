@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import Login from "./login";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [isLoggedin, setIsLoggedin] = useState(true);
   return (
     <ThemeProvider attribute="class">
       {isLoggedin ? (

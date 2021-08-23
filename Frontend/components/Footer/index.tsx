@@ -1,4 +1,7 @@
 import React, { FunctionComponent } from "react";
+import Customer from "../../public/assets/Customer.svg";
+import Trunk from "../../public/assets/Trunk.svg";
+import Image from "next/image";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -14,9 +17,12 @@ const Footer: FunctionComponent = () => {
       <a className="px-2">
         <Link href="/bestelbonnen">bestelbonnen</Link>
       </a>
-      <a className="px-2">
-        <Link href="/klanten">klanten</Link>
-      </a>
+      <Link href="/klanten">
+        <a>
+          <Image src={Customer} alt="klanten" />
+          <p>Klanten</p>
+        </a>
+      </Link>
     </footer>
   );
 };
