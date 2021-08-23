@@ -1,8 +1,5 @@
 import React from "react";
-import Image from "next/image";
 import { useFormik } from "formik";
-
-import Logo from "../public/logo.png";
 
 function Login() {
   const formik = useFormik({
@@ -13,7 +10,7 @@ function Login() {
   });
   return (
     <section className="flex h-screen flex-col justify-center items-center">
-      {/* <Image src={Logo} alt="Logo" className="mx-auto" /> */}
+      <img src={"/assets/logo.png"} alt="Logo" className="mx-auto h-12" />
       <form
         className="flex flex-col p-4 bg-white m-5 rounded shadow-sm px-10"
         onSubmit={formik.handleSubmit}
