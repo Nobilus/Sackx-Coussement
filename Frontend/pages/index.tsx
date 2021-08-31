@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import React from "react";
 import Productgroup from "../components/Productgroup";
+import ProductHeader from "../components/Productgroup/header";
 import { Product } from "../types/Products";
 
 const products: Array<Product> = [
@@ -40,6 +41,7 @@ const products: Array<Product> = [
 export default function Home() {
   return (
     <>
+      <ProductHeader />
       <Productgroup groupname="Oregon/Douglas" products={products} />
     </>
   );
