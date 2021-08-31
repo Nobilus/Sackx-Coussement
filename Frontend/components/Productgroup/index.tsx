@@ -14,7 +14,9 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
   return (
     <section className="container mx-auto mb-8">
       <div>
-        <h1 className="text-lg font-body text-green-25 mx-2">{groupname}</h1>
+        <h1 className="text-lg font-body font-semibold text-green-25 mx-2">
+          {groupname}
+        </h1>
         <hr className="border-green-25" />
       </div>
       <div className="grid grid-cols-5 mx-2 mt-4 mb-2">
