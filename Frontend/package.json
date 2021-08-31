@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@svgr/webpack": "^5.5.0",
     "formik": "^2.2.9",
     "next": "11.0.1",
     "next-themes": "^0.0.15",
