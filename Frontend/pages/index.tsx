@@ -41,8 +41,14 @@ const products: Array<Product> = [
 export default function Home() {
   return (
     <>
-      <ProductHeader />
-      <Productgroup groupname="Oregon/Douglas" products={products} />
+      <div className="bg-gray-100">
+        <ProductHeader />
+        <Productgroup groupname="Oregon/Douglas" products={products} />
+        <Productgroup groupname="Oregon/Douglas" products={products} />
+        <Productgroup groupname="Oregon/Douglas" products={products} />
+        <Productgroup groupname="Oregon/Douglas" products={products} />
+        <Productgroup groupname="Oregon/Douglas" products={products} />
+      </div>
     </>
   );
 }
