@@ -18,7 +18,7 @@ const Footer: FunctionComponent = () => {
   }
 
   return (
-    <footer className="bg-white flex flex-row justify-center items-center">
+    <footer className="bg-white flex flex-row justify-center items-center ">
       <Link href="/">
         <a className="flex flex-col content-center m-auto">
           {/* <Trunks fill={isActive("producten") ? "#00371C" : "#668776"} /> */}
