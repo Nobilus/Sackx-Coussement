@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Login from "./login";
+import Header from "../components/Header";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoggedin, setIsLoggedin] = useState(true);
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider attribute="class">
       {isLoggedin ? (
         <>
+          <Header user={"Sander"} />
           <Component {...pageProps} />
           <Footer />
         </>
