@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductHeader = () => {
   return (
-    <div className="container flex flex-row justify-between mx-auto">
+    <div className="container flex flex-row justify-between mx-auto mb-16">
       {/* search item */}
       <input type="text" className="border border-green" />
       <div>
