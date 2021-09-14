@@ -24,7 +24,6 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
         <p className="font-title text-green-25 text-md">Aankoopprijs</p>
         <p className="font-title text-green-25 text-md">Prijs excl BTW</p>
         <p className="font-title text-green-25 text-md">Prijs incl BTW</p>
-        {/* <p className="font-title text-green-25 text-md">Prijs incl BTW</p> */}
       </div>
       <article>
         {products.map(({ name, priceInclVat, priceExclVat, purchasePrice }) => (
