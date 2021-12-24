@@ -1,10 +1,27 @@
 import React, { FunctionComponent } from "react";
-import Customer from "../../public/assets/Customer.svg";
-import Trunks from "../../public/assets/Trunks.svg";
-import Bestelbonnen from "../../public/assets/Bestelbonnen.svg";
+import { GiWoodPile } from "react-icons/gi";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { IoPeopleOutline } from "react-icons/io5";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+interface LinkItemProps {
+  href: string;
+  title: string;
+  icon: JSX.Element;
+}
+
+const LinkItem: FunctionComponent<LinkItemProps> = ({ href, icon, title }) => {
+  return (
+    <Link href={href}>
+      <a className="flex flex-col items-center mx-auto mt-auto text-xs">
+        {icon}
+        <p className="m-auto">{title}</p>
+      </a>
+    </Link>
+  );
+};
 
 const Footer: FunctionComponent = () => {
   const { pathname } = useRouter();
@@ -17,31 +34,43 @@ const Footer: FunctionComponent = () => {
     }
   }
 
+  const linkItems: Array<LinkItemProps> = [
+    {
+      href: "/",
+      icon: (
+        <GiWoodPile fill={isActive("/") ? "#00371C" : "#668776"} size={32} />
+      ),
+      title: "Producten",
+    },
+    {
+      href: "/bestelbonnen",
+      icon: (
+        <IoDocumentTextOutline
+          color={isActive("/bestelbonnen") ? "#00371C" : "#668776"}
+          size={32}
+        />
+      ),
+      title: "Bestelbonnen",
+    },
+    {
+      href: "/klanten",
+      icon: (
+        <IoPeopleOutline
+          color={isActive("/klanten") ? "#00371C" : "#668776"}
+          size={32}
+        />
+      ),
+      title: "Klanten",
+    },
+  ];
+
   return (
-    <footer className="fixed float-left bottom-0 left-0 w-full bg-white flex flex-row justify-center items-center ">
-      <Link href="/">
-        <a className="flex flex-col content-center m-auto">
-          {/* <Trunks fill={isActive("producten") ? "#00371C" : "#668776"} /> */}
-
-          <p className="m-auto">Producten</p>
-        </a>
-      </Link>
-
-      <Link href="/bestelbonnen">
-        <a className="flex flex-col content-center m-auto">
-          {/* <Bestelbonnen
-            fill={isActive("bestelbonnen") ? "#00371C" : "#668776"}
-          /> */}
-          <p className="m-auto">Bestelbonnen</p>
-        </a>
-      </Link>
-
-      <Link href="/klanten">
-        <a className="flex flex-col content-center m-auto">
-          {/* <Customer fill={isActive("klanten") ? "#00371C" : "#668776"} /> */}
-          <p className="m-auto">Klanten</p>
-        </a>
-      </Link>
+    <footer className="fixed float-left bottom-0 left-0 w-full bg-white flex flex-row justify-center items-center py-2 shadow-2xl">
+      <div className=" max-w-3xl flex justify-between w-full">
+        {linkItems.map((item, index) => (
+          <LinkItem key={`linkitem-${index}`} {...item} />
+        ))}
+      </div>
     </footer>
   );
 };

@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { Product } from "../../types/Products";
-import Image from "next/image";
 import TableHeader from "../Table/TableHeader";
 import TableTitle from "../Table/TableTitle";
 import TableItem from "../Table/TableItem";
 import toLocaleCurrency from "src/utils/toLocaleCurrency";
 import Table from "../Table/Table";
 import TableRow from "../Table/TableRow";
+import { MdModeEdit } from "react-icons/md";
 
 interface ProductGroupProps {
   groupname: string;
@@ -23,15 +23,17 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
     <Table>
       <TableHeader>{groupname}</TableHeader>
       <TableTitle titles={titles} />
-      {products.map(({ name, priceInclVat, priceExclVat, purchasePrice }) => (
-        <TableRow>
-          <TableItem>{name}</TableItem>
-          <TableItem>{toLocaleCurrency(purchasePrice)}</TableItem>
-          <TableItem>{toLocaleCurrency(priceInclVat)}</TableItem>
-          <TableItem>{toLocaleCurrency(priceExclVat)}</TableItem>
-          <Image src={"/assets/Edit.svg"} height={16} width={16} />
-        </TableRow>
-      ))}
+      {products.map(
+        ({ name, priceInclVat, priceExclVat, purchasePrice }, index) => (
+          <TableRow key={`tablerow-${index}`}>
+            <TableItem>{name}</TableItem>
+            <TableItem>{toLocaleCurrency(purchasePrice)}</TableItem>
+            <TableItem>{toLocaleCurrency(priceInclVat)}</TableItem>
+            <TableItem>{toLocaleCurrency(priceExclVat)}</TableItem>
+            <MdModeEdit />
+          </TableRow>
+        )
+      )}
     </Table>
   );
 };
