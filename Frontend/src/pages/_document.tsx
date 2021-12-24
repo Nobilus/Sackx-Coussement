@@ -4,8 +4,8 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
+        <title>Sacx-Coussement</title>
         <Head>
-          <title>Sacx-Coussement</title>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
@@ -13,6 +13,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
+
         <body className="bg-gray-100 h-screen flex flex-col justify-between">
           <Main />
           <NextScript />
