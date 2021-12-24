@@ -1,32 +1,24 @@
-import "../styles/globals.css";
+import React from "react";
 import type { AppProps } from "next/app";
-import React, { useState } from "react";
+
+import "../styles/globals.css";
+
 import Footer from "../components/Footer";
 import Login from "./login";
 import Header from "../components/Header";
-import Head from "next/head";
+import { Authenticated, NotAuthenticated } from "./providers/AuthProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [isLoggedin, setIsLoggedin] = useState(true);
   return (
     <>
-      <Head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Poppins:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      {isLoggedin ? (
-        <>
-          <Header user={"Sander"} />
-          <Component {...pageProps} />
-          <Footer />
-        </>
-      ) : (
+      <Authenticated>
+        <Header user={"Sander"} />
+        <Component {...pageProps} />
+        <Footer />
+      </Authenticated>
+      <NotAuthenticated>
         <Login />
-      )}
+      </NotAuthenticated>
     </>
   );
 }
