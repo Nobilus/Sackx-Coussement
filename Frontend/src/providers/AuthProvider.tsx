@@ -1,7 +1,7 @@
 import react, { useEffect } from "react";
 
 import { createContext, FunctionComponent, useContext, useState } from "react";
-import { createLogicalWrapper } from "src/pages/utils/logicalWrapper";
+import { createLogicalWrapper } from "src/utils/logicalWrapper";
 
 interface IAuthContext {
   signedIn: boolean;
