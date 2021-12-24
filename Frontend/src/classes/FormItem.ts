@@ -53,7 +53,8 @@ class FormItem {
     | "week"
     | "dropdown"
     | "dropdown-multi-select"
-    | "text-area";
+    | "text-area"
+    | "current-password";
   rows?: number;
 
   constructor(formItem: FormItem) {

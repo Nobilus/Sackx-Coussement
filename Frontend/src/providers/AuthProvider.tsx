@@ -32,7 +32,9 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
 
   const signOut = () => {};
 
-  const signIn = () => {};
+  const signIn = () => {
+    setSignedIn(true);
+  };
 
   const value = {
     signedIn,

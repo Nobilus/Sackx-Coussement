@@ -11,7 +11,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={`text-white bg-green-100 hover:bg-green-500 px-4 py-2 rounded max-w-max mx-auto ${className}`}
+      className={`text-white bg-green-100 hover:bg-green-500 px-4 py-2 rounded mx-auto ${className}`}
       {...props}
     >
       {children}
