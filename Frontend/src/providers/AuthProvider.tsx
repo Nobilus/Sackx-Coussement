@@ -1,9 +1,13 @@
+import react, { useEffect } from "react";
+
 import { createContext, FunctionComponent, useContext, useState } from "react";
-import { createLogicalWrapper } from "../utils/logicalWrapper";
+import { createLogicalWrapper } from "src/pages/utils/logicalWrapper";
 
 interface IAuthContext {
   signedIn: boolean;
   user: any;
+  signOut: () => void;
+  signIn: () => void;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);

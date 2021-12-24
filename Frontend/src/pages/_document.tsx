@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import AppProvider from "../providers/AppProvider";
 
 class MyDocument extends Document {
   render() {
