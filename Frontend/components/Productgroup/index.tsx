@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Product } from "../../types/Products";
-import Edit from "../../public/assets/Edit.svg";
+import Image from "next/image";
 
 interface ProductGroupProps {
   groupname: string;
@@ -47,7 +47,8 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
                 minimumFractionDigits: 2,
               })}
             </p>
-            <Edit className="mx-auto" />
+            <Image src={"../../public/assets/Edit.svg"} />
+            {/* <Edit className="mx-auto" /> */}
           </div>
         ))}
       </article>

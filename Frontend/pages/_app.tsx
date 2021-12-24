@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { ThemeProvider } from "next-themes";
 import React, { useState } from "react";
 import Footer from "../components/Footer";
 import Login from "./login";
@@ -10,7 +9,7 @@ import Head from "next/head";
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoggedin, setIsLoggedin] = useState(true);
   return (
-    <ThemeProvider attribute="class">
+    <>
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -19,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      {isLoggedin ? (
+      {/* {isLoggedin ? (
         <>
           <Header user={"Sander"} />
           <Component {...pageProps} />
@@ -27,8 +26,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         </>
       ) : (
         <Login />
-      )}
-    </ThemeProvider>
+      )} */}
+    </>
   );
 }
 export default MyApp;
