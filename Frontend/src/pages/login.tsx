@@ -1,17 +1,11 @@
 import React from "react";
-import { useFormik } from "formik";
+import Card from "../components/Card";
 
 function Login() {
-  const formik = useFormik({
-    initialValues: { username: "", password: "" },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
   return (
     <section className="flex h-screen flex-col justify-center items-center">
       <img src={"/assets/logo.png"} alt="Logo" className="mx-auto h-12" />
-      <form
+      {/* <form
         className="flex flex-col p-4 bg-white m-5 rounded shadow-sm px-10"
         onSubmit={formik.handleSubmit}
       >
@@ -55,7 +49,8 @@ function Login() {
         >
           Login
         </button>
-      </form>
+      </form> */}
+      <Card></Card>
     </section>
   );
 }

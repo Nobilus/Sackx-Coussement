@@ -47,7 +47,7 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
                 minimumFractionDigits: 2,
               })}
             </p>
-            <Image src={"../../public/assets/Edit.svg"} />
+            {/* <Image src={"/assets/Edit.svg"} /> */}
             {/* <Edit className="mx-auto" /> */}
           </div>
         ))}

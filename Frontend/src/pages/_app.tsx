@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           rel="stylesheet"
         />
       </Head>
-      {/* {isLoggedin ? (
+      {isLoggedin ? (
         <>
           <Header user={"Sander"} />
           <Component {...pageProps} />
@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </>
       ) : (
         <Login />
-      )} */}
+      )}
     </>
   );
 }
