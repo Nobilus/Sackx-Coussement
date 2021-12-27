@@ -15,7 +15,7 @@ interface LinkItemProps {
 const LinkItem: FunctionComponent<LinkItemProps> = ({ href, icon, title }) => {
   return (
     <Link href={href}>
-      <a className="flex flex-col items-center mx-auto mt-auto text-xs">
+      <a className="flex flex-col items-center mx-auto mt-auto text-xs ">
         {icon}
         <p className="m-auto">{title}</p>
       </a>
@@ -66,7 +66,7 @@ const Footer: FunctionComponent = () => {
 
   return (
     <footer className="fixed float-left bottom-0 left-0 w-full bg-white flex flex-row justify-center items-center py-2 shadow-2xl">
-      <div className=" max-w-3xl flex justify-between w-full">
+      <div className="grid grid-cols-3 place-items-center max-w-3xl w-full">
         {linkItems.map((item, index) => (
           <LinkItem key={`linkitem-${index}`} {...item} />
         ))}
