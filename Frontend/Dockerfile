@@ -8,7 +8,7 @@ RUN pwd
 WORKDIR /app
 RUN pwd
 COPY package.json package-lock.json ./
-RUN npm ci --only-production
+RUN npm i
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
@@ -17,7 +17,7 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN npm run build && npm ci --only-production
+RUN npm run build && npm i
 
 # Production image, copy all the files and run next
 FROM node:alpine AS runner
