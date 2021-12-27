@@ -1,18 +1,18 @@
 # Install dependencies only when needed
-FROM --platform=linux/arm/v7 node:alpine AS deps
-# RUN echo 'Installing dependencies...'
+FROM node:alpine AS deps
+RUN echo 'Installing dependencies...'
 ENV NODE_OPTIONS=--openssl-legacy-provider
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-#RUN apk add --no-cache libc6-compat
-#RUN pwd
+RUN apk add --no-cache libc6-compat
+RUN pwd
 WORKDIR /app
-#RUN pwd
+RUN pwd
 COPY package.json package-lock.json ./
 RUN npm ci --only-production
 
 # Rebuild the source code only when needed
-FROM --platform=linux/arm/v7 node:alpine AS builder
-# RUN echo 'Building...'
+FROM node:alpine AS builder
+RUN echo 'Building...'
 ENV NODE_OPTIONS=--openssl-legacy-provider
 WORKDIR /app
 COPY . .
@@ -20,9 +20,9 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN npm run build && npm ci --only-production
 
 # Production image, copy all the files and run next
-FROM --platform=linux/arm/v7 node:alpine AS runner
+FROM node:alpine AS runner
 WORKDIR /app
-# RUN echo 'Copy files and run next...'
+RUN echo 'Copy files and run next...'
 ENV NODE_ENV production
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
