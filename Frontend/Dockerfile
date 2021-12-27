@@ -3,10 +3,10 @@ FROM --platform=linux/arm/v7 node:alpine AS deps
 # RUN echo 'Installing dependencies...'
 ENV NODE_OPTIONS=--openssl-legacy-provider
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
-RUN pwd
+#RUN apk add --no-cache libc6-compat
+#RUN pwd
 WORKDIR /app
-RUN pwd
+#RUN pwd
 COPY package.json package-lock.json ./
 RUN npm ci --only-production
 
