@@ -49,4 +49,3 @@ ENV PORT 3001
 ENV NEXT_TELEMETRY_DISABLED 1
 
 CMD ["node_modules/.bin/next", "start"]
-
