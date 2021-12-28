@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import AppProvider from "../providers/AppProvider";
 
 class MyDocument extends Document {
   render() {
@@ -15,7 +14,7 @@ class MyDocument extends Document {
           />
         </Head>
 
-        <body className="bg-gray-100 h-screen flex flex-col justify-between">
+        <body className="bg-gray-100 h-screen flex flex-col justify-between font-body">
           <Main />
           <NextScript />
         </body>
