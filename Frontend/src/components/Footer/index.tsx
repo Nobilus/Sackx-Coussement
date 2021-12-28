@@ -15,7 +15,7 @@ interface LinkItemProps {
 const LinkItem: FunctionComponent<LinkItemProps> = ({ href, icon, title }) => {
   return (
     <Link href={href}>
-      <a className="flex flex-col items-center mx-auto mt-auto text-xs ">
+      <a className="flex flex-col items-center px-auto pt-auto text-xs ">
         {icon}
         <p className="m-auto">{title}</p>
       </a>
