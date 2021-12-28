@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Product } from "../../types/Products";
-import TableHeader from "../Table/TableHeader";
-import TableTitle from "../Table/TableTitle";
-import TableItem from "../Table/TableItem";
+import TableHeader from "../ProductTable/TableHeader";
+import TableTitle from "../ProductTable/TableTitle";
+import TableItem from "../ProductTable/TableItem";
 import toLocaleCurrency from "src/utils/toLocaleCurrency";
-import Table from "../Table/Table";
-import TableRow from "../Table/TableRow";
+import Table from "../ProductTable/Table";
+import TableRow from "../ProductTable/TableRow";
 import { MdModeEdit } from "react-icons/md";
 
 interface ProductGroupProps {
