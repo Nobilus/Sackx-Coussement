@@ -1,4 +1,4 @@
-interface BestelbonEntry {
+export interface BestelbonEntry {
   date: string;
   amount: number;
 }

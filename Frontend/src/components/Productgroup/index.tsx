@@ -22,15 +22,21 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
   return (
     <Table>
       <TableHeader>{groupname}</TableHeader>
-      <TableTitle titles={titles} />
+      <TableTitle titles={titles} colAmount={5} />
       {products.map(
         ({ name, priceInclVat, priceExclVat, purchasePrice }, index) => (
           <TableRow key={`tablerow-${index}`}>
             <TableItem>{name}</TableItem>
-            <TableItem>{toLocaleCurrency(purchasePrice)}</TableItem>
-            <TableItem>{toLocaleCurrency(priceInclVat)}</TableItem>
-            <TableItem>{toLocaleCurrency(priceExclVat)}</TableItem>
-            <MdModeEdit />
+            <TableItem className={"place-self-center"}>
+              {toLocaleCurrency(purchasePrice)}
+            </TableItem>
+            <TableItem className={"place-self-center"}>
+              {toLocaleCurrency(priceInclVat)}
+            </TableItem>
+            <TableItem className="place-self-end">
+              {toLocaleCurrency(priceExclVat)}
+            </TableItem>
+            <MdModeEdit className="my-auto place-self-end" />
           </TableRow>
         )
       )}
