@@ -1,7 +1,29 @@
-import { FunctionComponent } from "react";
+import classNames from "classnames/bind";
+import { FunctionComponent, useState } from "react";
 
-const TableRow: FunctionComponent = ({ children }) => {
-  return <div className="grid grid-cols-5 mx-2 mb-4">{children}</div>;
+interface TableRowProps {
+  cols?: number;
+  className?: string;
+}
+
+const TableRow: FunctionComponent<TableRowProps> = ({
+  children,
+  cols,
+  className,
+}) => {
+  const [colAmount] = useState(cols ? cols : 5);
+
+  return (
+    <div
+      className={classNames(
+        "grid mx-2 mb-4",
+        [`grid-cols-${colAmount}`],
+        [className]
+      )}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default TableRow;
