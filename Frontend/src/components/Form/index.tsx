@@ -8,6 +8,7 @@ import {
 import classNames from "classnames/bind";
 import FormItem, { FormItemOption } from "src/classes/FormItem";
 import dynamic from "next/dynamic";
+import Button from "../Button";
 
 // const Dropdown = dynamic(() => import("../dropdown"));
 const Input = dynamic(() => import("src/components/Input/TextInput"));
@@ -201,6 +202,10 @@ const Form: FunctionComponent<FormProps> = ({
     []
   );
 
+  function handleButtonClick(e: any) {
+    e.preventDefault;
+  }
+
   useEffect(() => {
     function handleSubmit() {
       if (formHasErrors(items)) {
@@ -268,17 +273,33 @@ const Form: FunctionComponent<FormProps> = ({
         //     />
         //   );
         // } else {
-        return (
-          <Input
-            key={`input-${index}`}
-            onChange={onFormItemChange}
-            value={items[index].value}
-            errormessage={item.errormessage}
-            faulty={items[index].faulty}
-            className={className}
-            {...item}
-          />
-        );
+        if (item.type === "button") {
+          return (
+            <Button
+              type={"button"}
+              btntype={item.btntype}
+              onClick={item.onClick}
+              key={`btn-${index}`}
+              className={`${className} ${item.btnClassName}`}
+            >
+              {item.text}
+            </Button>
+          );
+        } else {
+          return (
+            <Input
+              key={`input-${index}`}
+              onChange={onFormItemChange}
+              value={items[index].value}
+              errormessage={item.errormessage}
+              faulty={items[index].faulty}
+              className={className}
+              inputClassName={item.inputClassName}
+              {...item}
+            />
+          );
+        }
+
         // }
       })}
     </form>

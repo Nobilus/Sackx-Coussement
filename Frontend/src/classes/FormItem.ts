@@ -28,6 +28,11 @@ class FormItem {
   errormessage?: string;
   autoComplete?: string;
   selected?: any;
+  btntype?: "primary" | "secondary";
+  onClick?: any;
+  text?: string;
+  inputClassName?: string;
+  btnClassName?: string;
   type?:
     | "button"
     | "checkbox"
@@ -72,12 +77,16 @@ class FormItem {
     this.faulty = getValueFromObject(formItem, "faulty", undefined);
     this.errormessage = getValueFromObject(formItem, "errormessage", undefined);
     this.autoComplete = getValueFromObject(formItem, "autoComplete", "off");
-
-    if (formItem.required == undefined) {
-      this.required = true;
-    } else {
-      this.required = formItem.required;
-    }
+    this.btntype = getValueFromObject(formItem, "btnType", undefined);
+    this.onClick = getValueFromObject(formItem, "onClick", undefined);
+    this.text = getValueFromObject(formItem, "text", undefined);
+    this.required = getValueFromObject(formItem, "required", true);
+    this.inputClassName = getValueFromObject(
+      formItem,
+      "inputClassName",
+      undefined
+    );
+    this.btnClassName = getValueFromObject(formItem, "btnClassName", undefined);
 
     if (this.type === "text-area") {
       this.rows = getValueFromObject(formItem, "rows", undefined);

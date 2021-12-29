@@ -19,13 +19,13 @@ const OffertesItem: FunctionComponent<OffertesItemProps> = ({
 }) => {
   return (
     <TableRow cols={4}>
-      <TableItem className="place-self-start">{name}</TableItem>
-      <TableItem className="place-self-center">{date}</TableItem>
-      <TableItem className="place-self-end">
+      <TableItem className="my-auto place-self-start">{name}</TableItem>
+      <TableItem className="my-auto place-self-center">{date}</TableItem>
+      <TableItem className="my-auto place-self-end">
         {toLocaleCurrency(amount)}
       </TableItem>
       <TableItem className="place-self-end">
-        <Button btnType="primary">Omzetten naar factuur</Button>
+        <Button btntype="primary">Omzetten naar factuur</Button>
       </TableItem>
     </TableRow>
   );
