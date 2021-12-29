@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import BestelbonItem from "src/components/Bestelbon";
+import DocumentHeader from "src/components/DocumentHeader";
 import PageLayout from "src/components/Layout/PageLayout";
 import OffertesItem from "src/components/Offertes";
 import Table from "src/components/Table/Table";
 import TableHeader from "src/components/Table/TableHeader";
 import TableTitle from "src/components/Table/TableTitle";
+import { useFilters } from "src/providers/FilterProvider";
 import { Bestelbon } from "src/types/Bestelbon";
 import { Offerte } from "src/types/Offerte";
 
@@ -74,11 +76,12 @@ const offertes: Array<Offerte> = [
 const offerteTableTitles = ["Naam", "Datum", "Bedrag"];
 
 const Bestelbonnen = () => {
-  const [type, setType] = useState("Offertes");
+  const { filters } = useFilters();
 
-  if (type === "Bestelbonnen") {
+  if (filters.documenttype.name === "Bestelbonnen") {
     return (
       <PageLayout>
+        <DocumentHeader />
         <Table>
           {bestelbonnen.map(({ customer, entries }, i) => (
             <BestelbonItem
@@ -93,6 +96,7 @@ const Bestelbonnen = () => {
   } else {
     return (
       <PageLayout>
+        <DocumentHeader />
         <Table>
           <TableHeader />
           <TableTitle titles={offerteTableTitles} colAmount={4} />

@@ -16,7 +16,7 @@ const DropdownItem: FunctionComponent<DropdownItemProps> = ({
     <Listbox.Option
       className={({ active }) =>
         classNames("cursor-default select-none relative py-2 pl-10 pr-4", {
-          "text-green-900 bg-blue-100": active,
+          "text-green-900 bg-green-100": active,
           "text-green-900": !active,
         })
       }

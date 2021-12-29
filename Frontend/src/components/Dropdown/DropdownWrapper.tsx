@@ -18,23 +18,32 @@ const DropdownWrapper: FunctionComponent<DropdownWrapperProps> = ({
   placeholder,
 }) => {
   return (
-    <Listbox as="div" value={value} onChange={onChange} className={className}>
-      <Listbox.Button className="relative rounded border border-green bg-white px-4 py-2 text-greenw-full  pl-7 pr-10 text-left cursor-default">
-        <span className="block truncate">{placeholder}</span>
-        <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-          <MdExpandMore className="w-5 h-5" />
-        </span>
-      </Listbox.Button>
+    <Listbox
+      value={value}
+      onChange={onChange}
+      as={"div"}
+      className={classNames(className)}
+    >
+      <div className={"relative"}>
+        <Listbox.Button className="relative rounded border border-green bg-white px-4 py-2 text-green pl-5 pr-8 text-left cursor-default w-44">
+          <span className="block truncate">
+            {value ? value.name : placeholder}
+          </span>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+            <MdExpandMore className="w-5 h-5" />
+          </span>
+        </Listbox.Button>
 
-      <Transition
-        leave="transition ease-in duration-100"
-        leaveFrom="opacity-100"
-        leaveTo="opacity-0"
-      >
-        <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-blue ring-opacity-5 focus:outline-none sm:text-sm">
-          {children}
-        </Listbox.Options>
-      </Transition>
+        <Transition
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Listbox.Options className="absolute z-10 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-green ring-opacity-5 focus:outline-none sm:text-sm">
+            {children}
+          </Listbox.Options>
+        </Transition>
+      </div>
     </Listbox>
   );
 };

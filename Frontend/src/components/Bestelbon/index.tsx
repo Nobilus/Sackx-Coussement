@@ -18,7 +18,6 @@ const BestelbonItem: FunctionComponent<BestelbonItemProps> = ({
   entries,
 }) => {
   const tableTitles = ["Naam", "Datum", "Bedrag"];
-  console.log(entries);
 
   return (
     <>
@@ -39,7 +38,7 @@ const BestelbonItem: FunctionComponent<BestelbonItemProps> = ({
       })}
       <TableRow cols={1} className={"mt-14"}>
         <TableItem className="place-self-end">
-          <Button btnType={"primary"}>Omzetten naar factuur</Button>
+          <Button btntype={"primary"}>Omzetten naar factuur</Button>
         </TableItem>
       </TableRow>
     </>

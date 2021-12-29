@@ -1,4 +1,6 @@
 import React from "react";
+import KlantenHeader from "src/components/KlantenHeader";
+import PageHeaderContainer from "src/components/Layout/PageHeaderContainer";
 import PageLayout from "src/components/Layout/PageLayout";
 import Table from "src/components/Table/Table";
 import TableHeader from "src/components/Table/TableHeader";
@@ -69,6 +71,7 @@ const titles = ["Naam", "E-mail", "Telefoon", "Contactpersoon"];
 const Klanten = () => {
   return (
     <PageLayout>
+      <KlantenHeader />
       <Table>
         <TableHeader />
         <TableTitle titles={titles} />
