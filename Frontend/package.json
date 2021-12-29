@@ -9,6 +9,7 @@
     "svg": "svgr -d src/components/icons src/assets/svgs"
   },
   "dependencies": {
+    "@headlessui/react": "^1.4.2",
     "classnames": "^2.3.1",
     "next": "^12.0.7",
     "react": "^17.0.2",

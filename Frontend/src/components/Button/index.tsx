@@ -1,3 +1,4 @@
+import classNames from "classnames/bind";
 import { FunctionComponent } from "react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +15,10 @@ const Button: FunctionComponent<ButtonProps> = ({
   if (btntype?.toLowerCase() === "primary") {
     return (
       <button
-        className={`text-white bg-green-100 hover:bg-green-500 px-4 py-2 rounded ${className}`}
+        className={classNames(
+          "text-white bg-green-100 hover:bg-green-500 px-4 py-2 rounded",
+          className
+        )}
         {...props}
       >
         {children}
@@ -23,7 +27,10 @@ const Button: FunctionComponent<ButtonProps> = ({
   } else {
     return (
       <button
-        className={`rounded border border-green bg-green px-4 py-2 text-white ${className}`}
+        className={classNames(
+          "rounded border border-green bg-white px-4 py-2 text-green",
+          className
+        )}
         {...props}
       >
         {children}
