@@ -45,6 +45,7 @@ function Login() {
           onSubmit={handleSubmit}
         />
         <Button
+          btntype="primary"
           type="submit"
           onClick={() => setSubmitting(true)}
           className=" w-44"

@@ -1,10 +1,13 @@
 import { FunctionComponent } from "react";
 import { AuthProvider } from "./AuthProvider";
+import { FilterProvider } from "./FilterProvider";
 
 const AppProvider: FunctionComponent = ({ children }) => {
   return (
     <>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <FilterProvider>{children}</FilterProvider>
+      </AuthProvider>
     </>
   );
 };

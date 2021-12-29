@@ -1,7 +1,15 @@
+import classNames from "classnames/bind";
 import { FunctionComponent } from "react";
 
-const TableItem: FunctionComponent = ({ children }) => {
-  return <p className="text-lg">{children}</p>;
+interface TableItemProps {
+  className?: string;
+}
+
+const TableItem: FunctionComponent<TableItemProps> = ({
+  children,
+  className,
+}) => {
+  return <p className={classNames("text-base", className)}>{children}</p>;
 };
 
 export default TableItem;

@@ -15,7 +15,7 @@ interface LinkItemProps {
 const LinkItem: FunctionComponent<LinkItemProps> = ({ href, icon, title }) => {
   return (
     <Link href={href}>
-      <a className="flex flex-col items-center mx-auto mt-auto text-xs ">
+      <a className="flex flex-col items-center px-auto pt-auto text-xs ">
         {icon}
         <p className="m-auto">{title}</p>
       </a>
@@ -43,10 +43,10 @@ const Footer: FunctionComponent = () => {
       title: "Producten",
     },
     {
-      href: "/bestelbonnen",
+      href: "/documents",
       icon: (
         <IoDocumentTextOutline
-          color={isActive("/bestelbonnen") ? "#00371C" : "#668776"}
+          color={isActive("/documents") ? "#00371C" : "#668776"}
           size={32}
         />
       ),

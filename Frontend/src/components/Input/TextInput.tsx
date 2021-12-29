@@ -1,3 +1,4 @@
+import classNames from "classnames/bind";
 import { FunctionComponent } from "react";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -6,6 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   faulty?: "true" | "false";
   errormessage?: string;
   submitting?: boolean;
+  inputClassName?: string;
 }
 
 const TextInput: FunctionComponent<InputProps> = ({
@@ -16,15 +18,19 @@ const TextInput: FunctionComponent<InputProps> = ({
   placeholder,
   id,
   className,
+  inputClassName,
   faulty,
   errormessage,
   submitting = false,
   ...props
 }) => {
   return (
-    <div className="relative my-4">
+    <div className={classNames("relative my-auto", className)}>
       <input
-        className="peer border border-green-100 rounded placeholder-transparent pl-0.5 outline-none h-8 w-full"
+        className={classNames(
+          "peer border border-green-100 rounded placeholder-transparent pl-0.5 outline-none w-full",
+          inputClassName
+        )}
         autoComplete={autoComplete}
         onChange={onChange}
         type={type}

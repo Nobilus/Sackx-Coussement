@@ -1,5 +1,3 @@
-import react, { useEffect } from "react";
-
 import { createContext, FunctionComponent, useContext, useState } from "react";
 import { createLogicalWrapper } from "src/utils/logicalWrapper";
 
@@ -27,7 +25,7 @@ export const NotAuthenticated = createLogicalWrapper(
 );
 
 export const AuthProvider: FunctionComponent = ({ children }) => {
-  const [signedIn, setSignedIn] = useState(false);
+  const [signedIn, setSignedIn] = useState(true);
   const [user, setUser] = useState<any | null>(null);
 
   const signOut = () => {};
