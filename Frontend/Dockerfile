@@ -25,6 +25,7 @@ WORKDIR /app
 RUN echo 'Copy files and run next...'
 ENV NODE_ENV production
 ENV NODE_OPTIONS=--openssl-legacy-provider
+ENV DIST_DIR=.next
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
@@ -32,7 +33,7 @@ RUN adduser -S nextjs -u 1001
 # You only need to copy next.config.js if you are NOT using the default configuration
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/${DIST_DIR} ./${DIST_DIR}
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 
