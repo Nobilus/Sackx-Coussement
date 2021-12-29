@@ -43,10 +43,10 @@ const Footer: FunctionComponent = () => {
       title: "Producten",
     },
     {
-      href: "/bestelbonnen",
+      href: "/documents",
       icon: (
         <IoDocumentTextOutline
-          color={isActive("/bestelbonnen") ? "#00371C" : "#668776"}
+          color={isActive("/documents") ? "#00371C" : "#668776"}
           size={32}
         />
       ),

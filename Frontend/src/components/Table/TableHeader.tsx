@@ -4,7 +4,7 @@ const TableHeader: FunctionComponent = ({ children }) => {
   return (
     <div>
       {children && (
-        <h1 className="text-lg font-body font-semibold text-green-25 mx-2 mb-2">
+        <h1 className="text-xl font-body font-semibold text-green-25 mx-2 mb-2">
           {children}
         </h1>
       )}

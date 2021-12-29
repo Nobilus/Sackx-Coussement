@@ -9,7 +9,7 @@ const TableItem: FunctionComponent<TableItemProps> = ({
   children,
   className,
 }) => {
-  return <p className={classNames("text-lg", className)}>{children}</p>;
+  return <p className={classNames("text-base", className)}>{children}</p>;
 };
 
 export default TableItem;
