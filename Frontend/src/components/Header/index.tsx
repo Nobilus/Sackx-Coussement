@@ -13,6 +13,7 @@ const Header = ({ user }: HeaderProps) => {
         height={83.42}
         layout="fixed"
         width={363.74}
+        priority
       />
       {user}
     </div>
