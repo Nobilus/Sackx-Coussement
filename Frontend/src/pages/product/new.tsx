@@ -24,8 +24,6 @@ const New = () => {
   const [values, setValues] = useState(initialValues);
 
   const handleTextChanged = (e: any) => {
-    console.log(e.target.value);
-
     if (e.target.name in values) {
       setValues({ ...values, [e.target.name]: e.target.value });
     }
