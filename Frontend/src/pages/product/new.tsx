@@ -12,13 +12,13 @@ const New = () => {
     "text-baseline font-body font-regular border border-green-100 rounded placeholder-transparent pl-4 py-2 outline-none  bg-white placeholder:text-green-25 text-green-200";
 
   const initialValues = {
-    productName: undefined,
-    productGroup: undefined,
-    purchasePrice: undefined,
-    exclVat: undefined,
-    unit: undefined,
-    thickness: undefined,
-    width: undefined,
+    productName: "",
+    productGroup: "",
+    purchasePrice: "",
+    exclVat: "",
+    unit: "",
+    thickness: "",
+    width: "",
   };
 
   const [values, setValues] = useState(initialValues);
