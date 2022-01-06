@@ -7,6 +7,7 @@ import toLocaleCurrency from "src/utils/toLocaleCurrency";
 import Table from "../Table/Table";
 import TableRow from "../Table/TableRow";
 import { MdModeEdit } from "react-icons/md";
+import { useRouter } from "next/router";
 
 interface ProductGroupProps {
   groupname: string;
@@ -19,6 +20,12 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
   groupname,
   products,
 }) => {
+  const router = useRouter();
+
+  const handleClickEdit = () => {
+    router.push("/product/1");
+  };
+
   return (
     <Table>
       <TableHeader>{groupname}</TableHeader>
@@ -36,7 +43,10 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
             <TableItem className="place-self-end">
               {toLocaleCurrency(priceExclVat)}
             </TableItem>
-            <MdModeEdit className="my-auto place-self-end" />
+            <MdModeEdit
+              className="my-auto place-self-end cursor-pointer"
+              onClick={handleClickEdit}
+            />
           </TableRow>
         )
       )}
