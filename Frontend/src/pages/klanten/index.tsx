@@ -75,8 +75,8 @@ const Klanten = () => {
       <Table>
         <TableHeader />
         <TableTitle titles={titles} />
-        {customer.map(({ name, email, telephone, contactperson }) => (
-          <TableRow cols={4}>
+        {customer.map(({ name, email, telephone, contactperson }, i) => (
+          <TableRow cols={4} key={`tablerow-${i}`}>
             <TableItem className="place-self-start">{name}</TableItem>
             <TableItem className="place-self-center">{email}</TableItem>
             <TableItem className="place-self-center">{telephone}</TableItem>

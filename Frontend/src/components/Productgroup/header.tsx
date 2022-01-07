@@ -12,7 +12,7 @@ const ProductHeader = () => {
   };
 
   const clickNieuweBestelbon = () => {
-    router.push("/document/new/bestelbon");
+    router.push("/documents/new");
   };
 
   const groups = [
