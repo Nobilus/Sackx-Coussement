@@ -141,7 +141,7 @@ namespace Project.Migrations
                     b.HasData(
                         new
                         {
-                            ProductId = new Guid("0ca3af6e-ed24-40af-9e72-5ea2f0cb8a54"),
+                            ProductId = new Guid("64ef9d4b-8da2-48e9-962d-4b40b3c2860c"),
                             Name = "Oregon 7x15",
                             Price = 5.0099999999999998,
                             Thickness = 7.0,
@@ -150,7 +150,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("27a0226c-d055-47fe-83b3-93d598ecc35c"),
+                            ProductId = new Guid("d65740a1-118f-426c-9187-be79efede89c"),
                             Name = "Oregon 7x18",
                             Price = 4.6200000000000001,
                             Thickness = 7.0,
@@ -159,7 +159,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("b7d9245c-3475-40c9-9a35-b15dd5699e76"),
+                            ProductId = new Guid("c7221e00-a802-4cd5-a4fc-e8650b1205ba"),
                             Name = "Pannelatten",
                             Price = 0.29999999999999999,
                             Thickness = 2.3999999999999999,
@@ -168,7 +168,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("3b8d8988-11fe-4e7b-a6ed-40e005419259"),
+                            ProductId = new Guid("93d40bce-f5ef-4eef-9396-fd92be9793a7"),
                             Name = "Stoflatten",
                             Price = 0.22,
                             Thickness = 2.0,
@@ -177,7 +177,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("7d377399-33fb-4c73-bbfc-9ee444358c04"),
+                            ProductId = new Guid("e7991ffd-4c72-4adf-9a3c-c231d031898c"),
                             Name = "RND gedrenkt",
                             Price = 0.84999999999999998,
                             Thickness = 2.5,
@@ -186,7 +186,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("5d0511b4-7a04-4ad5-80de-2d1fbca7813a"),
+                            ProductId = new Guid("d58da81d-caa1-4549-b671-73936ed15e68"),
                             Name = "RND ongeschaafd",
                             Price = 0.60999999999999999,
                             Thickness = 2.0,
@@ -195,7 +195,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("387fa51b-c60e-43a5-92ea-197cb32fb568"),
+                            ProductId = new Guid("fc08ca3c-66d8-4326-8d35-235bc9dd10e7"),
                             Name = "Merantiplaten",
                             Price = 4.4500000000000002,
                             Thickness = 0.35999999999999999,
@@ -204,7 +204,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("6f0c62fe-5f7c-4d19-883f-fcece97c9df2"),
+                            ProductId = new Guid("199f248d-83a0-4f93-939f-62785c3e0cc3"),
                             Name = "CDX platen",
                             Price = 6.5599999999999996,
                             Thickness = 1.8,
@@ -213,7 +213,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("287e3985-79a0-4732-9750-1f6e638a0e49"),
+                            ProductId = new Guid("865667c4-b7c3-4c2c-a029-c0eb7d189738"),
                             Name = "OBS platen",
                             Price = 3.9700000000000002,
                             Thickness = 1.2,
@@ -222,7 +222,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("09ead58d-6eef-4fa0-b252-16cc96a02f4f"),
+                            ProductId = new Guid("d0f36653-7997-4227-9df3-44aa6925d722"),
                             Name = "Meubelplaten wit",
                             Price = 5.6200000000000001,
                             Thickness = 1.0,
@@ -231,7 +231,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("6baf1e58-115c-4a28-a088-df8b520211b1"),
+                            ProductId = new Guid("b9ca00f8-df63-4e96-a056-65c6f82ca005"),
                             Name = "Gipsplaten",
                             Price = 2.6400000000000001,
                             Thickness = 0.90000000000000002,
@@ -240,7 +240,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("0adb561c-eafe-48d1-9514-e20c7b1b60f7"),
+                            ProductId = new Guid("10f97eb8-7f45-4dd3-b208-7cb06cb605cb"),
                             Name = "Plafondlatten",
                             Price = 0.56999999999999995,
                             Thickness = 2.2000000000000002,
@@ -249,7 +249,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("8d25a0ce-8164-41c0-aad0-26c75dc6ee75"),
+                            ProductId = new Guid("f6816871-9005-441a-89d8-0128b591c91f"),
                             Name = "CLS",
                             Price = 0.98999999999999999,
                             Thickness = 3.7999999999999998,
@@ -258,7 +258,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("5bee2968-273f-4239-a159-7dbb26cbd331"),
+                            ProductId = new Guid("f1ce4ee5-bdbc-4c51-8843-d138b33db411"),
                             Name = "Terrasplanken tali",
                             Price = 6.3499999999999996,
                             Thickness = 2.5,
@@ -267,7 +267,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("02369ac3-59e5-4b3b-bbe7-c29b23868b88"),
+                            ProductId = new Guid("2cb51452-4738-4dc4-878a-5a840f014b4c"),
                             Name = "Thermowood",
                             Price = 6.1500000000000004,
                             Thickness = 63.0,
@@ -276,7 +276,7 @@ namespace Project.Migrations
                         },
                         new
                         {
-                            ProductId = new Guid("7d7516f8-2734-4225-8277-18d9edf7fd59"),
+                            ProductId = new Guid("c35ea7cc-44a8-4cce-bc3c-c9d49cdc7a29"),
                             Name = "Tali kepers",
                             Price = 2.8100000000000001,
                             Thickness = 40.0,

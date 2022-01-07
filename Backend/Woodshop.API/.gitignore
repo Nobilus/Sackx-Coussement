@@ -450,3 +450,4 @@ $RECYCLE.BIN/
 appsettings.*.json
 
 postman_collection.json
+Migrations/*
