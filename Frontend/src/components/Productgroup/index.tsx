@@ -30,26 +30,24 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
     <Table>
       <TableHeader>{groupname}</TableHeader>
       <TableTitle titles={titles} colAmount={5} />
-      {products.map(
-        ({ name, priceInclVat, priceExclVat, purchasePrice }, index) => (
-          <TableRow key={`tablerow-${index}`}>
-            <TableItem>{name}</TableItem>
-            <TableItem className={"place-self-center"}>
-              {toLocaleCurrency(purchasePrice)}
-            </TableItem>
-            <TableItem className={"place-self-center"}>
-              {toLocaleCurrency(priceInclVat)}
-            </TableItem>
-            <TableItem className="place-self-end">
-              {toLocaleCurrency(priceExclVat)}
-            </TableItem>
-            <MdModeEdit
-              className="my-auto place-self-end cursor-pointer"
-              onClick={handleClickEdit}
-            />
-          </TableRow>
-        )
-      )}
+      {products.map(({ name, priceWithVat, price, purchasePrice }, index) => (
+        <TableRow key={`tablerow-${index}`}>
+          <TableItem>{name}</TableItem>
+          <TableItem className={"place-self-center"}>
+            {toLocaleCurrency(purchasePrice)}
+          </TableItem>
+          <TableItem className={"place-self-center"}>
+            {toLocaleCurrency(priceWithVat)}
+          </TableItem>
+          <TableItem className="place-self-end">
+            {toLocaleCurrency(price)}
+          </TableItem>
+          <MdModeEdit
+            className="my-auto place-self-end cursor-pointer"
+            onClick={handleClickEdit}
+          />
+        </TableRow>
+      ))}
     </Table>
   );
 };
