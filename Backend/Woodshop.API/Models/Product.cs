@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Woodshop.API.Models;
 
 namespace Project.Models
 {
@@ -12,6 +13,9 @@ namespace Project.Models
         public double Width { get; set; }
         public double Price { get; set; }
         public double PurchasePrice { get; set; }
+        [JsonIgnore]
+        public int ProductGroupId { get; set; }
+        public ProductGroup ProductGroup { get; set; }
 
         [JsonIgnore]
         public int UnitId { get; set; }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using AutoMapper;
 using Project.DTO;
 using Project.Models;
+using Woodshop.API.DTO;
+using Woodshop.API.Models;
 
 namespace Sneakers.API.DTO
 {
@@ -76,6 +78,9 @@ namespace Sneakers.API.DTO
                     dest => dest.OrderDetails,
                     opt => opt.MapFrom(src => src.OrderProducts)
 
+                ).ForMember(
+                    dest => dest.IsPayed,
+                    opt => opt.MapFrom(src => src.IsPayed)
                 );
             CreateMap<Product, OrderProduct>();
             CreateMap<OrderProduct, OrderProductDTO>()
@@ -103,6 +108,8 @@ namespace Sneakers.API.DTO
                     dest => dest.PurchasePrice,
                     opt => opt.MapFrom(src => src.Product.PurchasePrice)
                 );
+
+            CreateMap<ProductGroup, ProductgroupDTO>();
         }
     }
 }

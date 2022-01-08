@@ -12,6 +12,7 @@ using Project.Config;
 using Project.DataContext;
 using Project.Repositories;
 using Project.Services;
+using Woodshop.API.Repositories;
 
 namespace Project
 {
@@ -69,6 +70,7 @@ namespace Project
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
+            services.AddTransient<IProductGroupRepository, ProductGroupRepository>();
 
             services.AddTransient<IWoodshopService, WoodshopService>();
         }

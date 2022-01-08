@@ -9,10 +9,12 @@ namespace Project.Models
         public Guid OrderId { get; set; }
         public DateTime Date { get; set; }
         public string OrderType { get; set; }
+        public bool IsPayed { get; set; }
         [JsonIgnore]
         public Guid CustomerId { get; set; }
         [JsonIgnore]
         public Customer Customer { get; set; }
+
         [JsonIgnore]
         public ICollection<OrderProduct> OrderProducts { get; set; }
 

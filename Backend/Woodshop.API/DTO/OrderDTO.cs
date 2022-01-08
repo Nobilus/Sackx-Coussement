@@ -32,6 +32,7 @@ namespace Project.DTO
         public double Indebted { get; set; }
         public double VAT { get; set; }
         public string OrderType { get; set; }
+        public bool IsPayed { get; set; }
         public ICollection<OrderProductDTO> OrderDetails { get; set; }
 
     }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Project.DTO;
 using Project.Models;
 using Project.Services;
+using Woodshop.API.Models;
 
 namespace Project.Controllers
 {
@@ -51,6 +52,33 @@ namespace Project.Controllers
             try
             {
                 return new OkObjectResult(await _woodshopService.GetProduct(productId));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("products/withgroups")]
+        public async Task<ActionResult<List<ProductGroup>>> GetProductsWithGroups()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.ListProductgroupsWithProducts());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+        [HttpGet]
+        [Route("products/groups")]
+        public async Task<ActionResult<List<ProductGroup>>> GetProductgroups()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.ListProductgroups());
             }
             catch (Exception ex)
             {

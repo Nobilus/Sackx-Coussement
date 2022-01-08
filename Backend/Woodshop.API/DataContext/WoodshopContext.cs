@@ -11,6 +11,7 @@ using Project.Models;
 using System.IO;
 using CsvHelper;
 using Project.DTO;
+using Woodshop.API.Models;
 
 namespace Project.DataContext
 {
@@ -24,6 +25,7 @@ namespace Project.DataContext
         DbSet<Person> Persons { get; set; }
         DbSet<Staff> Staff { get; set; }
         DbSet<OrderProduct> OrderProducts { get; set; }
+        DbSet<ProductGroup> ProductGroups { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
@@ -37,6 +39,7 @@ namespace Project.DataContext
         public DbSet<Person> Persons { get; set; }
         public DbSet<Staff> Staff { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
 
         private ConnectionStrings _connectionStrings;
 
@@ -55,6 +58,7 @@ namespace Project.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+
             modelBuilder.Entity<Customer>()
             .HasKey(c => new { c.CustomerId });
 
@@ -70,6 +74,11 @@ namespace Project.DataContext
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Unit)
             .WithMany(u => u.Products);
+
+            modelBuilder.Entity<ProductGroup>()
+            .HasMany(pg => pg.Products)
+            .WithOne(p => p.ProductGroup);
+
 
             modelBuilder.Entity<OrderProduct>()
             .HasKey(op => new { op.OrderId, op.ProductId });
@@ -87,6 +96,12 @@ namespace Project.DataContext
                 PersonId = 2,
                 TelephoneNumber = "0412345678",
                 IsAdmin = true,
+            });
+
+            modelBuilder.Entity<ProductGroup>().HasData(new ProductGroup()
+            {
+                ProductGroupId = 1,
+                ProductGroupName = "Alle"
             });
             #endregion
             #region Customers
@@ -126,6 +141,7 @@ namespace Project.DataContext
                         Price = p.Price,
                         PurchasePrice = p.PurchasePrice,
                         UnitId = p.UnitId,
+                        ProductGroupId = 1,
                     });
                 }
             }

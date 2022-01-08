@@ -9,6 +9,9 @@ using Newtonsoft.Json;
 using Project.DTO;
 using Project.Models;
 using Project.Repositories;
+using Woodshop.API.DTO;
+using Woodshop.API.Models;
+using Woodshop.API.Repositories;
 
 namespace Project.Services
 {
@@ -28,6 +31,8 @@ namespace Project.Services
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
         Task<List<Unit>> GetUnits();
+        Task<List<ProductgroupDTO>> ListProductgroupsWithProducts();
+        Task<List<ProductGroup>> ListProductgroups();
     }
 
 
@@ -39,11 +44,12 @@ namespace Project.Services
         private IOrderRepository _orderRepository;
         private IPersonRepository _personRepository;
         private IUnitRepository _unitRepository;
+        private IProductGroupRepository _productgroupRepository;
         private IMapper _mapper;
 
         private double VAT = 1.21;
 
-        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository, IOrderRepository orderRepository, IPersonRepository personRepository, IUnitRepository unitRepository)
+        public WoodshopService(IMapper mapper, ICustomerRepository customerRepository, IProductRepository productRepository, IStaffRepository staffRepository, IOrderRepository orderRepository, IPersonRepository personRepository, IUnitRepository unitRepository, IProductGroupRepository productGroupRepository)
         {
             _customerRepository = customerRepository;
             _productRepository = productRepository;
@@ -51,6 +57,7 @@ namespace Project.Services
             _orderRepository = orderRepository;
             _personRepository = personRepository;
             _unitRepository = unitRepository;
+            _productgroupRepository = productGroupRepository;
             _mapper = mapper;
 
         }
@@ -260,5 +267,28 @@ namespace Project.Services
             }
         }
 
+        public async Task<List<ProductgroupDTO>> ListProductgroupsWithProducts()
+        {
+            try
+            {
+                List<ProductgroupDTO> productGroups = _mapper.Map<List<ProductgroupDTO>>(await _productgroupRepository.GetProductsWithGroups());
+                return productGroups;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<List<ProductGroup>> ListProductgroups()
+        {
+            try
+            {
+                return await _productgroupRepository.GetProductgroups();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
