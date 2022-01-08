@@ -70,36 +70,6 @@ export default function Home() {
             products={group.products}
           />
         ))}
-      {/* {products && (
-        <>
-        products
-          <Productgroup
-            key={"productgroup-1"}
-            groupname="Oregon/Douglas"
-            products={products}
-          />
-          <Productgroup
-            key={"productgroup-2"}
-            groupname="Oregon/Douglas"
-            products={products}
-          />
-          <Productgroup
-            key={"productgroup-3"}
-            groupname="Oregon/Douglas"
-            products={products}
-          />
-          <Productgroup
-            key={"productgroup-4"}
-            groupname="Oregon/Douglas"
-            products={products}
-          />
-          <Productgroup
-            key={"productgroup-5"}
-            groupname="Oregon/Douglas"
-            products={products}
-          />
-        </>
-      )} */}
     </PageLayout>
   );
 }

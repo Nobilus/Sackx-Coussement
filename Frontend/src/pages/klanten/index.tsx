@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import KlantenHeader from "src/components/KlantenHeader";
 import PageHeaderContainer from "src/components/Layout/PageHeaderContainer";
 import PageLayout from "src/components/Layout/PageLayout";
@@ -8,6 +8,7 @@ import TableItem from "src/components/Table/TableItem";
 import TableRow from "src/components/Table/TableRow";
 import TableTitle from "src/components/Table/TableTitle";
 import { Customer } from "src/types/Customer";
+import { get } from "src/utils/api";
 
 const customer: Array<Customer> = [
   {
@@ -69,20 +70,30 @@ const customer: Array<Customer> = [
 const titles = ["Naam", "E-mail", "Telefoon", "Contactpersoon"];
 
 const Klanten = () => {
+  const [customers, setCustomers] = useState<any>();
+  useEffect(() => {
+    async function getCustomers() {
+      const [error, customers] = await get("/customers");
+      setCustomers(customers);
+    }
+    getCustomers();
+  }, []);
   return (
     <PageLayout>
       <KlantenHeader />
       <Table>
         <TableHeader />
         <TableTitle titles={titles} />
-        {customer.map(({ name, email, telephone, contactperson }, i) => (
-          <TableRow cols={4} key={`tablerow-${i}`}>
-            <TableItem className="place-self-start">{name}</TableItem>
-            <TableItem className="place-self-center">{email}</TableItem>
-            <TableItem className="place-self-center">{telephone}</TableItem>
-            <TableItem className="place-self-end">{contactperson}</TableItem>
-          </TableRow>
-        ))}
+        {customers &&
+          customers.length > 0 &&
+          customers.map(({ customerName, email, telephone, firstName }, i) => (
+            <TableRow cols={4} key={`tablerow-${i}`}>
+              <TableItem className="place-self-start">{customerName}</TableItem>
+              <TableItem className="place-self-center">email</TableItem>
+              <TableItem className="place-self-center">telephone</TableItem>
+              <TableItem className="place-self-end">{firstName}</TableItem>
+            </TableRow>
+          ))}
       </Table>
     </PageLayout>
   );

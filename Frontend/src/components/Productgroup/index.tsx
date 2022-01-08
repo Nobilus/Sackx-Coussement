@@ -22,32 +22,35 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
 }) => {
   const router = useRouter();
 
-  const handleClickEdit = () => {
-    router.push("/product/1");
-  };
-
   return (
     <Table>
       <TableHeader>{groupname}</TableHeader>
       <TableTitle titles={titles} colAmount={5} />
-      {products.map(({ name, priceWithVat, price, purchasePrice }, index) => (
-        <TableRow key={`tablerow-${index}`}>
-          <TableItem>{name}</TableItem>
-          <TableItem className={"place-self-center"}>
-            {toLocaleCurrency(purchasePrice)}
-          </TableItem>
-          <TableItem className={"place-self-center"}>
-            {toLocaleCurrency(priceWithVat)}
-          </TableItem>
-          <TableItem className="place-self-end">
-            {toLocaleCurrency(price)}
-          </TableItem>
-          <MdModeEdit
-            className="my-auto place-self-end cursor-pointer"
-            onClick={handleClickEdit}
-          />
-        </TableRow>
-      ))}
+      {products.map(
+        ({ name, priceWithVat, price, purchasePrice, productId }, index) => {
+          const handleClickEdit = () => {
+            router.push(`/product/${productId}`);
+          };
+          return (
+            <TableRow key={`tablerow-${index}`}>
+              <TableItem>{name}</TableItem>
+              <TableItem className={"place-self-center"}>
+                {toLocaleCurrency(purchasePrice)}
+              </TableItem>
+              <TableItem className={"place-self-center"}>
+                {toLocaleCurrency(priceWithVat)}
+              </TableItem>
+              <TableItem className="place-self-end">
+                {toLocaleCurrency(price)}
+              </TableItem>
+              <MdModeEdit
+                className="my-auto place-self-end cursor-pointer"
+                onClick={handleClickEdit}
+              />
+            </TableRow>
+          );
+        }
+      )}
     </Table>
   );
 };

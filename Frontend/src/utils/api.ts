@@ -25,6 +25,8 @@ async function get(
   endpoint: string
 ): Promise<[error: error | null, data: any | null]> {
   const resp = await fetch(`${BASE_URL}${endpoint}`);
+  console.log(resp);
+
   return processResponse(resp);
 }
 

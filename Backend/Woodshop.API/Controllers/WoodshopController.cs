@@ -99,7 +99,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
