@@ -13,7 +13,8 @@ namespace Project.DTO
     }
     public class OrderDTO
     {
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
+        public string OrderType { get; set; }
         public List<OrderAddProductDTO> Products { get; set; }
     }
 
@@ -21,7 +22,7 @@ namespace Project.DTO
     public class OrdersDTO
     {
         public Guid Id { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public DateTime Date { get; set; }
         public string Firstname { get; set; }
         public string CustomerName { get; set; }
@@ -30,6 +31,7 @@ namespace Project.DTO
         public string City { get; set; }
         public double Indebted { get; set; }
         public double VAT { get; set; }
+        public string OrderType { get; set; }
         public ICollection<OrderProductDTO> OrderDetails { get; set; }
 
     }

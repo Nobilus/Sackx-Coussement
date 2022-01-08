@@ -98,6 +98,10 @@ namespace Sneakers.API.DTO
                 .ForMember(
                     dest => dest.Price,
                     opt => opt.MapFrom(src => src.Product.Price)
+                )
+                .ForMember(
+                    dest => dest.PurchasePrice,
+                    opt => opt.MapFrom(src => src.Product.PurchasePrice)
                 );
         }
     }

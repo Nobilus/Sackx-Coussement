@@ -14,6 +14,7 @@ namespace Project.Repositories
         Task<Order> AddOrder(Order order);
         Task<List<Order>> GetOrders();
         Task<Order> GetOrder(Guid id);
+        Task<Order> SwitchOrderType(Guid id);
     }
 
     public class OrderRepository : IOrderRepository
@@ -52,6 +53,25 @@ namespace Project.Repositories
                 .ThenInclude(op => op.Product)
                 .ThenInclude(op => op.Unit)
                 .SingleOrDefaultAsync();
+        }
+
+        public async Task<Order> SwitchOrderType(Guid id)
+        {
+            Order o = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            switch (o.OrderType)
+            {
+                case "factuur":
+                    o.OrderType = "bestelbon";
+                    break;
+                case "bestelbon":
+                    o.OrderType = "factuur";
+                    break;
+                default:
+                    o.OrderType = "bestelbon";
+                    break;
+            }
+            await _context.SaveChangesAsync();
+            return o;
         }
     }
 }

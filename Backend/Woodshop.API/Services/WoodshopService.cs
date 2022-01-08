@@ -24,7 +24,7 @@ namespace Project.Services
         Task<Order> AddOrder(OrderDTO order);
         Task<List<OrdersDTO>> GetOrders();
         Task<OrdersDTO> GetOrder(Guid id);
-        // Task<OrderPatchDTO> PatchOrder(Guid id, OrderPatchDTO order);
+        Task<Order> SwitchOrderType(Guid id);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
         Task<List<Unit>> GetUnits();
@@ -248,18 +248,17 @@ namespace Project.Services
             }
         }
 
-        // public async Task<OrderPatchDTO> PatchOrder(Guid id, OrderPatchDTO order)
-        // {
-        //     try
-        //     {
-        //         await _orderRepository.PatchOrder();
-        //         return order;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         throw ex;
-        //     }
-        // }
+        public async Task<Order> SwitchOrderType(Guid id)
+        {
+            try
+            {
+                return await _orderRepository.SwitchOrderType(id); ;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

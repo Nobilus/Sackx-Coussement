@@ -8,6 +8,7 @@ namespace Project.Models
     {
         public Guid OrderId { get; set; }
         public DateTime Date { get; set; }
+        public string OrderType { get; set; }
         [JsonIgnore]
         public Guid CustomerId { get; set; }
         [JsonIgnore]

@@ -192,20 +192,20 @@ namespace Project.Controllers
             }
         }
 
-        // [Authorize]
-        // [HttpPatch]
-        // [Route("order/{orderId}")]
-        // public async Task<ActionResult<OrdersDTO>> PatchOrder(Guid id, OrderPatchDTO order)
-        // {
-        //     try
-        //     {
-        //         return new OkObjectResult(await _woodshopService.PatchOrder(id, order));
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return new StatusCodeResult(500);
-        //     }
-        // }
+        [Authorize]
+        [HttpPatch]
+        [Route("order/switch/{orderId}")]
+        public async Task<ActionResult<OrdersDTO>> SwitchOrderType(Guid id)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.SwitchOrderType(id));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
 
         [Authorize]
         [HttpGet]

@@ -106,17 +106,6 @@ namespace Project.DataContext
                         City = c.City,
                     });
                 }
-                // modelBuilder.Entity<Person>().HasData(new Person()
-                // {
-                //     PersonId = 1,
-                //     FirstName = "Jonas",
-                //     LastName = "De Meyer",
-                // });
-                // modelBuilder.Entity<Customer>().HasData(new Customer()
-                // {
-                //     PersonId = 1,
-                //     CompanyNumber = "0123456789"
-                // });
             }
 
             #endregion
