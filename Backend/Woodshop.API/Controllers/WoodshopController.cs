@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -138,6 +137,21 @@ namespace Project.Controllers
             try
             {
                 return new OkObjectResult(await _woodshopService.AddCustomer(customer));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("customer/validate/{vatNumber}")]
+        public async Task<ActionResult<Customer>> CheckVATNumber(string vatNumber)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.ValidateVatnumber(vatNumber));
             }
             catch (Exception ex)
             {

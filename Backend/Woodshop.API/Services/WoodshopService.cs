@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Project.DTO;
 using Project.Models;
 using Project.Repositories;
+using RestSharp;
 using Woodshop.API.DTO;
 using Woodshop.API.Models;
 using Woodshop.API.Repositories;
@@ -33,6 +34,7 @@ namespace Project.Services
         Task<List<Unit>> GetUnits();
         Task<List<ProductgroupDTO>> ListProductgroupsWithProducts();
         Task<List<ProductGroup>> ListProductgroups();
+        Task<Customer> ValidateVatnumber(string vatNumber);
     }
 
 
@@ -284,6 +286,25 @@ namespace Project.Services
             try
             {
                 return await _productgroupRepository.GetProductgroups();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<Customer> ValidateVatnumber(string vatNumber)
+        {
+            try
+            {
+                var client = new RestClient($"https://controleerbtwnummer.eu/api/validate/{vatNumber}.json");
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("content-type", "application/json");
+
+                IRestResponse response = await client.ExecuteAsync(request);
+
+                Customer customer = _mapper.Map<Customer>(JsonConvert.DeserializeObject<APICustomer>(response.Content));
+                return customer;
             }
             catch (Exception ex)
             {

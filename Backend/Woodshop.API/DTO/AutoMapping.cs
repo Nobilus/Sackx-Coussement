@@ -110,6 +110,23 @@ namespace Sneakers.API.DTO
                 );
 
             CreateMap<ProductGroup, ProductgroupDTO>();
+            CreateMap<APICustomer, Customer>()
+            .ForMember(
+                dest => dest.City,
+                opt => opt.MapFrom(src => src.Address.City)
+            )
+            .ForMember(
+                dest => dest.Street,
+                opt => opt.MapFrom(src => $"{src.Address.Street} {src.Address.Number}")
+            )
+            .ForMember(
+                dest => dest.CustomerName,
+                opt => opt.MapFrom(src => src.Name)
+            )
+            .ForMember(
+                dest => dest.Postal,
+                opt => opt.MapFrom(src => src.Address.Postal)
+            );
         }
     }
 }
