@@ -65,7 +65,8 @@ namespace Project.Controllers
         {
             try
             {
-                return new OkObjectResult(await _woodshopService.ListProductgroupsWithProducts());
+                string query = HttpContext.Request.Query["q"].ToString();
+                return new OkObjectResult(await _woodshopService.ListProductgroupsWithProducts(query));
             }
             catch (Exception ex)
             {

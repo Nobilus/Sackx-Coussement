@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace Woodshop.API.Repositories
     public interface IProductGroupRepository
     {
         Task<List<ProductGroup>> GetProductgroups();
-        Task<List<ProductGroup>> GetProductsWithGroups();
+        Task<List<ProductGroup>> GetProductsWithGroups(string query = null);
     }
 
     public class ProductGroupRepository : IProductGroupRepository
@@ -22,9 +23,17 @@ namespace Woodshop.API.Repositories
             _context = context;
         }
 
-        public async Task<List<ProductGroup>> GetProductsWithGroups()
+        public async Task<List<ProductGroup>> GetProductsWithGroups(string query = null)
         {
-            return await _context.ProductGroups.Include(pg => pg.Products).ToListAsync<ProductGroup>();
+            if (String.IsNullOrEmpty(query))
+            {
+                return await _context.ProductGroups.Include(pg => pg.Products).ToListAsync<ProductGroup>();
+            }
+            else
+            {
+                return await _context.ProductGroups.Include(pg => pg.Products.Where(p => p.Name.Contains(query))).ToListAsync<ProductGroup>();
+            }
+
         }
 
         public async Task<List<ProductGroup>> GetProductgroups()

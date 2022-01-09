@@ -33,7 +33,7 @@ namespace Project.Services
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
         Task<List<Unit>> GetUnits();
-        Task<List<ProductgroupDTO>> ListProductgroupsWithProducts();
+        Task<List<ProductgroupDTO>> ListProductgroupsWithProducts(string query);
         Task<List<ProductGroup>> ListProductgroups();
         Task<Customer> ValidateVatnumber(string vatNumber);
     }
@@ -153,15 +153,8 @@ namespace Project.Services
         {
             try
             {
-                List<CustomerDTO> customers = _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers());
-                if (String.IsNullOrEmpty(query))
-                {
-                    return customers.OrderBy(c => c.CustomerName).ToList<CustomerDTO>();
-                }
-                else
-                {
-                    return customers.Where(c => RemoveSpecialCharacters(c.CustomerName.ToLower()).Contains(query.ToLower())).OrderBy(c => c.CustomerName).ToList<CustomerDTO>();
-                }
+                List<CustomerDTO> customers = _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers(query));
+                return customers;
             }
             catch (System.Exception ex)
             {
@@ -310,12 +303,13 @@ namespace Project.Services
             }
         }
 
-        public async Task<List<ProductgroupDTO>> ListProductgroupsWithProducts()
+        public async Task<List<ProductgroupDTO>> ListProductgroupsWithProducts(string query)
         {
             try
             {
-                List<ProductgroupDTO> productGroups = _mapper.Map<List<ProductgroupDTO>>(await _productgroupRepository.GetProductsWithGroups());
+                List<ProductgroupDTO> productGroups = _mapper.Map<List<ProductgroupDTO>>(await _productgroupRepository.GetProductsWithGroups(query));
                 return productGroups;
+
             }
             catch (Exception ex)
             {

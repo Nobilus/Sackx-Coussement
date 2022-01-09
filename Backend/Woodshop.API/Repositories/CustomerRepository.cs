@@ -12,7 +12,7 @@ namespace Project.Repositories
     {
         Task<Customer> AddCustomer(Customer customer);
         Task<Customer> GetCustomer(Guid customerId);
-        Task<List<Customer>> GetCustomers();
+        Task<List<Customer>> GetCustomers(string query = null);
     }
 
     public class CustomerRepository : ICustomerRepository
@@ -24,9 +24,17 @@ namespace Project.Repositories
             _context = context;
         }
 
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<Customer>> GetCustomers(string query = null)
         {
-            return await _context.Customers.Include(c => c.Orders).ToListAsync();
+            if (String.IsNullOrEmpty(query))
+            {
+                return await _context.Customers.Include(c => c.Orders).OrderBy(c => c.CustomerName).ToListAsync();
+            }
+            else
+            {
+                return await _context.Customers.Where(c => c.CustomerName.Contains(query)).Include(c => c.Orders).OrderBy(c => c.CustomerName).ToListAsync();
+            }
+
         }
 
         public async Task<Customer> GetCustomer(Guid customerId)
