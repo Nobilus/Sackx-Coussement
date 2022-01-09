@@ -1,8 +1,7 @@
-import { Bestelbon } from "./Bestelbon";
 import { Customer } from "./Customer";
-import { Offerte } from "./Offerte";
 import { Order } from "./Order";
 import { Product } from "./Products";
+import { Unit } from "./Unit";
 
 export interface Data {
   products: Array<{
@@ -11,8 +10,9 @@ export interface Data {
     products: Array<Product>;
   }>;
   customers: Array<Customer>;
-  offertes: Array<Offerte>;
+  offertes: Array<Order>;
   bestelbonnen: Array<Array<Order>>;
   loading: boolean;
   customer: null | Customer;
+  units: null | Array<Unit>;
 }

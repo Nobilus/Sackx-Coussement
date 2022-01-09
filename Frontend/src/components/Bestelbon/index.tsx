@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect } from "react";
 
 import { BestelbonEntry } from "src/types/Bestelbon";
 import { Order } from "src/types/Order";
+import dateStringToReadable from "src/utils/dateStringToReadable";
 import toLocaleCurrency from "src/utils/toLocaleCurrency";
 import Button from "../Button";
 import Table from "../Table/Table";
@@ -26,13 +27,14 @@ const BestelbonItem: FunctionComponent<BestelbonItemProps> = ({
       <TableHeader />
       <TableTitle titles={tableTitles} />
       {entries.map(({ date, indebted }, i) => {
-        const newDate = new Date(date).toISOString().split("T")[0];
         return (
           <TableRow cols={3} key={`tablerow-${i}`}>
             <TableItem className="place-self-start">
               {i === 0 ? name : ""}
             </TableItem>
-            <TableItem className="place-self-center">{newDate}</TableItem>
+            <TableItem className="place-self-center">
+              {dateStringToReadable(date)}
+            </TableItem>
             <TableItem className="place-self-end">
               {toLocaleCurrency(indebted)}
             </TableItem>

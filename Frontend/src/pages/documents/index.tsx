@@ -78,7 +78,7 @@ const offerteTableTitles = ["Naam", "Datum", "Bedrag"];
 
 const Bestelbonnen = () => {
   const { filters } = useFilters();
-  const { bestelbonnen } = useData();
+  const { bestelbonnen, offertes } = useData();
 
   if (filters.documenttype.name === "Bestelbonnen") {
     return (
@@ -104,8 +104,13 @@ const Bestelbonnen = () => {
         <Table>
           <TableHeader />
           <TableTitle titles={offerteTableTitles} colAmount={4} />
-          {offertes.map((offerte, i) => (
-            <OffertesItem {...offerte} key={`offerteitem-${i}`} />
+          {offertes.map(({ date, customerName, indebted }, i) => (
+            <OffertesItem
+              date={date}
+              name={customerName}
+              amount={indebted}
+              key={`offerteitem-${i}`}
+            />
           ))}
         </Table>
       </PageLayout>

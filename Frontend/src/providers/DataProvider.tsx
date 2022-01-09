@@ -13,6 +13,7 @@ import { Data } from "src/types/Data";
 import { Offerte } from "src/types/Offerte";
 import { Order, OrderDetail } from "src/types/Order";
 import { Product } from "src/types/Products";
+import { Unit } from "src/types/Unit";
 import { get } from "src/utils/api";
 
 interface IDataProviderContext {
@@ -23,10 +24,11 @@ interface IDataProviderContext {
   validateVatNumber: (vatNumber: string) => Promise<void>;
   products: any;
   customers: Customer[];
-  offertes: Offerte[];
+  offertes: Array<Order>;
   bestelbonnen: Array<Array<Order>>;
   loading: boolean;
   customer: null | Customer;
+  units: null | Array<Unit>;
 }
 
 const DataProviderContext = createContext<IDataProviderContext>(
@@ -51,6 +53,8 @@ function reducer(state: Data, action: { type: string; payload?: any }) {
       return { ...state, loading: action.payload.loading };
     case "setCustomer":
       return { ...state, customer: action.payload };
+    case "addUnits":
+      return { ...state, units: action.payload };
     default:
       return { ...state };
   }
@@ -61,6 +65,7 @@ const initialState: Data = {
   customers: [],
   offertes: [],
   bestelbonnen: [],
+  units: null,
   customer: null,
   loading: false,
 };
@@ -74,6 +79,7 @@ const DataProvider: FunctionComponent = ({ children }) => {
       case "/":
         if (state.products.length === 0) {
           fetchProducts();
+          fetchUnits();
         }
 
       case "/klanten":
@@ -83,6 +89,9 @@ const DataProvider: FunctionComponent = ({ children }) => {
       case "/documents":
         if (state.bestelbonnen.length === 0) {
           fetchBestelbons();
+        }
+        if (state.offertes.length === 0) {
+          fetchOffertes();
         }
       default:
         break;
@@ -131,6 +140,20 @@ const DataProvider: FunctionComponent = ({ children }) => {
     const [error, bestelbons] = await get(`/bestelbons`);
     setLoadingFalse();
     dispatch({ type: "addBestelbonnen", payload: bestelbons });
+  };
+
+  const fetchOffertes = async () => {
+    setLoadingTrue();
+    const [error, offertes] = await get("/offertes");
+    setLoadingFalse();
+    dispatch({ type: "addOffertes", payload: offertes });
+  };
+
+  const fetchUnits = async () => {
+    setLoadingTrue();
+    const [error, units] = await get("/units");
+    setLoadingFalse();
+    dispatch({ type: "addUnits", payload: units });
   };
 
   const validateVatNumber = async (vatNumber: string) => {
