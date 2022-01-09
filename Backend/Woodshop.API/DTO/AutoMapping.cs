@@ -18,6 +18,10 @@ namespace Sneakers.API.DTO
                 .ForMember(
                     dest => dest.MeasurmentUnit,
                     opt => opt.MapFrom(src => src.Unit.Name)
+                )
+                .ForMember(
+                    dest => dest.ProductGroupName,
+                    opt => opt.MapFrom(src => src.ProductGroup.ProductGroupName)
                 );
             CreateMap<ProductAddDTO, Product>();
 

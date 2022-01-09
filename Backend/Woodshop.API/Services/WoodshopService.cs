@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace Project.Services
     {
         Task<CustomerDTO> GetCustomer(Guid customerId);
         Task<List<CustomerDTO>> GetCustomers();
-        Task<List<ProductDTO>> GetProducts(string orderby);
+        Task<List<ProductDTO>> GetProducts(string orderby, string query);
         Task<ProductDTO> GetProduct(Guid id);
         Task<List<StaffDTO>> GetStaffs();
         Task<StaffDTO> GetStaff(int id);
@@ -64,13 +65,38 @@ namespace Project.Services
 
         }
 
-        public async Task<List<ProductDTO>> GetProducts(string orderby)
+        private string RemoveSpecialCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || c == '.' || c == '_')
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+
+        public async Task<List<ProductDTO>> GetProducts(string orderby, string query)
         {
             List<ProductDTO> products = _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
             products.ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
 
             string[] allowdQueries = { "price", "name", "thickness", "unit" };
-            if (allowdQueries.Contains(orderby))
+            if (!String.IsNullOrEmpty(query))
+            {
+                if (allowdQueries.Contains(orderby))
+                {
+                    var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
+                }
+                else
+                {
+                    return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => p.Name).ToList<ProductDTO>();
+                }
+            }
+            else if (allowdQueries.Contains(orderby))
             {
                 var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                 return products.OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();

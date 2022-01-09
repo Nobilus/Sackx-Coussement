@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Project.Models;
+using Woodshop.API.Models;
 
 namespace Project.DTO
 {
@@ -29,6 +30,9 @@ namespace Project.DTO
         public double Price { get; set; }
         public double PriceWithVat { get; set; }
         public double PurchasePrice { get; set; }
+        [JsonIgnore]
+        public ProductGroup Productgroup { get; set; }
+        public string ProductGroupName { get; set; }
         [JsonIgnore]
         public Unit Unit { get; set; }
         public string MeasurmentUnit { get; set; }

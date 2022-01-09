@@ -8,7 +8,7 @@ import TableRow from "src/components/Table/TableRow";
 
 interface ProductProps {
   name?: string;
-  productGroup?: string;
+  productGroupName?: string;
   measurmentUnit: string;
   price?: number;
   priceWithVat?: number;
@@ -20,7 +20,7 @@ interface ProductProps {
 
 const Product: FunctionComponent<ProductProps> = ({
   name,
-  productGroup,
+  productGroupName,
   purchasePrice,
   measurmentUnit,
   thickness,
@@ -32,7 +32,7 @@ const Product: FunctionComponent<ProductProps> = ({
 
   const initialValues = {
     name: name ?? "",
-    productGroup: productGroup ?? "",
+    productGroupName: productGroupName ?? "",
     purchasePrice: purchasePrice ?? "",
     price: price ?? "",
     measurmentUnit: measurmentUnit ?? "",
@@ -116,7 +116,7 @@ const Product: FunctionComponent<ProductProps> = ({
             value={values.price}
           />
         </TableRow>
-        <TableRow cols={2}>
+        {/* <TableRow cols={2}>
           <TableItem className="place-self-center text-green-25 font-title">
             Dikte
           </TableItem>
@@ -142,7 +142,7 @@ const Product: FunctionComponent<ProductProps> = ({
             onChange={handleTextChanged}
             value={values.width}
           />
-        </TableRow>
+        </TableRow> */}
         <TableRow cols={2}>
           <Button
             className="col-start-2 w-max place-self-end"
