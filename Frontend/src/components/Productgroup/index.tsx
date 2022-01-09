@@ -38,10 +38,10 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
                 {toLocaleCurrency(purchasePrice)}
               </TableItem>
               <TableItem className={"place-self-center"}>
-                {toLocaleCurrency(priceWithVat)}
-              </TableItem>
-              <TableItem className="place-self-end">
                 {toLocaleCurrency(price)}
+              </TableItem>
+              <TableItem className="place-self-end my-auto">
+                {toLocaleCurrency(priceWithVat)}
               </TableItem>
               <MdModeEdit
                 className="my-auto place-self-end cursor-pointer"

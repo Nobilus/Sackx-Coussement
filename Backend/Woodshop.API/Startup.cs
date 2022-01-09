@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +48,9 @@ namespace Project
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+            services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+            .AddCertificate()
+            .AddCertificateCache();
 
             services.AddAuthentication(options =>
             {
@@ -77,7 +81,11 @@ namespace Project
 
             services.AddTransient<IWoodshopService, WoodshopService>();
 
-
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
 
             services.AddCors(options =>
             {

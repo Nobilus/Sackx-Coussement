@@ -7,33 +7,35 @@ import TableItem from "src/components/Table/TableItem";
 import TableRow from "src/components/Table/TableRow";
 
 interface ProductProps {
-  productName?: string;
+  name?: string;
   productGroup?: string;
-  purchasePrice?: string;
-  exclVat?: string;
-  unit?: string;
-  thickness?: string;
-  width?: string;
+  measurmentUnit: string;
+  price?: number;
+  priceWithVat?: number;
+  productId?: string;
+  purchasePrice?: number;
+  thickness?: number;
+  width?: number;
 }
 
 const Product: FunctionComponent<ProductProps> = ({
-  productName,
+  name,
   productGroup,
   purchasePrice,
-  exclVat,
-  unit,
+  measurmentUnit,
   thickness,
   width,
+  price,
 }) => {
   const inputClassname =
     "text-baseline font-body font-regular border border-green-100 rounded placeholder-transparent pl-4 py-2 outline-none  bg-white placeholder:text-green-25 text-green-200";
 
   const initialValues = {
-    productName: productName ?? "",
+    name: name ?? "",
     productGroup: productGroup ?? "",
     purchasePrice: purchasePrice ?? "",
-    exclVat: exclVat ?? "",
-    unit: unit ?? "",
+    price: price ?? "",
+    measurmentUnit: measurmentUnit ?? "",
     thickness: thickness ?? "",
     width: width ?? "",
   };
@@ -58,7 +60,7 @@ const Product: FunctionComponent<ProductProps> = ({
           editable={true}
           onChange={handleTextChanged}
           placeholder="product naam"
-          value={values.productName}
+          value={values.name}
           className="mb-4"
         />
 
@@ -98,7 +100,7 @@ const Product: FunctionComponent<ProductProps> = ({
             type={"text"}
             name={"unit"}
             onChange={handleTextChanged}
-            value={values.unit}
+            value={values.measurmentUnit}
           />
         </TableRow>
         <TableRow cols={2}>
@@ -111,7 +113,7 @@ const Product: FunctionComponent<ProductProps> = ({
             type={"text"}
             name={"exclVat"}
             onChange={handleTextChanged}
-            value={values.exclVat}
+            value={values.price}
           />
         </TableRow>
         <TableRow cols={2}>

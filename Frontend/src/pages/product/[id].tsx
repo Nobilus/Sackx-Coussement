@@ -11,11 +11,14 @@ const EditProduct = () => {
     async function fetchProductdetail() {
       const [error, product] = await get(`/products/${id}`);
       console.log("this is product", product);
+      console.log(product);
 
       setProduct(product);
     }
+    console.log(id);
+
     fetchProductdetail();
-  }, []);
+  }, [id]);
 
   // fetch product detail
   // const product = {
