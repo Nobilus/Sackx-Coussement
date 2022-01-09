@@ -29,6 +29,7 @@ namespace Project.Services
         Task<Order> AddOrder(OrderDTO order);
         Task<List<OrdersDTO>> GetOrders();
         Task<List<List<OrdersDTO>>> GetBestelbons();
+        Task<List<OrdersDTO>> GetOffertes();
         Task<OrdersDTO> GetOrder(Guid id);
         Task<Order> SwitchOrderType(Guid id);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
@@ -263,6 +264,30 @@ namespace Project.Services
                 }
                 var groupedOrders = orders.GroupBy(o => o.CustomerName).Select(grp => grp.ToList()).ToList();
                 return groupedOrders;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<OrdersDTO>> GetOffertes()
+        {
+            try
+            {
+                List<OrdersDTO> orders = _mapper.Map<List<OrdersDTO>>(await _orderRepository.GetOffertes());
+                foreach (var order in orders)
+                {
+                    double total = 0.00;
+                    foreach (var product in order.OrderDetails)
+                    {
+                        product.PriceWithVat = Math.Round(product.Price * VAT, 2);
+                        total += product.Quantity * product.Price;
+                    }
+                    order.Indebted = total;
+                    order.VAT = Math.Round(total * 0.21, 2);
+                }
+                return orders;
             }
             catch (Exception ex)
             {

@@ -279,6 +279,19 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+        [HttpGet]
+        [Route("offertes")]
+        public async Task<ActionResult<List<List<OrdersDTO>>>> GetOffertes()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetOffertes());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
 
         // [Authorize]
         [HttpGet]
