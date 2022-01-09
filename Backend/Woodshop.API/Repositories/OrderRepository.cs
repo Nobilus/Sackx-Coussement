@@ -13,8 +13,10 @@ namespace Project.Repositories
     {
         Task<Order> AddOrder(Order order);
         Task<List<Order>> GetOrders();
+        Task<List<Order>> GetBestelbons();
         Task<Order> GetOrder(Guid id);
         Task<Order> SwitchOrderType(Guid id);
+
     }
 
     public class OrderRepository : IOrderRepository
@@ -42,6 +44,18 @@ namespace Project.Repositories
                 .ThenInclude(op => op.Unit)
                 .ToListAsync();
         }
+
+        public async Task<List<Order>> GetBestelbons()
+        {
+            return await _context.Orders
+                .Where(o => o.OrderType == "bestelbon")
+                .Include(o => o.Customer)
+                .Include(o => o.OrderProducts)
+                .ThenInclude(op => op.Product)
+                .ThenInclude(op => op.Unit)
+                .ToListAsync();
+        }
+
         public async Task<Order> GetOrder(Guid id)
         {
 

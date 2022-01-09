@@ -131,6 +131,15 @@ namespace Sneakers.API.DTO
                 dest => dest.Postal,
                 opt => opt.MapFrom(src => src.Address.Postal)
             );
+            CreateMap<List<Order>, BestelbonDTO>()
+            .ForMember(
+                dest => dest.CustomerName,
+                opt => opt.MapFrom(src => src[0].Customer.CustomerName)
+            )
+            .ForMember(
+                dest => dest.Orders,
+                opt => opt.MapFrom(src => src)
+            );
         }
     }
 }

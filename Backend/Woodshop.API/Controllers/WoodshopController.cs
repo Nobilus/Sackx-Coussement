@@ -266,6 +266,19 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+        [HttpGet]
+        [Route("bestelbons")]
+        public async Task<ActionResult<List<List<OrdersDTO>>>> GetbestelBons()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetBestelbons());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
 
         // [Authorize]
         [HttpGet]

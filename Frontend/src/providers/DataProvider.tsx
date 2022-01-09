@@ -11,6 +11,7 @@ import { Bestelbon } from "src/types/Bestelbon";
 import { Customer } from "src/types/Customer";
 import { Data } from "src/types/Data";
 import { Offerte } from "src/types/Offerte";
+import { Order, OrderDetail } from "src/types/Order";
 import { Product } from "src/types/Products";
 import { get } from "src/utils/api";
 
@@ -23,7 +24,7 @@ interface IDataProviderContext {
   products: any;
   customers: Customer[];
   offertes: Offerte[];
-  bestelbonnen: Bestelbon[];
+  bestelbonnen: Array<Array<Order>>;
   loading: boolean;
   customer: null | Customer;
 }
@@ -79,6 +80,10 @@ const DataProvider: FunctionComponent = ({ children }) => {
         if (state.customers.length === 0) {
           fetchCustomers();
         }
+      case "/documents":
+        if (state.bestelbonnen.length === 0) {
+          fetchBestelbons();
+        }
       default:
         break;
     }
@@ -119,6 +124,13 @@ const DataProvider: FunctionComponent = ({ children }) => {
   };
   const clearSearchCustomer = () => {
     fetchCustomers();
+  };
+
+  const fetchBestelbons = async () => {
+    setLoadingTrue();
+    const [error, bestelbons] = await get(`/bestelbons`);
+    setLoadingFalse();
+    dispatch({ type: "addBestelbonnen", payload: bestelbons });
   };
 
   const validateVatNumber = async (vatNumber: string) => {

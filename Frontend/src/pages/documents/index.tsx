@@ -6,6 +6,7 @@ import OffertesItem from "src/components/Offertes";
 import Table from "src/components/Table/Table";
 import TableHeader from "src/components/Table/TableHeader";
 import TableTitle from "src/components/Table/TableTitle";
+import { useData } from "src/providers/DataProvider";
 import { useFilters } from "src/providers/FilterProvider";
 import { Bestelbon } from "src/types/Bestelbon";
 import { Offerte } from "src/types/Offerte";
@@ -77,19 +78,22 @@ const offerteTableTitles = ["Naam", "Datum", "Bedrag"];
 
 const Bestelbonnen = () => {
   const { filters } = useFilters();
+  const { bestelbonnen } = useData();
 
   if (filters.documenttype.name === "Bestelbonnen") {
     return (
       <PageLayout>
         <DocumentHeader />
         <Table>
-          {bestelbonnen.map(({ customer, entries }, i) => (
-            <BestelbonItem
-              name={customer}
-              entries={entries}
-              key={`bestelbonitem-${i}`}
-            />
-          ))}
+          {bestelbonnen.map((bonnen, i) => {
+            return (
+              <BestelbonItem
+                name={bonnen[0].customerName}
+                entries={bonnen}
+                key={`bestelbonitem-${i}`}
+              />
+            );
+          })}
         </Table>
       </PageLayout>
     );

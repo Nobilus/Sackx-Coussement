@@ -1,6 +1,7 @@
 import { Bestelbon } from "./Bestelbon";
 import { Customer } from "./Customer";
 import { Offerte } from "./Offerte";
+import { Order } from "./Order";
 import { Product } from "./Products";
 
 export interface Data {
@@ -11,7 +12,7 @@ export interface Data {
   }>;
   customers: Array<Customer>;
   offertes: Array<Offerte>;
-  bestelbonnen: Array<Bestelbon>;
+  bestelbonnen: Array<Array<Order>>;
   loading: boolean;
   customer: null | Customer;
 }

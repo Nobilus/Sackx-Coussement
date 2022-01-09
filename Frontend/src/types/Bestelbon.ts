@@ -3,7 +3,4 @@ export interface BestelbonEntry {
   amount: number;
 }
 
-export interface Bestelbon {
-  customer: string;
-  entries: Array<BestelbonEntry>;
-}
+export interface Bestelbon {}

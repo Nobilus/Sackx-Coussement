@@ -28,6 +28,7 @@ namespace Project.Services
         Task<StaffAddDTO> AddStaff(StaffAddDTO staffmember);
         Task<Order> AddOrder(OrderDTO order);
         Task<List<OrdersDTO>> GetOrders();
+        Task<List<List<OrdersDTO>>> GetBestelbons();
         Task<OrdersDTO> GetOrder(Guid id);
         Task<Order> SwitchOrderType(Guid id);
         Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
@@ -36,6 +37,7 @@ namespace Project.Services
         Task<List<ProductgroupDTO>> ListProductgroupsWithProducts(string query);
         Task<List<ProductGroup>> ListProductgroups();
         Task<Customer> ValidateVatnumber(string vatNumber);
+
     }
 
 
@@ -236,6 +238,31 @@ namespace Project.Services
                 }
                 await _orderRepository.AddOrder(newOrder);
                 return newOrder;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<List<OrdersDTO>>> GetBestelbons()
+        {
+            try
+            {
+                List<OrdersDTO> orders = _mapper.Map<List<OrdersDTO>>(await _orderRepository.GetBestelbons());
+                foreach (var order in orders)
+                {
+                    double total = 0.00;
+                    foreach (var product in order.OrderDetails)
+                    {
+                        product.PriceWithVat = Math.Round(product.Price * VAT, 2);
+                        total += product.Quantity * product.Price;
+                    }
+                    order.Indebted = total;
+                    order.VAT = Math.Round(total * 0.21, 2);
+                }
+                var groupedOrders = orders.GroupBy(o => o.CustomerName).Select(grp => grp.ToList()).ToList();
+                return groupedOrders;
             }
             catch (Exception ex)
             {
