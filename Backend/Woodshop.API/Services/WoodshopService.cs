@@ -20,7 +20,7 @@ namespace Project.Services
     public interface IWoodshopService
     {
         Task<CustomerDTO> GetCustomer(Guid customerId);
-        Task<List<CustomerDTO>> GetCustomers();
+        Task<List<CustomerDTO>> GetCustomers(string query);
         Task<List<ProductDTO>> GetProducts(string orderby, string query);
         Task<ProductDTO> GetProduct(Guid id);
         Task<List<StaffDTO>> GetStaffs();
@@ -149,9 +149,24 @@ namespace Project.Services
             }
         }
 
-        public async Task<List<CustomerDTO>> GetCustomers()
+        public async Task<List<CustomerDTO>> GetCustomers(string query)
         {
-            return _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers());
+            try
+            {
+                List<CustomerDTO> customers = _mapper.Map<List<CustomerDTO>>(await _customerRepository.GetCustomers());
+                if (String.IsNullOrEmpty(query))
+                {
+                    return customers.OrderBy(c => c.CustomerName).ToList<CustomerDTO>();
+                }
+                else
+                {
+                    return customers.Where(c => RemoveSpecialCharacters(c.CustomerName.ToLower()).Contains(query.ToLower())).OrderBy(c => c.CustomerName).ToList<CustomerDTO>();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer)

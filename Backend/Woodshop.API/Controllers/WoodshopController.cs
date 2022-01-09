@@ -105,9 +105,10 @@ namespace Project.Controllers
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
         {
+            string query = HttpContext.Request.Query["q"].ToString();
             try
             {
-                return new OkObjectResult(await _woodshopService.GetCustomers());
+                return new OkObjectResult(await _woodshopService.GetCustomers(query));
             }
             catch (Exception ex)
             {
