@@ -77,7 +77,7 @@ class FormItem {
     this.faulty = getValueFromObject(formItem, "faulty", undefined);
     this.errormessage = getValueFromObject(formItem, "errormessage", undefined);
     this.autoComplete = getValueFromObject(formItem, "autoComplete", "off");
-    this.btntype = getValueFromObject(formItem, "btnType", undefined);
+    this.btntype = getValueFromObject(formItem, "btnType", "primary");
     this.onClick = getValueFromObject(formItem, "onClick", undefined);
     this.text = getValueFromObject(formItem, "text", undefined);
     this.required = getValueFromObject(formItem, "required", true);
@@ -87,7 +87,6 @@ class FormItem {
       undefined
     );
     this.btnClassName = getValueFromObject(formItem, "btnClassName", undefined);
-
     if (this.type === "text-area") {
       this.rows = getValueFromObject(formItem, "rows", undefined);
     }

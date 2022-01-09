@@ -13,6 +13,8 @@ module.exports = {
     "grid-cols-4",
     "grid-cols-5",
     "grid-cols-6",
+    "gap-x-20",
+    "gap-y-8",
   ],
   darkMode: "media", // or 'media' or 'class'
   theme: {

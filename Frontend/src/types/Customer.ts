@@ -8,4 +8,5 @@ export interface Customer {
   orders: any;
   email: string;
   telephone: string;
+  VATNumber: string;
 }

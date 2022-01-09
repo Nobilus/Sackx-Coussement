@@ -1,14 +1,22 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import FormItem from "src/classes/FormItem";
 import Form from "src/components/Form";
 import PageLayout from "src/components/Layout/PageLayout";
+import { useData } from "src/providers/DataProvider";
 
 const New: FunctionComponent = () => {
   const [submitting, setSubmitting] = useState(false);
+  const [vatNumber, setVatNumber] = useState<string>();
+  const [changed, setChanged] = useState(false);
+  const { validateVatNumber, customer } = useData();
 
-  const validateVATNumber = () => {
-    console.log("validating");
-  };
+  const valVat = (vatNumber: string | undefined) => {};
+
+  useEffect(() => {
+    console.log("this is the vatnumber", vatNumber);
+
+    return () => {};
+  }, [vatNumber]);
 
   const formItems = [
     new FormItem({
@@ -25,13 +33,14 @@ const New: FunctionComponent = () => {
       btntype: "primary",
       text: "Valideren en gegevens ophalen",
       className: "my-auto",
-      onClick: validateVATNumber,
+      onClick: () => valVat(vatNumber),
     }),
     new FormItem({
       id: "name",
       name: "name",
       type: "text",
       placeholder: "Naam",
+      value: customer?.customerName,
       className: "col-span-2",
       inputClassName: "h-10",
     }),
@@ -40,18 +49,14 @@ const New: FunctionComponent = () => {
       name: "street",
       type: "text",
       placeholder: "Straat",
+      value: customer?.street,
       inputClassName: "h-10",
     }),
-    new FormItem({
-      id: "number",
-      name: "number",
-      type: "text",
-      placeholder: "Nummer en bus",
-      inputClassName: "h-10",
-    }),
+
     new FormItem({
       id: "gemeente",
       name: "gemeente",
+      value: customer?.city,
       type: "text",
       placeholder: "Gemeente",
       inputClassName: "h-10",
@@ -59,23 +64,18 @@ const New: FunctionComponent = () => {
     new FormItem({
       id: "postcode",
       name: "postcode",
+      value: customer?.postal,
       type: "text",
       placeholder: "Postcode",
       inputClassName: "h-10",
     }),
-    new FormItem({
-      id: "land",
-      name: "land",
-      type: "text",
-      placeholder: "Land",
-      className: "col-span-2",
-      inputClassName: "h-10",
-    }),
+
     new FormItem({
       id: "telefoonnr",
       name: "telefoonnr",
       type: "text",
       placeholder: "Telefoonnummer",
+      value: customer?.telephone,
       className: "col-span-2",
       inputClassName: "h-10",
     }),
@@ -95,6 +95,14 @@ const New: FunctionComponent = () => {
     console.log(e);
   }
 
+  function handleItemChange(e: any) {
+    if (e.id === "btwnr") {
+      setChanged(!changed);
+      setVatNumber(e.value);
+      validateVatNumber(e.value);
+    }
+  }
+
   return (
     <PageLayout>
       <Form
@@ -102,10 +110,12 @@ const New: FunctionComponent = () => {
         cols={2}
         colGap={20}
         rowGap={8}
+        onItemChange={handleItemChange}
         formItems={formItems}
         onSubmit={handleSubmit}
         submitting={submitting}
         setSubmitting={setSubmitting}
+        changed={changed}
       />
     </PageLayout>
   );

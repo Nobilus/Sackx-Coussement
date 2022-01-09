@@ -74,7 +74,7 @@ const Product: FunctionComponent<ProductProps> = ({
             type={"text"}
             name={"productGroup"}
             onChange={handleTextChanged}
-            value={values.productGroup}
+            value={values.productGroupName}
           />
         </TableRow>
         <TableRow cols={2}>

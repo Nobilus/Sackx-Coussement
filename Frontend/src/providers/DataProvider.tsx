@@ -19,10 +19,13 @@ interface IDataProviderContext {
   clearSearchCustomer: () => void;
   searchProduct: (product: string) => Promise<void>;
   clearSearchProduct: () => Promise<void>;
+  validateVatNumber: (vatNumber: string) => Promise<void>;
   products: any;
   customers: Customer[];
   offertes: Offerte[];
   bestelbonnen: Bestelbon[];
+  loading: boolean;
+  customer: null | Customer;
 }
 
 const DataProviderContext = createContext<IDataProviderContext>(
@@ -33,7 +36,7 @@ export function useData() {
   return useContext(DataProviderContext);
 }
 
-function reducer(state: Data, action: { type: string; payload: any }) {
+function reducer(state: Data, action: { type: string; payload?: any }) {
   switch (action.type) {
     case "addProducts":
       return { ...state, products: action.payload };
@@ -43,7 +46,10 @@ function reducer(state: Data, action: { type: string; payload: any }) {
       return { ...state, bestelbonnen: action.payload };
     case "addOffertes":
       return { ...state, offertes: action.payload };
-
+    case "toggleLoading":
+      return { ...state, loading: action.payload.loading };
+    case "setCustomer":
+      return { ...state, customer: action.payload };
     default:
       return { ...state };
   }
@@ -54,6 +60,8 @@ const initialState: Data = {
   customers: [],
   offertes: [],
   bestelbonnen: [],
+  customer: null,
+  loading: false,
 };
 
 const DataProvider: FunctionComponent = ({ children }) => {
@@ -76,12 +84,21 @@ const DataProvider: FunctionComponent = ({ children }) => {
     }
   }, [pathname]);
 
+  const setLoadingTrue = () => {
+    dispatch({ type: "toggleLoading", payload: { loading: true } });
+  };
+  const setLoadingFalse = () => {
+    dispatch({ type: "toggleLoading", payload: { loading: false } });
+  };
+
   const fetchProducts = async () => {
     const [error, products] = await get(`/products/withgroups`);
     dispatch({ type: "addProducts", payload: products });
   };
   const searchProduct = async (product: string) => {
+    setLoadingTrue();
     const [error, products] = await get(`/products/withgroups?q=${product}`);
+    setLoadingFalse();
     dispatch({ type: "addProducts", payload: products });
   };
   const clearSearchProduct = async () => {
@@ -89,15 +106,26 @@ const DataProvider: FunctionComponent = ({ children }) => {
   };
 
   const fetchCustomers = async () => {
+    setLoadingTrue();
     const [error, customers] = await get(`/customers`);
+    setLoadingFalse();
     dispatch({ type: "addCustomers", payload: customers });
   };
   const searchCustomer = async (query: string) => {
+    setLoadingTrue();
     const [error, customers] = await get(`/customers?q=${query}`);
+    setLoadingFalse();
     dispatch({ type: "addCustomers", payload: customers });
   };
   const clearSearchCustomer = () => {
     fetchCustomers();
+  };
+
+  const validateVatNumber = async (vatNumber: string) => {
+    setLoadingTrue();
+    const [error, customer] = await get(`/customer/validate/${vatNumber}`);
+    setLoadingFalse();
+    dispatch({ type: "setCustomer", payload: customer });
   };
 
   const value = {
@@ -106,6 +134,7 @@ const DataProvider: FunctionComponent = ({ children }) => {
     clearSearchCustomer,
     searchProduct,
     clearSearchProduct,
+    validateVatNumber,
   };
 
   return (

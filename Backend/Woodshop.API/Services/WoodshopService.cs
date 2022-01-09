@@ -308,6 +308,10 @@ namespace Project.Services
             try
             {
                 List<ProductgroupDTO> productGroups = _mapper.Map<List<ProductgroupDTO>>(await _productgroupRepository.GetProductsWithGroups(query));
+                foreach (ProductgroupDTO pg in productGroups)
+                {
+                    pg.Products.ToList<ProductDTO>().ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
+                }
                 return productGroups;
 
             }

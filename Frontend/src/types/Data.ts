@@ -12,4 +12,6 @@ export interface Data {
   customers: Array<Customer>;
   offertes: Array<Offerte>;
   bestelbonnen: Array<Bestelbon>;
+  loading: boolean;
+  customer: null | Customer;
 }
