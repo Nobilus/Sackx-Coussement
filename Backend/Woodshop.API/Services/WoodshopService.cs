@@ -83,31 +83,39 @@ namespace Project.Services
 
         public async Task<List<ProductDTO>> GetProducts(string orderby, string query)
         {
-            List<ProductDTO> products = _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
-            products.ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
+            try
+            {
+                List<ProductDTO> products = _mapper.Map<List<ProductDTO>>(await _productRepository.GetProducts());
+                products.ForEach(p => p.PriceWithVat = Math.Round(p.Price * 1.21, 2));
 
-            string[] allowdQueries = { "price", "name", "thickness", "unit" };
-            if (!String.IsNullOrEmpty(query))
-            {
-                if (allowdQueries.Contains(orderby))
-                {
-                    var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
-                }
-                else
-                {
-                    return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => p.Name).ToList<ProductDTO>();
-                }
-            }
-            else if (allowdQueries.Contains(orderby))
-            {
-                var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                return products.OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
-            }
-            else
-            {
+                // string[] allowdQueries = { "price", "name", "thickness", "unit" };
+                // if (!(String.IsNullOrEmpty(query)))
+                // {
+                //     if (allowdQueries.Contains(orderby))
+                //     {
+                //         var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                //         return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
+                //     }
+                //     else
+                //     {
+                //         return products.Where(p => RemoveSpecialCharacters(p.Name.ToLower()).Contains(query.ToLower())).OrderBy(p => p.Name).ToList<ProductDTO>();
+                //     }
+                // }
+                // else if (!(String.IsNullOrEmpty(orderby)) && allowdQueries.Contains(orderby))
+                // {
+                //     var param = typeof(ProductDTO).GetProperty(orderby, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                //     return products.OrderBy(p => param.GetValue(p, null)).ToList<ProductDTO>();
+                // }
+                // else
+                // {
                 return products;
+                // }
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
         public async Task<ProductDTO> GetProduct(Guid id)

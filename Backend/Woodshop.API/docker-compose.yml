@@ -6,8 +6,7 @@ services:
     environment:
       SA_PASSWORD: "<YourNewStrong@Passw0rd>"
       ACCEPT_EULA: "Y"
-    restart:
-      - always
+    restart: "always"
     ports:
       - 1433:1433
     volumes:

@@ -29,6 +29,7 @@ namespace Project.Repositories
             return await _context.Products
                                     .Include(p => p.Unit)
                                     .Include(p => p.ProductGroup)
+                                    .OrderBy(p => p.Name)
                                     .ToListAsync();
         }
 

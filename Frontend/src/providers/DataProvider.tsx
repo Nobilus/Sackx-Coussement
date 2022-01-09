@@ -12,7 +12,7 @@ import { Customer } from "src/types/Customer";
 import { Data } from "src/types/Data";
 import { Offerte } from "src/types/Offerte";
 import { Order, OrderDetail } from "src/types/Order";
-import { Product } from "src/types/Products";
+import { Product, ProductWithGroupname } from "src/types/Products";
 import { Unit } from "src/types/Unit";
 import { get } from "src/utils/api";
 
@@ -22,7 +22,8 @@ interface IDataProviderContext {
   searchProduct: (product: string) => Promise<void>;
   clearSearchProduct: () => Promise<void>;
   validateVatNumber: (vatNumber: string) => Promise<void>;
-  products: any;
+  productsWithGroupname: Array<ProductWithGroupname>;
+  products: Array<Product>;
   customers: Customer[];
   offertes: Array<Order>;
   bestelbonnen: Array<Array<Order>>;
@@ -41,7 +42,9 @@ export function useData() {
 
 function reducer(state: Data, action: { type: string; payload?: any }) {
   switch (action.type) {
-    case "addProducts":
+    case "addProductsWithGroupname":
+      return { ...state, productsWithGroupname: action.payload };
+    case "addAllProducts":
       return { ...state, products: action.payload };
     case "addCustomers":
       return { ...state, customers: action.payload };
@@ -61,6 +64,7 @@ function reducer(state: Data, action: { type: string; payload?: any }) {
 }
 
 const initialState: Data = {
+  productsWithGroupname: [],
   products: [],
   customers: [],
   offertes: [],
@@ -80,6 +84,7 @@ const DataProvider: FunctionComponent = ({ children }) => {
         if (state.products.length === 0) {
           fetchProducts();
           fetchUnits();
+          fetchAllProducts();
         }
 
       case "/klanten":
@@ -106,9 +111,19 @@ const DataProvider: FunctionComponent = ({ children }) => {
   };
 
   const fetchProducts = async () => {
+    setLoadingTrue();
     const [error, products] = await get(`/products/withgroups`);
-    dispatch({ type: "addProducts", payload: products });
+    setLoadingFalse();
+    dispatch({ type: "addProductsWithGroupname", payload: products });
   };
+
+  const fetchAllProducts = async () => {
+    setLoadingTrue();
+    const [error, products] = await get("/products");
+    setLoadingFalse();
+    dispatch({ type: "addAllProducts", payload: products });
+  };
+
   const searchProduct = async (product: string) => {
     setLoadingTrue();
     const [error, products] = await get(`/products/withgroups?q=${product}`);

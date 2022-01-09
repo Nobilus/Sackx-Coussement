@@ -5,7 +5,7 @@ import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 interface AutocompleteProps {
   placeholder: string;
-  items: Array<any>;
+  items?: Array<any>;
   className?: string;
   selectedItem?: any;
   handleSelectedItemChange?: any;

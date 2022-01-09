@@ -9,3 +9,9 @@ export interface Product {
   productGroupName: string;
   measurmentUnit: null | string;
 }
+
+export interface ProductWithGroupname {
+  productGroupId: number;
+  productGroupName: string;
+  products: Array<Product>;
+}

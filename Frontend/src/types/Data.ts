@@ -1,14 +1,11 @@
 import { Customer } from "./Customer";
 import { Order } from "./Order";
-import { Product } from "./Products";
+import { Product, ProductWithGroupname } from "./Products";
 import { Unit } from "./Unit";
 
 export interface Data {
-  products: Array<{
-    productGroupId: number;
-    productGroupName: string;
-    products: Array<Product>;
-  }>;
+  productsWithGroupname: Array<ProductWithGroupname>;
+  products: Array<Product>;
   customers: Array<Customer>;
   offertes: Array<Order>;
   bestelbonnen: Array<Array<Order>>;

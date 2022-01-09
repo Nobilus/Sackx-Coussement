@@ -8,6 +8,7 @@ import TableHeader from "src/components/Table/TableHeader";
 import TableRow from "src/components/Table/TableRow";
 import TableTitle from "src/components/Table/TableTitle";
 import { MdClose } from "react-icons/md";
+import { useData } from "src/providers/DataProvider";
 
 const Autocomplete = dynamic(import("src/components/Autocomplete"), {
   ssr: false,
@@ -15,7 +16,7 @@ const Autocomplete = dynamic(import("src/components/Autocomplete"), {
 
 const New = () => {
   const titles = ["Product", "Aantal", "Eenheid", "Stukprijs"];
-
+  const { units, products: items } = useData();
   const [products, setProducts] = useState([{}]);
 
   const addProduct = () => {
@@ -29,60 +30,6 @@ const New = () => {
     setProducts([...newArr]);
   };
 
-  const items = [
-    "Alabama",
-    "Alaska",
-    "American Samoa",
-    "Arizona",
-    "Arkansas",
-    "California",
-    "Colorado",
-    "Connecticut",
-    "Delaware",
-    "District of Columbia",
-    "Federated States of Micronesia",
-    "Florida",
-    "Georgia",
-    "Guam",
-    "Hawaii",
-    "Idaho",
-    "Illinois",
-    "Indiana",
-    "Iowa",
-    "Kansas",
-    "Kentucky",
-    "Louisiana",
-    "Maine",
-    "Marshall Islands",
-    "Maryland",
-    "Massachusetts",
-    "Michigan",
-    "Minnesota",
-    "Mississippi",
-    "Missouri",
-    "Montana",
-    "Nebraska",
-    "Nevada",
-    "New Hampshire",
-    "New Jersey",
-    "New Mexico",
-    "New York",
-    "North Carolina",
-    "North Dakota",
-    "Northern Mariana Islands",
-    "Ohio",
-    "Oklahoma",
-    "Oregon",
-    "Palau",
-    "Pennsylvania",
-    "Puerto Rico",
-    "Rhode Island",
-    "South Carolina",
-    "South Dakota",
-    "Tennessee",
-    "Texas",
-    "Utah",
-  ];
   const handleContinue = () => {};
 
   const handleSelectedChange = (e: any) => {
@@ -128,7 +75,7 @@ const New = () => {
               <Autocomplete
                 className="place-self-start mr-9"
                 placeholder={"Product"}
-                items={items}
+                items={items.map(({ name }) => name)}
                 handleSelectedItemChange={handleSelectedChange}
                 name={`${i}`}
                 id={"product"}
@@ -146,7 +93,7 @@ const New = () => {
               <Autocomplete
                 className=" mx-16"
                 placeholder={"Eenheid"}
-                items={items}
+                items={units?.map(({ name }) => name)}
                 handleSelectedItemChange={handleSelectedChange}
                 name={`${i}`}
                 id={"unit"}

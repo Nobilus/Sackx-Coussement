@@ -5,20 +5,14 @@ import Productgroup from "../components/Productgroup";
 import ProductHeader from "../components/Productgroup/header";
 
 export default function Home() {
-  const { products } = useData();
-
-  useEffect(() => {
-    console.log(products);
-
-    return () => {};
-  }, [products]);
+  const { productsWithGroupname } = useData();
 
   return (
     <PageLayout>
       <ProductHeader />
-      {products &&
-        products.length > 0 &&
-        products.map((group: any) => (
+      {productsWithGroupname &&
+        productsWithGroupname.length > 0 &&
+        productsWithGroupname.map((group: any) => (
           <Productgroup
             key={group.productGroupId}
             groupname={group.productGroupName}
