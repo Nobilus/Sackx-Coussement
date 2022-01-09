@@ -1,6 +1,11 @@
 export interface Customer {
-  name: string;
+  customerId: string;
+  customerName: string;
+  firstName: string;
+  street: string;
+  postal: number;
+  city: string;
+  orders: any;
   email: string;
   telephone: string;
-  contactperson: string;
 }

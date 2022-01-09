@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useMemo } from "react";
 import Button from "../Button";
 import { MdSearch } from "react-icons/md";
 import Autocomplete from "../Autocomplete";
+import { useData } from "src/providers/DataProvider";
+import debounce from "lodash.debounce";
 
 const ProductHeader = () => {
   const router = useRouter();
-
+  const { searchProduct } = useData();
   const clickNieuwProduct = () => {
     router.push("/product/new");
   };
@@ -70,6 +72,15 @@ const ProductHeader = () => {
     "Utah",
   ];
 
+  const handleSearchChange = (e: any) => {
+    searchProduct(e.target.value);
+  };
+
+  const debouncedHandleSearchChange = useMemo(
+    () => debounce(handleSearchChange, 300),
+    []
+  );
+
   return (
     <div className="container flex flex-row justify-between mx-auto mb-16">
       {/* search item */}
@@ -84,6 +95,7 @@ const ProductHeader = () => {
             placeholder="Zoeken..."
             type="text"
             name="search"
+            onChange={debouncedHandleSearchChange}
           />
         </label>
         <Autocomplete
