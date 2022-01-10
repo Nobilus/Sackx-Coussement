@@ -1,5 +1,5 @@
 import { Customer } from "./Customer";
-import { Order } from "./Order";
+import { NewOrder, Order } from "./Order";
 import { Product, ProductWithGroupname } from "./Products";
 import { Unit } from "./Unit";
 
@@ -12,4 +12,6 @@ export interface Data {
   loading: boolean;
   customer: null | Customer;
   units: null | Array<Unit>;
+  order?: Array<NewOrder>;
+  orderType?: "offerte" | "bestelbon" | "factuur";
 }

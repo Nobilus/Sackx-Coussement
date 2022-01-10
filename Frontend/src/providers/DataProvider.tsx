@@ -7,11 +7,9 @@ import {
   useReducer,
   useState,
 } from "react";
-import { Bestelbon } from "src/types/Bestelbon";
 import { Customer } from "src/types/Customer";
 import { Data } from "src/types/Data";
-import { Offerte } from "src/types/Offerte";
-import { Order, OrderDetail } from "src/types/Order";
+import { NewOrder, Order, OrderDetail } from "src/types/Order";
 import { Product, ProductWithGroupname } from "src/types/Products";
 import { Unit } from "src/types/Unit";
 import { get } from "src/utils/api";
@@ -20,8 +18,11 @@ interface IDataProviderContext {
   searchCustomer: (query: string) => Promise<void>;
   clearSearchCustomer: () => void;
   searchProduct: (product: string) => Promise<void>;
+  searchSingleProduct: (product: string) => Array<Product>;
   clearSearchProduct: () => Promise<void>;
   validateVatNumber: (vatNumber: string) => Promise<void>;
+  storeOrder: (newOrder: Array<NewOrder>) => void;
+  setOrderType: (type: string) => void;
   productsWithGroupname: Array<ProductWithGroupname>;
   products: Array<Product>;
   customers: Customer[];
@@ -30,6 +31,7 @@ interface IDataProviderContext {
   loading: boolean;
   customer: null | Customer;
   units: null | Array<Unit>;
+  order: undefined | Array<NewOrder>;
 }
 
 const DataProviderContext = createContext<IDataProviderContext>(
@@ -58,6 +60,10 @@ function reducer(state: Data, action: { type: string; payload?: any }) {
       return { ...state, customer: action.payload };
     case "addUnits":
       return { ...state, units: action.payload };
+    case "storeOrder":
+      return { ...state, order: action.payload };
+    case "setOrderType":
+      return { ...state, orderType: action.payload };
     default:
       return { ...state };
   }
@@ -72,6 +78,8 @@ const initialState: Data = {
   units: null,
   customer: null,
   loading: false,
+  order: [],
+  orderType: undefined,
 };
 
 const DataProvider: FunctionComponent = ({ children }) => {
@@ -128,8 +136,16 @@ const DataProvider: FunctionComponent = ({ children }) => {
     setLoadingTrue();
     const [error, products] = await get(`/products/withgroups?q=${product}`);
     setLoadingFalse();
-    dispatch({ type: "addProducts", payload: products });
+    dispatch({ type: "addProductsWithGroupname", payload: products });
   };
+
+  const searchSingleProduct = async (product: string) => {
+    setLoadingTrue();
+    const [error, products] = await get(`/products?q=${product}`);
+    setLoadingFalse();
+    return products as Array<Product>;
+  };
+
   const clearSearchProduct = async () => {
     await fetchProducts();
   };
@@ -178,6 +194,14 @@ const DataProvider: FunctionComponent = ({ children }) => {
     dispatch({ type: "setCustomer", payload: customer });
   };
 
+  const storeOrder = (order: Array<NewOrder>) => {
+    dispatch({ type: "storeOrder", payload: order });
+  };
+
+  const setOrderType = (type: string) => {
+    dispatch({ type: "setOrderType", payload: type });
+  };
+
   const value = {
     ...state,
     searchCustomer,
@@ -185,6 +209,9 @@ const DataProvider: FunctionComponent = ({ children }) => {
     searchProduct,
     clearSearchProduct,
     validateVatNumber,
+    searchSingleProduct,
+    storeOrder,
+    setOrderType,
   };
 
   return (

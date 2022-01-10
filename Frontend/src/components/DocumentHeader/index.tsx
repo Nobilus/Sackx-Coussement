@@ -28,6 +28,7 @@ const DocumentHeader = () => {
         onChange={handleChange}
         name="customerdd"
         className="self-end"
+        value={filters.documenttype}
       />
     </PageHeaderContainer>
   );

@@ -19,3 +19,10 @@ export interface Order {
   isPayed: false;
   orderDetails: Array<OrderDetail>;
 }
+
+export interface NewOrder {
+  product?: Product;
+  price: number;
+  amount: number;
+  unit: string;
+}
