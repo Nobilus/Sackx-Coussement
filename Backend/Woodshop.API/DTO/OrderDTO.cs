@@ -9,11 +9,14 @@ namespace Project.DTO
     public class OrderAddProductDTO
     {
         public Guid Id { get; set; }
+        public int MeasurmentUnit { get; set; }
+        public double Price { get; set; }
         public double Amount { get; set; }
     }
     public class OrderDTO
     {
         public Guid CustomerId { get; set; }
+        public CustomerAddDTO Customer { get; set; }
         public string OrderType { get; set; }
         public List<OrderAddProductDTO> Products { get; set; }
     }

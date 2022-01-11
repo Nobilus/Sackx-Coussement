@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Project.DataContext;
+using Project.DTO;
 using Project.Models;
 
 namespace Project.Repositories
@@ -13,6 +14,7 @@ namespace Project.Repositories
         Task<Customer> AddCustomer(Customer customer);
         Task<Customer> GetCustomer(Guid customerId);
         Task<List<Customer>> GetCustomers(string query = null);
+        Task<Customer> CreateCustomerIfNotExists(Customer customer);
     }
 
     public class CustomerRepository : ICustomerRepository
@@ -49,6 +51,16 @@ namespace Project.Repositories
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
             return customer;
+        }
+
+        public async Task<Customer> CreateCustomerIfNotExists(Customer customer)
+        {
+            Customer c = await _context.Customers.Where(c => c.CustomerName == customer.CustomerName).SingleOrDefaultAsync();
+            if (c == null)
+            {
+                return await AddCustomer(customer);
+            }
+            return c;
         }
     }
 }

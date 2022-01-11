@@ -18,7 +18,7 @@ interface IDataProviderContext {
   searchCustomer: (query: string) => Promise<void>;
   clearSearchCustomer: () => void;
   searchProduct: (product: string) => Promise<void>;
-  searchSingleProduct: (product: string) => Array<Product>;
+  searchSingleProduct: (product: string) => Promise<Product[]>;
   clearSearchProduct: () => Promise<void>;
   validateVatNumber: (vatNumber: string) => Promise<void>;
   storeOrder: (newOrder: Array<NewOrder>) => void;
@@ -33,7 +33,8 @@ interface IDataProviderContext {
   loading: boolean;
   customer: null | Customer;
   units: null | Array<Unit>;
-  order: undefined | Array<NewOrder>;
+  order?: undefined | Array<NewOrder>;
+  orderType?: "offerte" | "bestelbon" | "factuur";
 }
 
 const DataProviderContext = createContext<IDataProviderContext>(
@@ -210,6 +211,15 @@ const DataProvider: FunctionComponent = ({ children }) => {
     setLoadingFalse();
   };
 
+  const createNewOrder = async (order: NewOrder) => {
+    setLoadingTrue();
+    const [error, response] = await post("/order", order);
+    console.log(error);
+    console.log(response);
+
+    setLoadingFalse();
+  };
+
   const searchSingleCustomer = async (query: string) => {
     setLoadingTrue();
     const [error, customer] = await get(`/customers?q=${query}`);
@@ -232,7 +242,6 @@ const DataProvider: FunctionComponent = ({ children }) => {
   };
 
   return (
-    // @ts-ignore
     <DataProviderContext.Provider value={value}>
       {children}
     </DataProviderContext.Provider>

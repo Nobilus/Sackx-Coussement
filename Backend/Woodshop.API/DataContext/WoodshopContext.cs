@@ -115,9 +115,14 @@ namespace Project.DataContext
                     {
                         CustomerId = Guid.NewGuid(),
                         CustomerName = c.CustomerName,
-                        FirstName = c.FirstName,
                         Street = c.Street,
-                        Postal = c.Postal,
+                        Postal = c.Postal ?? 0,
+                        VatNumber = c.VatNumber,
+                        Contact1 = c.Contact1,
+                        Contact2 = c.Contact2,
+                        Contact3 = c.Contact3,
+                        Fax = c.Fax,
+                        Telephone = c.Telephone,
                         City = c.City,
                     });
                 }
@@ -129,8 +134,8 @@ namespace Project.DataContext
             using (StreamReader reader = new StreamReader("SeedData/producten.csv"))
             using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                IEnumerable<ProductAddDTO> products = csv.GetRecords<ProductAddDTO>();
-                foreach (ProductAddDTO p in products)
+                IEnumerable<ProductSeedDTO> products = csv.GetRecords<ProductSeedDTO>();
+                foreach (ProductSeedDTO p in products)
                 {
                     modelBuilder.Entity<Product>().HasData(new Product()
                     {

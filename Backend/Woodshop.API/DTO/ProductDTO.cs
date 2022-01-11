@@ -6,6 +6,21 @@ using Woodshop.API.Models;
 
 namespace Project.DTO
 {
+    public class ProductSeedDTO
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public double Thickness { get; set; }
+        [Required]
+        public double Width { get; set; }
+        [Required]
+        public double Price { get; set; }
+        [Required]
+        public double PurchasePrice { get; set; }
+        [Required]
+        public int UnitId { get; set; }
+    }
     public class ProductAddDTO
     {
         [Required]

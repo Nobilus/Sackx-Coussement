@@ -59,10 +59,6 @@ namespace Sneakers.API.DTO
                     opt => opt.MapFrom(src => src.CustomerId)
                 )
                 .ForMember(
-                    dest => dest.Firstname,
-                    opt => opt.MapFrom(src => src.Customer.FirstName)
-                )
-                .ForMember(
                     dest => dest.CustomerName,
                     opt => opt.MapFrom(src => src.Customer.CustomerName)
                 )

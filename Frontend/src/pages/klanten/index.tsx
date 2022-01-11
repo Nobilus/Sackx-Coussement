@@ -8,7 +8,7 @@ import TableRow from "src/components/Table/TableRow";
 import TableTitle from "src/components/Table/TableTitle";
 import { useData } from "src/providers/DataProvider";
 
-const titles = ["Naam", "E-mail", "Telefoon", "Contactpersoon"];
+const titles = ["Naam", "E-mail", "Fax", "Contactpersoon"];
 
 const Klanten = () => {
   const { customers } = useData();
@@ -21,13 +21,17 @@ const Klanten = () => {
         <TableTitle titles={titles} />
         {customers &&
           customers.length > 0 &&
-          customers.map(({ customerName, email, telephone, firstName }, i) => (
+          customers.map(({ customerName, email, fax, contact1 }, i) => (
             <TableRow cols={4} key={`tablerow-${i}`}>
               <TableItem className="place-self-start">{customerName}</TableItem>
-              <TableItem className="place-self-center">email</TableItem>
-              <TableItem className="place-self-center">telephone</TableItem>
+              <TableItem className="place-self-center">
+                {email ?? "-"}
+              </TableItem>
+              <TableItem className="place-self-center">
+                {fax.length > 0 ? fax : "-"}
+              </TableItem>
               <TableItem className="place-self-end">
-                {firstName.length > 0 ? firstName : "-"}
+                {contact1.length > 0 ? contact1 : "-"}
               </TableItem>
             </TableRow>
           ))}

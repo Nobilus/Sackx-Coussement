@@ -232,18 +232,22 @@ namespace Project.Services
             }
         }
 
+
         public async Task<Order> AddOrder(OrderDTO order)
         {
             try
             {
                 Order newOrder = _mapper.Map<Order>(order);
+                Customer newCustomer = await _customerRepository.CreateCustomerIfNotExists(_mapper.Map<Customer>(newOrder.Customer));
+
+
                 newOrder.OrderId = Guid.NewGuid();
                 newOrder.Date = DateTime.Now.Date;
                 newOrder.OrderProducts = new List<OrderProduct>();
 
                 foreach (var p in order.Products)
                 {
-                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Id, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false });
+                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Id, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false, UnitId = p.MeasurmentUnit });
                 }
                 await _orderRepository.AddOrder(newOrder);
                 return newOrder;

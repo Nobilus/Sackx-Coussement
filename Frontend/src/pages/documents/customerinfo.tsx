@@ -9,13 +9,21 @@ import { useData } from "src/providers/DataProvider";
 import { Customer } from "src/types/Customer";
 
 const customerinfo = () => {
-  const { validateVatNumber, customer, searchSingleCustomer } = useData();
+  const {
+    validateVatNumber,
+    customer,
+    searchSingleCustomer,
+    order,
+    orderType,
+  } = useData();
   const [customerSearch, setCustomerSearch] = useState("");
   const [vatSearch, setVatSearch] = useState("");
   const [customerInfo, setCustomerInfo] = useState<Customer>();
 
   function handleSubmit(e: any) {
-    console.log(e);
+    console.log(order);
+    console.log(orderType);
+    console.log(customer);
   }
 
   useEffect(() => {
@@ -114,7 +122,7 @@ const customerinfo = () => {
         />
       </form>
       <div className="flex w-full justify-end mt-8">
-        <Button btntype="primary" className="">
+        <Button btntype="primary" className="" onClick={handleSubmit}>
           Plaats
         </Button>
       </div>
