@@ -130,6 +130,10 @@ namespace Sneakers.API.DTO
             .ForMember(
                 dest => dest.Postal,
                 opt => opt.MapFrom(src => src.Address.Postal)
+            )
+            .ForMember(
+                dest => dest.VatNumber,
+                opt => opt.MapFrom(src => $"{src.VatNumber}")
             );
             CreateMap<List<Order>, BestelbonDTO>()
             .ForMember(
@@ -139,7 +143,9 @@ namespace Sneakers.API.DTO
             .ForMember(
                 dest => dest.Orders,
                 opt => opt.MapFrom(src => src)
-            );
+            )
+           ;
+
         }
     }
 }

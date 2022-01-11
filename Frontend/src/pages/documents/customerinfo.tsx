@@ -1,122 +1,123 @@
-import { useState, useEffect } from "react";
+import debounce from "lodash.debounce";
+import { useState, useEffect, useMemo } from "react";
 import FormItem from "src/classes/FormItem";
+import Button from "src/components/Button";
 import Form from "src/components/Form";
+import TextInput from "src/components/Input/TextInput";
 import PageLayout from "src/components/Layout/PageLayout";
 import { useData } from "src/providers/DataProvider";
+import { Customer } from "src/types/Customer";
 
 const customerinfo = () => {
-  const [submitting, setSubmitting] = useState(false);
-  const [vatNumber, setVatNumber] = useState<string>();
-  const [changed, setChanged] = useState(false);
-  const { validateVatNumber, customer } = useData();
-
-  const valVat = (vatNumber: string | undefined) => {};
-
-  useEffect(() => {
-    console.log("this is the vatnumber", vatNumber);
-
-    return () => {};
-  }, [vatNumber]);
-
-  const formItems = [
-    new FormItem({
-      id: "btwnr",
-      name: "btwnr",
-      type: "text",
-      placeholder: "BTW nummer",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "validatebtn",
-      name: "validatebtn",
-      type: "button",
-      btntype: "primary",
-      text: "Valideren en gegevens ophalen",
-      className: "my-auto",
-      onClick: () => valVat(vatNumber),
-    }),
-    new FormItem({
-      id: "name",
-      name: "name",
-      type: "text",
-      placeholder: "Naam",
-      value: customer?.customerName,
-      className: "col-span-2",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "street",
-      name: "street",
-      type: "text",
-      placeholder: "Straat",
-      value: customer?.street,
-      inputClassName: "h-10",
-    }),
-
-    new FormItem({
-      id: "gemeente",
-      name: "gemeente",
-      value: customer?.city,
-      type: "text",
-      placeholder: "Gemeente",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "postcode",
-      name: "postcode",
-      value: customer?.postal,
-      type: "text",
-      placeholder: "Postcode",
-      inputClassName: "h-10",
-    }),
-
-    new FormItem({
-      id: "telefoonnr",
-      name: "telefoonnr",
-      type: "text",
-      placeholder: "Telefoonnummer",
-      value: customer?.telephone,
-      className: "col-span-2",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "btnAdd",
-      name: "btnAdd",
-      type: "button",
-      btntype: "primary",
-      btnClassName: "",
-      text: "Klant toevoegen",
-      onClick: () => setSubmitting(true),
-      className: "my-auto col-start-2 max-w-max place-self-end",
-    }),
-  ];
+  const { validateVatNumber, customer, searchSingleCustomer } = useData();
+  const [customerSearch, setCustomerSearch] = useState("");
+  const [vatSearch, setVatSearch] = useState("");
+  const [customerInfo, setCustomerInfo] = useState<Customer>();
 
   function handleSubmit(e: any) {
     console.log(e);
   }
 
-  function handleItemChange(e: any) {
-    if (e.id === "btwnr") {
-      setChanged(!changed);
-      setVatNumber(e.value);
-      validateVatNumber(e.value);
-    }
-  }
+  useEffect(() => {
+    console.log(customer);
+
+    return () => {};
+  }, [customer]);
+
+  const handleSearchChange = (e: any) => {
+    setCustomerSearch(e.target.value);
+  };
+
+  const debouncedHandleSearchChange = useMemo(
+    () => debounce(handleSearchChange, 300),
+    []
+  );
+
+  const handleVatSearchChange = (e: any) => {
+    setVatSearch(e.target.value);
+  };
+
+  const deboundedHandleVatSearchChange = useMemo(
+    () => debounce(handleVatSearchChange, 300),
+    []
+  );
+
+  const handleClickSearchCustomer = () => {
+    searchSingleCustomer(customerSearch);
+  };
+
+  const handleClickSearchByVat = () => {
+    validateVatNumber(vatSearch);
+  };
 
   return (
     <PageLayout>
-      <Form
-        className="mt-32"
-        cols={2}
-        colGap={20}
-        rowGap={8}
-        onItemChange={handleItemChange}
-        formItems={formItems}
-        onSubmit={handleSubmit}
-        submitting={submitting}
-        setSubmitting={setSubmitting}
-        changed={changed}
-      />
+      <div className="flex justify-between mb-4">
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="Klant zoeken"
+          onChange={debouncedHandleSearchChange}
+        />
+        <Button btntype="primary" onClick={handleClickSearchCustomer}>
+          Zoeken
+        </Button>
+      </div>
+      <div className="flex justify-between mb-20">
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="BTW nummer valideren"
+          onChange={deboundedHandleVatSearchChange}
+        />
+        <Button btntype="primary" onClick={handleClickSearchByVat}>
+          Valideren
+        </Button>
+      </div>
+
+      <form className="grid grid-cols-4 gap-x-20 gap-y-8">
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="BTW nummer"
+          value={customer?.vatNumber}
+        />
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="Naam"
+          value={customer?.customerName}
+        />
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="Straat en nummber"
+          value={customer?.street}
+        />
+        <TextInput
+          className="col-span-1"
+          float={false}
+          placeholder="Gemeente"
+          value={customer?.city}
+        />
+        <TextInput
+          className="col-span-1"
+          float={false}
+          placeholder="Postcode"
+          value={customer?.postal}
+        />
+        <TextInput
+          className="col-span-4"
+          float={false}
+          placeholder="Telefoonnummer"
+          value={customer?.telephone}
+        />
+      </form>
+      <div className="flex w-full justify-end mt-8">
+        <Button btntype="primary" className="">
+          Plaats
+        </Button>
+      </div>
     </PageLayout>
   );
 };

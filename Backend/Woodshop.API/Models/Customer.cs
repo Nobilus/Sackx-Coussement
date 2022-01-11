@@ -21,6 +21,8 @@ namespace Project.Models
 
         public string City { get; set; }
 
+        public string VatNumber { get; set; }
+
         public ICollection<Order> Orders { get; set; }
 
 

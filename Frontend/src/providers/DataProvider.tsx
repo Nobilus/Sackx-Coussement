@@ -24,6 +24,7 @@ interface IDataProviderContext {
   storeOrder: (newOrder: Array<NewOrder>) => void;
   setOrderType: (type: string) => void;
   createNewProduct: (product: NewProduct) => Promise<void>;
+  searchSingleCustomer: (query: string) => Promise<void>;
   productsWithGroupname: Array<ProductWithGroupname>;
   products: Array<Product>;
   customers: Customer[];
@@ -209,6 +210,13 @@ const DataProvider: FunctionComponent = ({ children }) => {
     setLoadingFalse();
   };
 
+  const searchSingleCustomer = async (query: string) => {
+    setLoadingTrue();
+    const [error, customer] = await get(`/customers?q=${query}`);
+    dispatch({ type: "setCustomer", payload: customer[0] });
+    setLoadingFalse();
+  };
+
   const value = {
     ...state,
     searchCustomer,
@@ -220,6 +228,7 @@ const DataProvider: FunctionComponent = ({ children }) => {
     storeOrder,
     setOrderType,
     createNewProduct,
+    searchSingleCustomer,
   };
 
   return (

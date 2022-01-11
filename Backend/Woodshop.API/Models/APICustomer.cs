@@ -8,6 +8,7 @@ namespace Woodshop.API.Models
         public bool Valid { get; set; }
         public string CountryCode { get; set; }
         public string Name { get; set; }
+        public string VatNumber { get; set; }
 
         public APICustomerAddress Address { get; set; }
     }
