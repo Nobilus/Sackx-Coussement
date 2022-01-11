@@ -8,23 +8,31 @@ namespace Project.DTO
 {
     public class CustomerAddDTO
     {
-        [Required(ErrorMessage = "Firstname required")]
-        [MaxLength(20)]
-        public string FirstName { get; set; }
-        [Required(ErrorMessage = "Lastname required")]
-        [MaxLength(20)]
-        public string LastName { get; set; }
-        [Required]
-        [MaxLength(12)]
-        public string CompanyNumber { get; set; }
+        public string CustomerName { get; set; }
+        public string Street { get; set; }
+        public int? Postal { get; set; }
+        public string City { get; set; }
+        public string VatNumber { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
+        public string Fax { get; set; }
+        public string Telephone { get; set; }
+
     }
     public class CustomerDTO
     {
-        public int Id { get; set; }
-
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string CompanyNumber { get; set; }
+        public Guid CustomerId { get; set; }
+        public string CustomerName { get; set; }
+        public string Street { get; set; }
+        public int Postal { get; set; }
+        public string City { get; set; }
+        public string VatNumber { get; set; }
+        public string Contact1 { get; set; }
+        public string Contact2 { get; set; }
+        public string Contact3 { get; set; }
+        public string Fax { get; set; }
+        public string Telephone { get; set; }
 
         public ICollection<Order> Orders { get; set; }
 

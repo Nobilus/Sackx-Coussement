@@ -11,8 +11,6 @@ namespace Project.Models
         public string LastName { get; set; }
 
         [JsonIgnore]
-        public virtual Customer Customer { get; set; }
-        [JsonIgnore]
         public virtual Staff Staff { get; set; }
     }
 }

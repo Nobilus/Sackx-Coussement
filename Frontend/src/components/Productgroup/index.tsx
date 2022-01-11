@@ -7,6 +7,7 @@ import toLocaleCurrency from "src/utils/toLocaleCurrency";
 import Table from "../Table/Table";
 import TableRow from "../Table/TableRow";
 import { MdModeEdit } from "react-icons/md";
+import { useRouter } from "next/router";
 
 interface ProductGroupProps {
   groupname: string;
@@ -19,26 +20,36 @@ const Productgroup: FunctionComponent<ProductGroupProps> = ({
   groupname,
   products,
 }) => {
+  const router = useRouter();
+
   return (
     <Table>
       <TableHeader>{groupname}</TableHeader>
       <TableTitle titles={titles} colAmount={5} />
       {products.map(
-        ({ name, priceInclVat, priceExclVat, purchasePrice }, index) => (
-          <TableRow key={`tablerow-${index}`}>
-            <TableItem>{name}</TableItem>
-            <TableItem className={"place-self-center"}>
-              {toLocaleCurrency(purchasePrice)}
-            </TableItem>
-            <TableItem className={"place-self-center"}>
-              {toLocaleCurrency(priceInclVat)}
-            </TableItem>
-            <TableItem className="place-self-end">
-              {toLocaleCurrency(priceExclVat)}
-            </TableItem>
-            <MdModeEdit className="my-auto place-self-end" />
-          </TableRow>
-        )
+        ({ name, priceWithVat, price, purchasePrice, productId }, index) => {
+          const handleClickEdit = () => {
+            router.push(`/product/${productId}`);
+          };
+          return (
+            <TableRow key={`tablerow-${index}`}>
+              <TableItem>{name}</TableItem>
+              <TableItem className={"place-self-center"}>
+                {toLocaleCurrency(purchasePrice)}
+              </TableItem>
+              <TableItem className={"place-self-center"}>
+                {toLocaleCurrency(price)}
+              </TableItem>
+              <TableItem className="place-self-end my-auto">
+                {toLocaleCurrency(priceWithVat)}
+              </TableItem>
+              <MdModeEdit
+                className="my-auto place-self-end cursor-pointer"
+                onClick={handleClickEdit}
+              />
+            </TableRow>
+          );
+        }
       )}
     </Table>
   );

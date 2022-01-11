@@ -1,5 +1,8 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
+
 import { BestelbonEntry } from "src/types/Bestelbon";
+import { Order } from "src/types/Order";
+import dateStringToReadable from "src/utils/dateStringToReadable";
 import toLocaleCurrency from "src/utils/toLocaleCurrency";
 import Button from "../Button";
 import Table from "../Table/Table";
@@ -10,7 +13,7 @@ import TableTitle from "../Table/TableTitle";
 
 interface BestelbonItemProps {
   name: string;
-  entries: Array<BestelbonEntry>;
+  entries: Array<Order>;
 }
 
 const BestelbonItem: FunctionComponent<BestelbonItemProps> = ({
@@ -23,15 +26,17 @@ const BestelbonItem: FunctionComponent<BestelbonItemProps> = ({
     <>
       <TableHeader />
       <TableTitle titles={tableTitles} />
-      {entries.map(({ date, amount }, i) => {
+      {entries.map(({ date, indebted }, i) => {
         return (
           <TableRow cols={3} key={`tablerow-${i}`}>
             <TableItem className="place-self-start">
               {i === 0 ? name : ""}
             </TableItem>
-            <TableItem className="place-self-center">{date}</TableItem>
+            <TableItem className="place-self-center">
+              {dateStringToReadable(date)}
+            </TableItem>
             <TableItem className="place-self-end">
-              {toLocaleCurrency(amount)}
+              {toLocaleCurrency(indebted)}
             </TableItem>
           </TableRow>
         );

@@ -26,7 +26,11 @@ namespace Project.Repositories
 
         public async Task<List<Product>> GetProducts()
         {
-            return await _context.Products.Include(p => p.Unit).ToListAsync();
+            return await _context.Products
+                                    .Include(p => p.Unit)
+                                    .Include(p => p.ProductGroup)
+                                    .OrderBy(p => p.Name)
+                                    .ToListAsync();
         }
 
         public async Task<Product> AddProduct(Product product)
@@ -38,7 +42,11 @@ namespace Project.Repositories
 
         public async Task<Product> GetProduct(Guid productId)
         {
-            return await _context.Products.Include(p => p.Unit).Where(p => p.ProductId == productId).SingleOrDefaultAsync();
+            return await _context.Products
+                                    .Include(p => p.Unit)
+                                    .Include(p => p.ProductGroup)
+                                    .Where(p => p.ProductId == productId)
+                                    .SingleOrDefaultAsync();
         }
     }
 }

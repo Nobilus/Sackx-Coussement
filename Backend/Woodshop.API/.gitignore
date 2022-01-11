@@ -450,3 +450,6 @@ $RECYCLE.BIN/
 appsettings.*.json
 
 postman_collection.json
+Migrations/*
+Backend/Woodshop.API/Migrations/WoodshopContextModelSnapshot.cs
+SeedData/*

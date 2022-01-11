@@ -7,6 +7,7 @@ interface THProps {
   value?: string;
   placeholder?: string;
   className?: string;
+  name?: string;
 }
 
 const TableHeader: FunctionComponent<THProps> = ({
@@ -16,6 +17,7 @@ const TableHeader: FunctionComponent<THProps> = ({
   value,
   placeholder,
   className,
+  name,
 }) => {
   if (editable) {
     return (
@@ -23,7 +25,7 @@ const TableHeader: FunctionComponent<THProps> = ({
         <input
           value={value}
           className={classNames(
-            " text-green-25 mx-2 mb-2 bg-gray-100 placeholder:text-green-25",
+            "mx-2 mb-2 bg-gray-100 placeholder:text-green-25",
             { "text-xl font-body font-semibold": !editable },
             {
               "text-baseline font-body font-regular border border-green-100 rounded placeholder-transparent pl-4 py-2 outline-none w-max bg-white":
@@ -33,6 +35,7 @@ const TableHeader: FunctionComponent<THProps> = ({
           disabled={!editable}
           onChange={onChange}
           placeholder={placeholder}
+          name={name}
         />
         <hr className="border-green-25" />
       </div>

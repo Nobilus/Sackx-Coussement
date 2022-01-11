@@ -27,6 +27,7 @@ interface FormProps {
   onSubmit?: any;
   className?: string;
   externalError?: string;
+  changed?: boolean;
 }
 
 const findIndexByName = (arr: FormItem[], searchName: string) => {
@@ -45,9 +46,10 @@ const Form: FunctionComponent<FormProps> = ({
   onItemChange,
   className = "",
   externalError,
+  changed = false,
 }) => {
   const [items, setItems] = useState<Array<FormItem>>(formItems);
-
+  const [valuesHaveChanged, setValuesHaveChanged] = useState(changed);
   const onFormItemChange = useCallback(
     (e: FormEvent<HTMLInputElement>) => {
       const index = findIndexByName(items, e.currentTarget.name);
@@ -280,7 +282,7 @@ const Form: FunctionComponent<FormProps> = ({
               btntype={item.btntype}
               onClick={item.onClick}
               key={`btn-${index}`}
-              className={`${className} ${item.btnClassName}`}
+              className={classNames(className, item.btnClassName)}
             >
               {item.text}
             </Button>

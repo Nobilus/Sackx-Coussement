@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -7,6 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Project.Config;
 using Project.Models;
+using System.IO;
+using CsvHelper;
+using Project.DTO;
+using Woodshop.API.Models;
 
 namespace Project.DataContext
 {
@@ -20,6 +25,7 @@ namespace Project.DataContext
         DbSet<Person> Persons { get; set; }
         DbSet<Staff> Staff { get; set; }
         DbSet<OrderProduct> OrderProducts { get; set; }
+        DbSet<ProductGroup> ProductGroups { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
@@ -33,6 +39,7 @@ namespace Project.DataContext
         public DbSet<Person> Persons { get; set; }
         public DbSet<Staff> Staff { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<ProductGroup> ProductGroups { get; set; }
 
         private ConnectionStrings _connectionStrings;
 
@@ -51,8 +58,9 @@ namespace Project.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+
             modelBuilder.Entity<Customer>()
-            .HasKey(c => new { c.PersonId });
+            .HasKey(c => new { c.CustomerId });
 
             modelBuilder.Entity<Staff>()
             .HasKey(s => new { s.PersonId });
@@ -67,20 +75,13 @@ namespace Project.DataContext
             .HasOne(p => p.Unit)
             .WithMany(u => u.Products);
 
+            modelBuilder.Entity<ProductGroup>()
+            .HasMany(pg => pg.Products)
+            .WithOne(p => p.ProductGroup);
+
+
             modelBuilder.Entity<OrderProduct>()
             .HasKey(op => new { op.OrderId, op.ProductId });
-
-
-            var product1 = new Product
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Oregon 7x15",
-                Thickness = 7,
-                Width = 15,
-                Price = 5.01,
-                UnitId = 1,
-            };
-
 
 
             #region Staff
@@ -96,157 +97,60 @@ namespace Project.DataContext
                 TelephoneNumber = "0412345678",
                 IsAdmin = true,
             });
+
+            modelBuilder.Entity<ProductGroup>().HasData(new ProductGroup()
+            {
+                ProductGroupId = 1,
+                ProductGroupName = "Alle"
+            });
             #endregion
             #region Customers
-            modelBuilder.Entity<Person>().HasData(new Person()
+            using (StreamReader reader = new StreamReader("SeedData/klanten.csv"))
+            using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                PersonId = 1,
-                FirstName = "Jonas",
-                LastName = "De Meyer",
-            });
-            modelBuilder.Entity<Customer>().HasData(new Customer()
-            {
-                PersonId = 1,
-                CompanyNumber = "0123456789"
-            });
+                IEnumerable<CustomerAddDTO> customers = csv.GetRecords<CustomerAddDTO>();
+                foreach (CustomerAddDTO c in customers)
+                {
+                    modelBuilder.Entity<Customer>().HasData(new Customer()
+                    {
+                        CustomerId = Guid.NewGuid(),
+                        CustomerName = c.CustomerName,
+                        Street = c.Street,
+                        Postal = c.Postal ?? 0,
+                        VatNumber = c.VatNumber,
+                        Contact1 = c.Contact1,
+                        Contact2 = c.Contact2,
+                        Contact3 = c.Contact3,
+                        Fax = c.Fax,
+                        Telephone = c.Telephone,
+                        City = c.City,
+                    });
+                }
+            }
+
             #endregion
             #region Products
-            modelBuilder.Entity<Product>().HasData(product1);
-            modelBuilder.Entity<Product>().HasData(new Product()
+
+            using (StreamReader reader = new StreamReader("SeedData/producten.csv"))
+            using (CsvReader csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                ProductId = Guid.NewGuid(),
-                Name = "Oregon 7x18",
-                Thickness = 7,
-                Width = 18,
-                Price = 4.62,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Pannelatten",
-                Thickness = 2.4,
-                Width = 3.2,
-                Price = 0.30,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Stoflatten",
-                Thickness = 2,
-                Width = 2.3,
-                Price = 0.22,
-                UnitId = 1
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "RND gedrenkt",
-                Thickness = 2.5,
-                Width = 10,
-                Price = 0.85,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "RND ongeschaafd",
-                Thickness = 2,
-                Width = 10,
-                Price = 0.61,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Merantiplaten",
-                Thickness = 0.36,
-                Width = 122,
-                Price = 4.45,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "CDX platen",
-                Thickness = 1.8,
-                Width = 122,
-                Price = 6.56,
-                UnitId = 2,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "OBS platen",
-                Thickness = 1.2,
-                Width = 59,
-                Price = 3.97,
-                UnitId = 2,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Meubelplaten wit",
-                Thickness = 1,
-                Width = 20,
-                Price = 5.62,
-                UnitId = 3,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Gipsplaten",
-                Thickness = 0.9,
-                Width = 0,
-                Price = 2.64,
-                UnitId = 2,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Plafondlatten",
-                Thickness = 2.2,
-                Width = 4.5,
-                Price = 0.57,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "CLS",
-                Thickness = 3.8,
-                Width = 5.8,
-                Price = 0.99,
-                UnitId = 1,
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Terrasplanken tali",
-                Thickness = 2.5,
-                Width = 14.5,
-                Price = 6.35,
-                UnitId = 1
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Thermowood",
-                Thickness = 63,
-                Width = 150,
-                Price = 6.15,
-                UnitId = 1
-            });
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                ProductId = Guid.NewGuid(),
-                Name = "Tali kepers",
-                Thickness = 40,
-                Width = 55,
-                Price = 2.81,
-                UnitId = 1
-            });
+                IEnumerable<ProductSeedDTO> products = csv.GetRecords<ProductSeedDTO>();
+                foreach (ProductSeedDTO p in products)
+                {
+                    modelBuilder.Entity<Product>().HasData(new Product()
+                    {
+                        ProductId = Guid.NewGuid(),
+                        Name = p.Name,
+                        Thickness = p.Thickness,
+                        Width = p.Width,
+                        Price = p.Price,
+                        PurchasePrice = p.PurchasePrice,
+                        UnitId = p.UnitId,
+                        ProductGroupId = 1,
+                    });
+                }
+            }
+
             #endregion
             #region Units
             modelBuilder.Entity<Unit>().HasData(new Unit()

@@ -1,88 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import KlantenHeader from "src/components/KlantenHeader";
-import PageHeaderContainer from "src/components/Layout/PageHeaderContainer";
 import PageLayout from "src/components/Layout/PageLayout";
 import Table from "src/components/Table/Table";
 import TableHeader from "src/components/Table/TableHeader";
 import TableItem from "src/components/Table/TableItem";
 import TableRow from "src/components/Table/TableRow";
 import TableTitle from "src/components/Table/TableTitle";
-import { Customer } from "src/types/Customer";
+import { useData } from "src/providers/DataProvider";
 
-const customer: Array<Customer> = [
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-  {
-    name: "Amazon",
-    email: "info@amazon.com",
-    telephone: "0471814125",
-    contactperson: "Jeff Bezos",
-  },
-];
-
-const titles = ["Naam", "E-mail", "Telefoon", "Contactpersoon"];
+const titles = ["Naam", "E-mail", "Fax", "Contactpersoon"];
 
 const Klanten = () => {
+  const { customers } = useData();
+
   return (
     <PageLayout>
       <KlantenHeader />
       <Table>
         <TableHeader />
         <TableTitle titles={titles} />
-        {customer.map(({ name, email, telephone, contactperson }) => (
-          <TableRow cols={4}>
-            <TableItem className="place-self-start">{name}</TableItem>
-            <TableItem className="place-self-center">{email}</TableItem>
-            <TableItem className="place-self-center">{telephone}</TableItem>
-            <TableItem className="place-self-end">{contactperson}</TableItem>
-          </TableRow>
-        ))}
+        {customers &&
+          customers.length > 0 &&
+          customers.map(({ customerName, email, fax, contact1 }, i) => (
+            <TableRow cols={4} key={`tablerow-${i}`}>
+              <TableItem className="place-self-start">{customerName}</TableItem>
+              <TableItem className="place-self-center">
+                {email ?? "-"}
+              </TableItem>
+              <TableItem className="place-self-center">
+                {fax && fax.length > 0 ? fax : "-"}
+              </TableItem>
+              <TableItem className="place-self-end">
+                {contact1 && contact1.length > 0 ? contact1 : "-"}
+              </TableItem>
+            </TableRow>
+          ))}
       </Table>
     </PageLayout>
   );

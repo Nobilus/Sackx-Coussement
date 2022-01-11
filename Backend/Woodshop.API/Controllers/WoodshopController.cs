@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Project.DTO;
 using Project.Models;
 using Project.Services;
+using Woodshop.API.Models;
 
 namespace Project.Controllers
 {
@@ -28,13 +29,14 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("products")]
-        [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
+        // [ResponseCache(Duration = 86400, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
             string orderby = HttpContext.Request.Query["orderby"].ToString();
+            string query = HttpContext.Request.Query["q"].ToString();
             try
             {
-                return new OkObjectResult(await _woodshopService.GetProducts(orderby));
+                return new OkObjectResult(await _woodshopService.GetProducts(orderby, query));
             }
             catch (Exception ex)
             {
@@ -58,6 +60,34 @@ namespace Project.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("products/withgroups")]
+        public async Task<ActionResult<List<ProductGroup>>> GetProductsWithGroups()
+        {
+            try
+            {
+                string query = HttpContext.Request.Query["q"].ToString();
+                return new OkObjectResult(await _woodshopService.ListProductgroupsWithProducts(query));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+        [HttpGet]
+        [Route("products/groups")]
+        public async Task<ActionResult<List<ProductGroup>>> GetProductgroups()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.ListProductgroups());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
         [HttpPost]
         [Route("product")]
         public async Task<ActionResult<ProductDTO>> AddProduct(ProductAddDTO product)
@@ -72,14 +102,15 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("customers")]
         public async Task<ActionResult<List<Customer>>> GetCustomers()
         {
+            string query = HttpContext.Request.Query["q"].ToString();
             try
             {
-                return new OkObjectResult(await _woodshopService.GetCustomers());
+                return new OkObjectResult(await _woodshopService.GetCustomers(query));
             }
             catch (Exception ex)
             {
@@ -87,10 +118,10 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("customer/{customerId}")]
-        public async Task<ActionResult<Customer>> GetCustomer(int customerId)
+        public async Task<ActionResult<Customer>> GetCustomer(Guid customerId)
         {
             try
             {
@@ -102,7 +133,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("customer")]
         public async Task<ActionResult<Customer>> AddCustomer(CustomerAddDTO customer)
@@ -117,7 +148,22 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
+        [HttpGet]
+        [Route("customer/validate/{vatNumber}")]
+        public async Task<ActionResult<Customer>> CheckVATNumber(string vatNumber)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.ValidateVatnumber(vatNumber));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+
+        // [Authorize]
         [HttpGet]
         [Route("staff")]
         public async Task<ActionResult<List<Staff>>> GetStaff()
@@ -132,7 +178,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("staff/{staffId}")]
         public async Task<ActionResult<StaffDTO>> GetStaff(int staffId)
@@ -147,7 +193,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("staff")]
         public async Task<ActionResult<Staff>> AddStaff(StaffAddDTO staff)
@@ -177,7 +223,7 @@ namespace Project.Controllers
             }
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPost]
         [Route("order")]
         public async Task<ActionResult<OrderDTO>> AddOrder(OrderDTO order)
@@ -193,21 +239,21 @@ namespace Project.Controllers
         }
 
         // [Authorize]
-        // [HttpPatch]
-        // [Route("order/{orderId}")]
-        // public async Task<ActionResult<OrdersDTO>> PatchOrder(Guid id, OrderPatchDTO order)
-        // {
-        //     try
-        //     {
-        //         return new OkObjectResult(await _woodshopService.PatchOrder(id, order));
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         return new StatusCodeResult(500);
-        //     }
-        // }
+        [HttpPatch]
+        [Route("order/switch/{orderId}")]
+        public async Task<ActionResult<OrdersDTO>> SwitchOrderType(Guid id)
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.SwitchOrderType(id));
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("orders")]
         public async Task<ActionResult<List<OrdersDTO>>> GetOrders()
@@ -221,8 +267,34 @@ namespace Project.Controllers
                 return new StatusCodeResult(500);
             }
         }
+        [HttpGet]
+        [Route("bestelbons")]
+        public async Task<ActionResult<List<List<OrdersDTO>>>> GetbestelBons()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetBestelbons());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
+        [HttpGet]
+        [Route("offertes")]
+        public async Task<ActionResult<List<List<OrdersDTO>>>> GetOffertes()
+        {
+            try
+            {
+                return new OkObjectResult(await _woodshopService.GetOffertes());
+            }
+            catch (Exception ex)
+            {
+                return new StatusCodeResult(500);
+            }
+        }
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         [Route("order/{orderId}")]
         public async Task<ActionResult<OrdersDTO>> GetOrder(Guid orderId)

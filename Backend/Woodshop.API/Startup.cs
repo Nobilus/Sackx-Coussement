@@ -1,4 +1,5 @@
 using System.Net;
+using Microsoft.AspNetCore.Authentication.Certificate;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,11 +13,14 @@ using Project.Config;
 using Project.DataContext;
 using Project.Repositories;
 using Project.Services;
+using Woodshop.API.Repositories;
 
 namespace Project
 {
     public class Startup
     {
+        private string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +31,7 @@ namespace Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // We need to enable viewing of PII logs so we can see more details about the error: 
             // Add the following line in ConfigureServices() to Startup.cs
             IdentityModelEventSource.ShowPII = true;
@@ -43,16 +48,19 @@ namespace Project
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+            // services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+            // .AddCertificate()
+            // .AddCertificateCache();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://jonasdm.eu.auth0.com/";
-                options.Audience = "https://woodshopdocker";
-            });
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(options =>
+            // {
+            //     options.Authority = "https://jonasdm.eu.auth0.com/";
+            //     options.Audience = "https://woodshopdocker";
+            // });
 
             services.AddSwaggerGen(c =>
             {
@@ -69,23 +77,40 @@ namespace Project
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
+            services.AddTransient<IProductGroupRepository, ProductGroupRepository>();
 
             services.AddTransient<IWoodshopService, WoodshopService>();
+
+            // services.AddHttpsRedirection(options =>
+            // {
+            //     options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+            //     options.HttpsPort = 5001;
+            // });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins, builder => { builder.AllowAnyOrigin(); });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
+
+
             if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project v1"));
             }
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseResponseCaching();
             app.UseRouting();
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseAuthorization();
 

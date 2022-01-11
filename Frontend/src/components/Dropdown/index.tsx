@@ -9,6 +9,7 @@ interface DropdownProps {
   className?: string;
   onChange: any;
   name: string;
+  value?: any;
 }
 
 const Dropdown: FunctionComponent<DropdownProps> = ({
@@ -17,8 +18,9 @@ const Dropdown: FunctionComponent<DropdownProps> = ({
   className,
   onChange,
   name,
+  value,
 }) => {
-  const [selected, setSelected] = useState<FormItemOption>();
+  const [selected, setSelected] = useState<FormItemOption>(value);
 
   function handleChange(e: { id: string; name: string }) {
     setSelected(e);
