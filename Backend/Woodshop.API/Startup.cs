@@ -48,19 +48,19 @@ namespace Project
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
-            services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
-            .AddCertificate()
-            .AddCertificateCache();
+            // services.AddAuthentication(CertificateAuthenticationDefaults.AuthenticationScheme)
+            // .AddCertificate()
+            // .AddCertificateCache();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.Authority = "https://jonasdm.eu.auth0.com/";
-                options.Audience = "https://woodshopdocker";
-            });
+            // services.AddAuthentication(options =>
+            // {
+            //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            // }).AddJwtBearer(options =>
+            // {
+            //     options.Authority = "https://jonasdm.eu.auth0.com/";
+            //     options.Audience = "https://woodshopdocker";
+            // });
 
             services.AddSwaggerGen(c =>
             {
@@ -81,11 +81,11 @@ namespace Project
 
             services.AddTransient<IWoodshopService, WoodshopService>();
 
-            services.AddHttpsRedirection(options =>
-            {
-                options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
-                options.HttpsPort = 5001;
-            });
+            // services.AddHttpsRedirection(options =>
+            // {
+            //     options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+            //     options.HttpsPort = 5001;
+            // });
 
             services.AddCors(options =>
             {
@@ -98,7 +98,7 @@ namespace Project
         {
 
 
-            app.UseCors(MyAllowSpecificOrigins);
+
 
             if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
@@ -106,10 +106,11 @@ namespace Project
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project v1"));
             }
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseResponseCaching();
             app.UseRouting();
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseAuthorization();
 

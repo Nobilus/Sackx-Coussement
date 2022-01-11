@@ -55,7 +55,7 @@ namespace Project.Repositories
 
         public async Task<Customer> CreateCustomerIfNotExists(Customer customer)
         {
-            Customer c = await _context.Customers.Where(c => c.CustomerName == customer.CustomerName).SingleOrDefaultAsync();
+            Customer c = await _context.Customers.Where(c => c.CustomerName == customer.CustomerName).FirstOrDefaultAsync();
             if (c == null)
             {
                 return await AddCustomer(customer);

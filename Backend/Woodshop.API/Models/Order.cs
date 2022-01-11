@@ -14,6 +14,7 @@ namespace Project.Models
         public Guid CustomerId { get; set; }
         [JsonIgnore]
         public Customer Customer { get; set; }
+        public double InDebted { get; set; }
 
         [JsonIgnore]
         public ICollection<OrderProduct> OrderProducts { get; set; }

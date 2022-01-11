@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:5000/api";
+const BASE_URL = "http://localhost:5000/api";
 // const BASE_URL = "https://controleerbtwnummer.eu/api";
 
 export type error = {
@@ -25,8 +25,6 @@ async function get(
   endpoint: string
 ): Promise<[error: error | null, data: any | null]> {
   const resp = await fetch(`${BASE_URL}${endpoint}`);
-  console.log(resp);
-
   return processResponse(resp);
 }
 

@@ -28,10 +28,10 @@ const Klanten = () => {
                 {email ?? "-"}
               </TableItem>
               <TableItem className="place-self-center">
-                {fax.length > 0 ? fax : "-"}
+                {fax && fax.length > 0 ? fax : "-"}
               </TableItem>
               <TableItem className="place-self-end">
-                {contact1.length > 0 ? contact1 : "-"}
+                {contact1 && contact1.length > 0 ? contact1 : "-"}
               </TableItem>
             </TableRow>
           ))}

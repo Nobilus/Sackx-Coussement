@@ -56,6 +56,19 @@ const New = () => {
     const type = e.id;
     const value = e.selectedItem;
 
+    if (type === "unit") {
+      const u = units?.find((u) => u.name === value);
+      const newProducts = [
+        ...products.slice(0, index),
+        {
+          ...products[index],
+          [type]: u?.unitId,
+        },
+        ...products.slice(index + 1),
+      ];
+      setProducts(newProducts);
+    }
+
     if (type === "product") {
       const product = await searchSingleProduct(value);
       console.log(product);
@@ -66,16 +79,6 @@ const New = () => {
           ...products[index],
           [type]: product[0],
           price: product[0].priceWithVat,
-        },
-        ...products.slice(index + 1),
-      ];
-      setProducts(newProducts);
-    } else {
-      const newProducts = [
-        ...products.slice(0, index),
-        {
-          ...products[index],
-          [type]: value,
         },
         ...products.slice(index + 1),
       ];
@@ -146,6 +149,7 @@ const New = () => {
                   min={0}
                   value={product.price}
                   onChange={handleTextChange}
+                  name={`${i}`}
                   id="price"
                 />
               </span>

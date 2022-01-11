@@ -1,12 +1,10 @@
 import debounce from "lodash.debounce";
-import { useState, useEffect, useMemo } from "react";
-import FormItem from "src/classes/FormItem";
+import Router from "next/router";
+import { useState, useEffect, useMemo, ChangeEvent } from "react";
 import Button from "src/components/Button";
-import Form from "src/components/Form";
 import TextInput from "src/components/Input/TextInput";
 import PageLayout from "src/components/Layout/PageLayout";
 import { useData } from "src/providers/DataProvider";
-import { Customer } from "src/types/Customer";
 
 const customerinfo = () => {
   const {
@@ -15,21 +13,27 @@ const customerinfo = () => {
     searchSingleCustomer,
     order,
     orderType,
+    createNewOrder,
+    updateCustomer,
   } = useData();
   const [customerSearch, setCustomerSearch] = useState("");
   const [vatSearch, setVatSearch] = useState("");
-  const [customerInfo, setCustomerInfo] = useState<Customer>();
 
-  function handleSubmit(e: any) {
-    console.log(order);
-    console.log(orderType);
-    console.log(customer);
-  }
+  const handleSubmit = async (e: any) => {
+    const orderObject = {
+      customer,
+      orderType,
+      Products: order,
+    };
+    console.log("this is the order: ", orderObject);
+
+    // @ts-ignore
+    const returnedOrder = await createNewOrder(orderObject);
+    if (returnedOrder) Router.push("/");
+  };
 
   useEffect(() => {
     console.log(customer);
-
-    return () => {};
   }, [customer]);
 
   const handleSearchChange = (e: any) => {
@@ -56,6 +60,14 @@ const customerinfo = () => {
 
   const handleClickSearchByVat = () => {
     validateVatNumber(vatSearch);
+  };
+
+  const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedValues = {
+      field: event.target.name,
+      value: event.target.value,
+    };
+    updateCustomer(updatedValues);
   };
 
   return (
@@ -89,36 +101,48 @@ const customerinfo = () => {
           float={false}
           placeholder="BTW nummer"
           value={customer?.vatNumber}
+          name={"vatNumber"}
+          onChange={onTextChange}
         />
         <TextInput
           className="col-span-2"
           float={false}
           placeholder="Naam"
           value={customer?.customerName}
+          name={"customerName"}
+          onChange={onTextChange}
         />
         <TextInput
           className="col-span-2"
           float={false}
           placeholder="Straat en nummber"
           value={customer?.street}
+          name={"street"}
+          onChange={onTextChange}
         />
         <TextInput
           className="col-span-1"
           float={false}
           placeholder="Gemeente"
           value={customer?.city}
+          name={"city"}
+          onChange={onTextChange}
         />
         <TextInput
           className="col-span-1"
           float={false}
           placeholder="Postcode"
           value={customer?.postal}
+          name={"postal"}
+          onChange={onTextChange}
         />
         <TextInput
           className="col-span-4"
           float={false}
           placeholder="Telefoonnummer"
           value={customer?.telephone}
+          name={"telephone"}
+          onChange={onTextChange}
         />
       </form>
       <div className="flex w-full justify-end mt-8">

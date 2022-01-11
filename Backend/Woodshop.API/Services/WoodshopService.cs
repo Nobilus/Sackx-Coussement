@@ -32,7 +32,7 @@ namespace Project.Services
         Task<List<OrdersDTO>> GetOffertes();
         Task<OrdersDTO> GetOrder(Guid id);
         Task<Order> SwitchOrderType(Guid id);
-        Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer);
+        Task<Customer> AddCustomer(CustomerAddDTO customer);
         Task<ProductAddDTO> AddProduct(ProductAddDTO product);
         Task<List<Unit>> GetUnits();
         Task<List<ProductgroupDTO>> ListProductgroupsWithProducts(string query);
@@ -173,17 +173,19 @@ namespace Project.Services
             }
         }
 
-        public async Task<CustomerAddDTO> AddCustomer(CustomerAddDTO customer)
+        public async Task<Customer> AddCustomer(CustomerAddDTO customer)
         {
             try
             {
-                Person newPerson = _mapper.Map<Person>(customer);
-                newPerson = await _personRepository.AddPerson(newPerson);
+                Customer newCustomer = await _customerRepository.CreateCustomerIfNotExists(_mapper.Map<Customer>(customer));
+                return newCustomer;
+                // Person newPerson = _mapper.Map<Person>(customer);
+                // newPerson = await _personRepository.AddPerson(newPerson);
 
-                Customer newCustomer = _mapper.Map<Customer>(customer);
+                // Customer newCustomer = _mapper.Map<Customer>(customer);
 
-                await _customerRepository.AddCustomer(newCustomer);
-                return customer;
+                // await _customerRepository.AddCustomer(newCustomer);
+                // return customer;
             }
             catch (Exception ex)
             {
@@ -240,15 +242,18 @@ namespace Project.Services
                 Order newOrder = _mapper.Map<Order>(order);
                 Customer newCustomer = await _customerRepository.CreateCustomerIfNotExists(_mapper.Map<Customer>(newOrder.Customer));
 
-
+                newOrder.CustomerId = newCustomer.CustomerId;
                 newOrder.OrderId = Guid.NewGuid();
                 newOrder.Date = DateTime.Now.Date;
                 newOrder.OrderProducts = new List<OrderProduct>();
-
+                double total = 0.00;
                 foreach (var p in order.Products)
                 {
-                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Id, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false, UnitId = p.MeasurmentUnit });
+                    total += p.Price * p.Amount;
+                    newOrder.OrderProducts.Add(new OrderProduct() { ProductId = p.Product.ProductId, OrderId = newOrder.OrderId, Quantity = p.Amount, IsPayed = false, UnitId = p.Unit });
                 }
+
+                newOrder.InDebted = total;
                 await _orderRepository.AddOrder(newOrder);
                 return newOrder;
             }

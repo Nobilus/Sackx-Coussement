@@ -1,122 +1,113 @@
-import { FunctionComponent, useEffect, useState } from "react";
+import debounce from "lodash.debounce";
+import Router from "next/router";
+import {
+  ChangeEvent,
+  FunctionComponent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import FormItem from "src/classes/FormItem";
+import Button from "src/components/Button";
 import Form from "src/components/Form";
+import TextInput from "src/components/Input/TextInput";
 import PageLayout from "src/components/Layout/PageLayout";
 import { useData } from "src/providers/DataProvider";
 
 const New: FunctionComponent = () => {
-  const [submitting, setSubmitting] = useState(false);
-  const [vatNumber, setVatNumber] = useState<string>();
-  const [changed, setChanged] = useState(false);
-  const { validateVatNumber, customer } = useData();
+  const { validateVatNumber, customer, updateCustomer, createCustomer } =
+    useData();
 
-  const valVat = (vatNumber: string | undefined) => {};
+  const handleSubmit = async (e: any) => {
+    if (customer) {
+      const c = await createCustomer(customer);
+      if (c) Router.push("/klanten");
+    }
+  };
 
   useEffect(() => {
-    console.log("this is the vatnumber", vatNumber);
+    console.log(customer);
+  }, [customer]);
 
-    return () => {};
-  }, [vatNumber]);
-
-  const formItems = [
-    new FormItem({
-      id: "btwnr",
-      name: "btwnr",
-      type: "text",
-      placeholder: "BTW nummer",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "validatebtn",
-      name: "validatebtn",
-      type: "button",
-      btntype: "primary",
-      text: "Valideren en gegevens ophalen",
-      className: "my-auto",
-      onClick: () => valVat(vatNumber),
-    }),
-    new FormItem({
-      id: "name",
-      name: "name",
-      type: "text",
-      placeholder: "Naam",
-      value: customer?.customerName,
-      className: "col-span-2",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "street",
-      name: "street",
-      type: "text",
-      placeholder: "Straat",
-      value: customer?.street,
-      inputClassName: "h-10",
-    }),
-
-    new FormItem({
-      id: "gemeente",
-      name: "gemeente",
-      value: customer?.city,
-      type: "text",
-      placeholder: "Gemeente",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "postcode",
-      name: "postcode",
-      value: customer?.postal,
-      type: "text",
-      placeholder: "Postcode",
-      inputClassName: "h-10",
-    }),
-
-    new FormItem({
-      id: "telefoonnr",
-      name: "telefoonnr",
-      type: "text",
-      placeholder: "Telefoonnummer",
-      value: customer?.telephone,
-      className: "col-span-2",
-      inputClassName: "h-10",
-    }),
-    new FormItem({
-      id: "btnAdd",
-      name: "btnAdd",
-      type: "button",
-      btntype: "primary",
-      btnClassName: "",
-      text: "Klant toevoegen",
-      onClick: () => setSubmitting(true),
-      className: "my-auto col-start-2 max-w-max place-self-end",
-    }),
-  ];
-
-  function handleSubmit(e: any) {
-    console.log(e);
-  }
-
-  function handleItemChange(e: any) {
-    if (e.id === "btwnr") {
-      setChanged(!changed);
-      setVatNumber(e.value);
-      validateVatNumber(e.value);
+  const handleClickSearchByVat = () => {
+    const vat = customer?.vatNumber;
+    if (vat) {
+      validateVatNumber(vat);
     }
-  }
+  };
+
+  const onTextChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedValues = {
+      field: event.target.name,
+      value: event.target.value,
+    };
+    updateCustomer(updatedValues);
+  };
 
   return (
     <PageLayout>
-      <Form
-        className="mt-32"
-        cols={2}
-        colGap={20}
-        rowGap={8}
-        onItemChange={handleItemChange}
-        formItems={formItems}
-        onSubmit={handleSubmit}
-        submitting={submitting}
-        setSubmitting={setSubmitting}
-        changed={changed}
-      />
+      <div className="grid grid-cols-4 gap-x-20 gap-y-8 mt-52">
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="BTW nummer"
+          value={customer?.vatNumber}
+          name={"vatNumber"}
+          onChange={onTextChange}
+        />
+        <Button
+          btntype="primary"
+          className="col-span-2"
+          onClick={handleClickSearchByVat}
+        >
+          Valideren en gegevens ophalen
+        </Button>
+        <TextInput
+          className="col-span-4"
+          float={false}
+          placeholder="Naam"
+          value={customer?.customerName}
+          name={"customerName"}
+          onChange={onTextChange}
+        />
+        <TextInput
+          className="col-span-2"
+          float={false}
+          placeholder="Straat en nummber"
+          value={customer?.street}
+          name={"street"}
+          onChange={onTextChange}
+        />
+        <TextInput
+          className="col-span-1"
+          float={false}
+          placeholder="Gemeente"
+          value={customer?.city}
+          name={"city"}
+          onChange={onTextChange}
+        />
+        <TextInput
+          className="col-span-1"
+          float={false}
+          placeholder="Postcode"
+          value={customer?.postal}
+          name={"postal"}
+          onChange={onTextChange}
+        />
+        <TextInput
+          className="col-span-4"
+          float={false}
+          placeholder="Telefoonnummer"
+          value={customer?.telephone}
+          name={"telephone"}
+          onChange={onTextChange}
+        />
+      </div>
+      <div className="flex w-full justify-end mt-8">
+        <Button btntype="primary" className="" onClick={handleSubmit}>
+          Klant toevoegen
+        </Button>
+      </div>
     </PageLayout>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "react";
 import { Customer } from "src/types/Customer";
 import { Data } from "src/types/Data";
-import { NewOrder, Order, OrderDetail } from "src/types/Order";
+import { CreateNewOrder, NewOrder, Order, OrderDetail } from "src/types/Order";
 import { NewProduct, Product, ProductWithGroupname } from "src/types/Products";
 import { Unit } from "src/types/Unit";
 import { get, post } from "src/utils/api";
@@ -25,6 +25,9 @@ interface IDataProviderContext {
   setOrderType: (type: string) => void;
   createNewProduct: (product: NewProduct) => Promise<void>;
   searchSingleCustomer: (query: string) => Promise<void>;
+  createNewOrder: (order: CreateNewOrder) => Promise<any>;
+  updateCustomer: (customer: { field: string; value: any }) => void;
+  createCustomer: (c: Customer) => Promise<any>;
   productsWithGroupname: Array<ProductWithGroupname>;
   products: Array<Product>;
   customers: Customer[];
@@ -67,6 +70,15 @@ function reducer(state: Data, action: { type: string; payload?: any }) {
       return { ...state, order: action.payload };
     case "setOrderType":
       return { ...state, orderType: action.payload };
+    case "updateCustomer":
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          [action.payload.field]: action.payload.value,
+        },
+      };
+
     default:
       return { ...state };
   }
@@ -211,13 +223,11 @@ const DataProvider: FunctionComponent = ({ children }) => {
     setLoadingFalse();
   };
 
-  const createNewOrder = async (order: NewOrder) => {
+  const createNewOrder = async (order: CreateNewOrder) => {
     setLoadingTrue();
     const [error, response] = await post("/order", order);
-    console.log(error);
-    console.log(response);
-
     setLoadingFalse();
+    return response;
   };
 
   const searchSingleCustomer = async (query: string) => {
@@ -225,6 +235,17 @@ const DataProvider: FunctionComponent = ({ children }) => {
     const [error, customer] = await get(`/customers?q=${query}`);
     dispatch({ type: "setCustomer", payload: customer[0] });
     setLoadingFalse();
+  };
+
+  const updateCustomer = (customer: { field: string; value: any }) => {
+    dispatch({ type: "updateCustomer", payload: customer });
+  };
+
+  const createCustomer = async (c: Customer) => {
+    setLoadingTrue();
+    const [error, customer] = await post(`/customer`, c);
+    setLoadingFalse();
+    return customer;
   };
 
   const value = {
@@ -239,6 +260,9 @@ const DataProvider: FunctionComponent = ({ children }) => {
     setOrderType,
     createNewProduct,
     searchSingleCustomer,
+    createNewOrder,
+    updateCustomer,
+    createCustomer,
   };
 
   return (

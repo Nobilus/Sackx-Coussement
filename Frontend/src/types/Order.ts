@@ -1,3 +1,4 @@
+import { Customer } from "./Customer";
 import { Product } from "./Products";
 
 export interface OrderDetail extends Product {
@@ -25,4 +26,10 @@ export interface NewOrder {
   price: number;
   amount: number;
   unit: string;
+}
+
+export interface CreateNewOrder {
+  customer: Customer | null;
+  orderType: "offerte" | "bestelbon" | "factuur" | undefined;
+  order: NewOrder[] | undefined;
 }

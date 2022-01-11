@@ -7,10 +7,11 @@ services:
       SA_PASSWORD: "<YourNewStrong@Passw0rd>"
       ACCEPT_EULA: "Y"
     restart: "always"
+    user: root
     ports:
       - 1433:1433
     volumes:
-      - ./db/data:/var/opt/mssql/data
+      - ./db/data:/var/opt/mssql/data:rw
   # api:
   #   image: woodshopapi
   #   build:

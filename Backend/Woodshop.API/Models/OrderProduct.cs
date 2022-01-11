@@ -9,6 +9,7 @@ namespace Project.Models
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
         public double Quantity { get; set; }
+        public double Price { get; set; }
         public int UnitId { get; set; }
         public bool IsPayed { get; set; }
     }
