@@ -10,9 +10,9 @@ import {
 import { Customer } from "src/types/Customer";
 import { Data } from "src/types/Data";
 import { NewOrder, Order, OrderDetail } from "src/types/Order";
-import { Product, ProductWithGroupname } from "src/types/Products";
+import { NewProduct, Product, ProductWithGroupname } from "src/types/Products";
 import { Unit } from "src/types/Unit";
-import { get } from "src/utils/api";
+import { get, post } from "src/utils/api";
 
 interface IDataProviderContext {
   searchCustomer: (query: string) => Promise<void>;
@@ -23,6 +23,7 @@ interface IDataProviderContext {
   validateVatNumber: (vatNumber: string) => Promise<void>;
   storeOrder: (newOrder: Array<NewOrder>) => void;
   setOrderType: (type: string) => void;
+  createNewProduct: (product: NewProduct) => Promise<void>;
   productsWithGroupname: Array<ProductWithGroupname>;
   products: Array<Product>;
   customers: Customer[];
@@ -202,6 +203,12 @@ const DataProvider: FunctionComponent = ({ children }) => {
     dispatch({ type: "setOrderType", payload: type });
   };
 
+  const createNewProduct = async (product: NewProduct) => {
+    setLoadingTrue();
+    const [error, response] = await post("/product", product);
+    setLoadingFalse();
+  };
+
   const value = {
     ...state,
     searchCustomer,
@@ -212,9 +219,11 @@ const DataProvider: FunctionComponent = ({ children }) => {
     searchSingleProduct,
     storeOrder,
     setOrderType,
+    createNewProduct,
   };
 
   return (
+    // @ts-ignore
     <DataProviderContext.Provider value={value}>
       {children}
     </DataProviderContext.Provider>

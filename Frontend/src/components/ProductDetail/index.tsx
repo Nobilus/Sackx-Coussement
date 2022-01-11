@@ -5,11 +5,13 @@ import Table from "src/components/Table/Table";
 import TableHeader from "src/components/Table/TableHeader";
 import TableItem from "src/components/Table/TableItem";
 import TableRow from "src/components/Table/TableRow";
+import { useData } from "src/providers/DataProvider";
+import Autocomplete from "../Autocomplete";
 
 interface ProductProps {
   name?: string;
   productGroupName?: string;
-  measurmentUnit: string;
+  measurmentUnit?: string;
   price?: number;
   priceWithVat?: number;
   productId?: string;
@@ -27,24 +29,40 @@ const Product: FunctionComponent<ProductProps> = ({
   width,
   price,
 }) => {
+  const { units } = useData();
   const inputClassname =
     "text-baseline font-body font-regular border border-green-100 rounded placeholder-transparent pl-4 py-2 outline-none  bg-white placeholder:text-green-25 text-green-200";
 
   const initialValues = {
     name: name ?? "",
     productGroupName: productGroupName ?? "",
-    purchasePrice: purchasePrice ?? "",
-    price: price ?? "",
+    purchasePrice: purchasePrice ?? 0,
+    price: price ?? 0,
     measurmentUnit: measurmentUnit ?? "",
-    thickness: thickness ?? "",
-    width: width ?? "",
+    thickness: thickness ?? 0,
+    width: width ?? 0,
   };
 
   const [values, setValues] = useState(initialValues);
 
   const handleTextChanged = (e: any) => {
+    console.log(e.target);
+
     if (e.target.name in values) {
       setValues({ ...values, [e.target.name]: e.target.value });
+    }
+  };
+
+  const handleDropdownChange = (e: any) => {
+    console.log(e);
+
+    if (e.name in values) {
+      if (e.name === "measurmentUnit") {
+        const unit = units?.find((u) => u.name === e.inputValue);
+        setValues({ ...values, [e.name]: unit?.unitId });
+      } else {
+        setValues({ ...values, [e.name]: e.inputValue });
+      }
     }
   };
 
@@ -62,6 +80,7 @@ const Product: FunctionComponent<ProductProps> = ({
           placeholder="product naam"
           value={values.name}
           className="mb-4"
+          name={"name"}
         />
 
         <TableRow cols={2}>
@@ -72,7 +91,7 @@ const Product: FunctionComponent<ProductProps> = ({
             placeholder="Productgroep"
             className={inputClassname}
             type={"text"}
-            name={"productGroup"}
+            name={"productGroupName"}
             onChange={handleTextChanged}
             value={values.productGroupName}
           />
@@ -84,7 +103,7 @@ const Product: FunctionComponent<ProductProps> = ({
           <input
             placeholder="Aankoopprijs"
             className={inputClassname}
-            type={"text"}
+            type={"number"}
             name={"purchasePrice"}
             onChange={handleTextChanged}
             value={values.purchasePrice}
@@ -92,18 +111,31 @@ const Product: FunctionComponent<ProductProps> = ({
         </TableRow>
         <TableRow cols={2}>
           <TableItem className="place-self-center text-green-25 font-title">
-            Eenheid
+            Verkoopprijs
           </TableItem>
           <input
-            placeholder="Eenheid"
+            placeholder="Aankoopprijs"
             className={inputClassname}
-            type={"text"}
-            name={"unit"}
+            type={"number"}
+            name={"price"}
             onChange={handleTextChanged}
-            value={values.measurmentUnit}
+            value={values.price}
           />
         </TableRow>
-        <TableRow cols={2}>
+        {units && (
+          <TableRow cols={2}>
+            <TableItem className="place-self-center text-green-25 font-title">
+              Eenheid
+            </TableItem>
+            <Autocomplete
+              placeholder="Eenheid"
+              items={units.map(({ name }) => name)}
+              handleSelectedItemChange={handleDropdownChange}
+              name={"measurmentUnit"}
+            />
+          </TableRow>
+        )}
+        {/* <TableRow cols={2}>
           <TableItem className="place-self-center text-green-25 font-title">
             Prijs Excl. BTW
           </TableItem>
@@ -115,7 +147,7 @@ const Product: FunctionComponent<ProductProps> = ({
             onChange={handleTextChanged}
             value={values.price}
           />
-        </TableRow>
+        </TableRow> */}
         {/* <TableRow cols={2}>
           <TableItem className="place-self-center text-green-25 font-title">
             Dikte

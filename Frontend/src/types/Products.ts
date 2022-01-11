@@ -15,3 +15,11 @@ export interface ProductWithGroupname {
   productGroupName: string;
   products: Array<Product>;
 }
+
+export interface NewProduct {
+  measurmentUnit: string;
+  name: string;
+  price: string;
+  productGroupName: string;
+  purchasePrice: string;
+}

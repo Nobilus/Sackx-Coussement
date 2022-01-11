@@ -44,11 +44,13 @@ const Autocomplete: FunctionComponent<AutocompleteProps> = forwardRef(
       highlightedIndex,
       getItemProps,
     } = useCombobox({
+      // @ts-ignore
       items: inputItems,
       selectedItem,
       onSelectedItemChange: sendValues,
       onInputValueChange: ({ inputValue }) => {
         setInputItems(
+          // @ts-ignore
           items.filter((item) =>
             //@ts-ignore
             item.toLowerCase().startsWith(inputValue.toLowerCase())
@@ -89,6 +91,7 @@ const Autocomplete: FunctionComponent<AutocompleteProps> = forwardRef(
           {...getMenuProps()}
         >
           {isOpen &&
+            // @ts-ignore
             inputItems.map((item, index) => (
               <li
                 className={

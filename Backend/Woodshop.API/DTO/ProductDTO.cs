@@ -11,6 +11,8 @@ namespace Project.DTO
         [Required]
         public string Name { get; set; }
         [Required]
+        public string ProductName { get; set; }
+        [Required]
         public double Thickness { get; set; }
         [Required]
         public double Width { get; set; }
@@ -18,6 +20,8 @@ namespace Project.DTO
         public double Price { get; set; }
         [Required]
         public double PurchasePrice { get; set; }
+        [Required]
+        public Guid ProductGroupId { get; set; }
         [Required]
         public int UnitId { get; set; }
     }
