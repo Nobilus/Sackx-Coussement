@@ -52,7 +52,7 @@ namespace Project.DataContext
         {
 
             options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()));
-            options.UseSqlServer(_connectionStrings.SQL);
+            options.UseMySQL(_connectionStrings.SQL);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

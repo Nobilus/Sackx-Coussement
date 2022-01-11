@@ -453,3 +453,4 @@ postman_collection.json
 Migrations/*
 Backend/Woodshop.API/Migrations/WoodshopContextModelSnapshot.cs
 SeedData/*
+db/data/*
