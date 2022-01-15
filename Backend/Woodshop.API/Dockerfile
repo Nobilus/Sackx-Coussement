@@ -22,5 +22,7 @@ RUN dotnet publish "Project.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+COPY /SeedData/klanten.csv /app/SeedData/
+COPY /SeedData/producten.csv /app/SeedData/
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Project.dll"]
