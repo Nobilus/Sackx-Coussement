@@ -12,6 +12,7 @@ using System.IO;
 using CsvHelper;
 using Project.DTO;
 using Woodshop.API.Models;
+using Pomelo.EntityFrameworkCore.MySql;
 
 namespace Project.DataContext
 {
@@ -52,7 +53,7 @@ namespace Project.DataContext
         {
 
             options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()));
-            options.UseMySQL(_connectionStrings.SQL);
+            options.UseMySql(_connectionStrings.SQL, new MySqlServerVersion(new Version(8, 0, 21)));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
